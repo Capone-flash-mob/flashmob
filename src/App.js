@@ -59,6 +59,7 @@ class App extends Component {
   }
   render() {
     return (
+	<div>
       <form onSubmit={this.addFlashmob.bind(this)}>
         <input type="text" ref={ el => this.name = el }/>
         <input type="text" ref={ el => this.desc = el }/>
@@ -88,7 +89,8 @@ class App extends Component {
           <input type="button"></input>
           <p> {data.announcments[0].text}</p>
         </div>
-      </div>
+      	</div>
+	</div>
     );
   }
 }
