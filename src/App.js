@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+// Functions
 
 // Data
 function getData(config) {
@@ -25,7 +26,7 @@ function getData(config) {
   }
 }
 // Preprocessing of data
-console.log(JSON.stringify(getData(1234)))
+var data = getData(1234)
 
 // Rendering
 class App extends Component {
@@ -33,12 +34,22 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
+          <h1 className="App-title">Capone</h1>
+          <span>Login</span>
         </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <img src={data["bannerImage"]}></img>
+        <h1>{data.title}</h1>
+        <div>
+          <div>{data.time + " " + data.date}</div>
+          <div>{data.location}</div>
+          <div>
+            <iframe width="420" height="345" src="https://www.youtube.com/embed/XGSy3_Czz8k">
+            </iframe>
+          </div>
+          {data.peopleIntrested + "Interested "}
+          <input type="button"></input>
+          <p> {data.announcments[0].text}</p>
+        </div>
       </div>
     );
   }
