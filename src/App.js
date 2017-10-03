@@ -90,25 +90,28 @@ class App extends Component {
               <span>Login</span>
             </header>
           </div>
-          <form onSubmit={this.addFlashmob.bind(this)}>
-            <input type="text" placeholder="Name" ref={ el => this.name = el }/>
-            <input type="text" placeholder="Description" ref={ el => this.desc = el }/>
-            <input type="text" placeholder="Location" ref={ el => this.loc = el }/>
-            <input type="submit"/>
-            <ul>
-              { /* Render the list of messages */
-                this.state.flashmobs.map( flashmob => <li key={flashmob.id}>{flashmob.details.name}</li> )
-              }
-            </ul>
-          </form>
+          <div>
+            <form onSubmit={this.addFlashmob.bind(this)}>
+              <label for="fname"> Event Name </label>
+              <input className="App-input-name" type="text" placeholder="Event name..." ref={ el => this.name = el }/>
+              <input className="App-input" type="text" placeholder="Description" ref={ el => this.desc = el }/>
+              <input className="App-input" type="text" placeholder="Location" ref={ el => this.loc = el }/>
+              <input className="App-input" type="submit"/>
+              <ul>
+                { /* Render the list of messages */
+                  this.state.flashmobs.map( flashmob => <li key={flashmob.id}>{flashmob.details.name}</li> )
+                }
+              </ul>
+            </form>
+          </div>
           <div className="App">
-            <img src={data["bannerImage"]}></img>
+            <img src={data["bannerImage"]} alt="not found"></img>
             <h1>{data.title}</h1>
             <div>
               <div>{data.time + " " + data.date}</div>
               <div>{data.location}</div>
               <div>
-                <iframe width="420" height="345" src="https://www.youtube.com/embed/XGSy3_Czz8k">
+                <iframe title="Video" width="420" height="345" src="https://www.youtube.com/embed/XGSy3_Czz8k">
                 </iframe>
               </div>
               {data.peopleIntrested + " interested "}
