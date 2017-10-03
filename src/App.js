@@ -52,43 +52,45 @@ class App extends Component {
         'desc': this.desc.value,
         'loc': this.loc.value
     };
-    
+
     /* Send the message to Firebase */
     fire.database().ref('flashmobs').push(flashMobInstance);
     this.inputEl.value = ''; // <- clear the input
   }
   render() {
     return (
-      <form onSubmit={this.addFlashmob.bind(this)}>
-        <input type="text" ref={ el => this.name = el }/>
-        <input type="text" ref={ el => this.desc = el }/>
-        <input type="text" ref={ el => this.loc = el }/>
-        <input type="submit"/>
-        <ul>
-          { /* Render the list of messages */
-            this.state.flashmobs.map( flashmob => <li key={flashmob.id}>{flashmob.details.name}</li> )
-          }
-        </ul>
-      </form>
-      <div className="App">
-        <header className="App-header">
-          <h1 className="App-title">Capone</h1>
-          <span>Login</span>
-        </header>
-        <img src={data["bannerImage"]}></img>
-        <h1>{data.title}</h1>
         <div>
-          <div>{data.time + " " + data.date}</div>
-          <div>{data.location}</div>
-          <div>
-            <iframe width="420" height="345" src="https://www.youtube.com/embed/XGSy3_Czz8k">
-            </iframe>
+          <form onSubmit={this.addFlashmob.bind(this)}>
+            <input type="text" ref={ el => this.name = el }/>
+            <input type="text" ref={ el => this.desc = el }/>
+            <input type="text" ref={ el => this.loc = el }/>
+            <input type="submit"/>
+            <ul>
+              { /* Render the list of messages */
+                this.state.flashmobs.map( flashmob => <li key={flashmob.id}>{flashmob.details.name}</li> )
+              }
+            </ul>
+          </form>
+          <div className="App">
+            <header className="App-header">
+              <h1 className="App-title">Capone</h1>
+              <span>Login</span>
+            </header>
+            <img src={data["bannerImage"]}></img>
+            <h1>{data.title}</h1>
+            <div>
+              <div>{data.time + " " + data.date}</div>
+              <div>{data.location}</div>
+              <div>
+                <iframe width="420" height="345" src="https://www.youtube.com/embed/XGSy3_Czz8k">
+                </iframe>
+              </div>
+              {data.peopleIntrested + "Interested "}
+              <input type="button"></input>
+              <p> {data.announcments[0].text}</p>
+            </div>
           </div>
-          {data.peopleIntrested + "Interested "}
-          <input type="button"></input>
-          <p> {data.announcments[0].text}</p>
-        </div>
-      </div>
+       </div>
     );
   }
 }
