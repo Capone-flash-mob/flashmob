@@ -51,19 +51,49 @@ class App extends Component {
         'name': this.name.value,
         'desc': this.desc.value,
         'loc': this.loc.value
+        /* @TODO NEED TO ADD FULL SCHEMA HERE
+          TAKEN FROM getData() FUNCTION ABOVE
+        'name': this.name.value,
+        'date': this.date.value,
+        'time': this.time.value,
+        'loc': this.loc.value,
+        'video': this.video.value,
+        'bannerImg': this.bannerImg.value,
+        'locImg': this.locImg.value,
+        // this may need some work. sponsor may not be needed, instead maybe
+        // display admin name, admin email (ie: choreographer name and email)
+        'sponsor': this.sponsor.value,  // not necessarily the choreographer
+        'adminID': this.adminID.value,  // this is the choreographer
+        'email': this.email.value,      // choreographer email, rename this for clarification
+        'numInterested': 'this.numInterested.value',
+        // not sure how this will work with several announcements
+        'announcements': 'this.announements.value'
+        // not sure that we need ot have 'uid' as part of the flashmob schema,
+        // but do we need to include an 'eventID' or something of the sort?
+      */
     };
 
     /* Send the message to Firebase */
     fire.database().ref('flashmobs').push(flashMobInstance);
     this.inputEl.value = ''; // <- clear the input
   }
+    /* The form for submission should be placed on the admin edit page to create the flashmob
+     * the rest should be displayed on the page for the specific flashmob. We'll need to work
+     * out the routes for both of these ASAP so that we can separate the two
+    */
   render() {
     return (
         <div>
+          <div className="App">
+            <header className="App-header">
+              <h1 className="App-title">Capone</h1>
+              <span>Login</span>
+            </header>
+          </div>
           <form onSubmit={this.addFlashmob.bind(this)}>
-            <input type="text" ref={ el => this.name = el }/>
-            <input type="text" ref={ el => this.desc = el }/>
-            <input type="text" ref={ el => this.loc = el }/>
+            <input type="text" placeholder="Name" ref={ el => this.name = el }/>
+            <input type="text" placeholder="Description" ref={ el => this.desc = el }/>
+            <input type="text" placeholder="Location" ref={ el => this.loc = el }/>
             <input type="submit"/>
             <ul>
               { /* Render the list of messages */
@@ -72,10 +102,6 @@ class App extends Component {
             </ul>
           </form>
           <div className="App">
-            <header className="App-header">
-              <h1 className="App-title">Capone</h1>
-              <span>Login</span>
-            </header>
             <img src={data["bannerImage"]}></img>
             <h1>{data.title}</h1>
             <div>
@@ -85,7 +111,7 @@ class App extends Component {
                 <iframe width="420" height="345" src="https://www.youtube.com/embed/XGSy3_Czz8k">
                 </iframe>
               </div>
-              {data.peopleIntrested + "Interested "}
+              {data.peopleIntrested + " interested "}
               <input type="button"></input>
               <p> {data.announcments[0].text}</p>
             </div>
