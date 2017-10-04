@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import fire from './fire';
 import logo from './logo.svg';
 import './App.css';
-// Functions
 
 // Data
 function getData(config) {
@@ -26,8 +25,24 @@ function getData(config) {
     ]
   }
 }
+
+// Get full flashMob item using flashMobId
+function getFlashMob(flashMobId){
+  var flashMobRef = fire.database().ref('/flashmobs/'+flashMobId);
+  flashMobRef.once("value").then(function(snapshot){
+    console.log(snapshot.val());
+    var flashMobSnap = snapshot.val();
+    document.getElementById("flashMobTitle").innerHTML = flashMobSnap.name;
+    document.getElementById("flashMobDate").innerHTML = flashMobSnap.date + flashMobSnap.time;
+    document.getElementById("flashMobName").innerHTML = flashMobSnap.location;
+    document.getElementById("flashMobDescription").innerHtml = flashMobSnap.description;
+    return flashMobSnap;
+  })
+}
+
 // Preprocessing of data
-var data = getData(1234)
+var data = getData(1234);
+var thisFlashMob = getFlashMob("-Kv_DgsoprFx0Z4st7Dq");
 
 // Rendering
 class App extends Component {
@@ -49,13 +64,15 @@ class App extends Component {
     // Construct flashmob object
     var flashMobInstance =  {
         'name': this.name.value,
-        'desc': this.desc.value,
-        'loc': this.loc.value
-        /* @TODO NEED TO ADD FULL SCHEMA HERE
-          TAKEN FROM getData() FUNCTION ABOVE
-        'name': this.name.value,
         'date': this.date.value,
         'time': this.time.value,
+        // do we really need a description?
+        'description': this.description.value,
+        'location': this.location.value,
+        'adminID': this.adminID.value,
+        'email': this.email.value
+        /* @TODO NEED TO ADD FULL SCHEMA HERE
+          TAKEN FROM getData() FUNCTION ABOVE
         'loc': this.loc.value,
         'video': this.video.value,
         'bannerImg': this.bannerImg.value,
@@ -70,7 +87,6 @@ class App extends Component {
         'announcements': 'this.announements.value'
         // not sure that we need ot have 'uid' as part of the flashmob schema,
         // but do we need to include an 'eventID' or something of the sort?
-      */
     };
 
     /* Send the message to Firebase */
@@ -129,23 +145,37 @@ class App extends Component {
                 }
               </ul>
             </form>
-          </div>
-          <div className="App">
-            <img src={data["bannerImage"]} alt="not found"></img>
-            <h1>{data.title}</h1>
+          </div>       
+          /*
+          <input type="text" placeholder="name"ref={ el => this.name = el }/>
+          <input type="text" placeholder="description" ref={ el => this.description = el }/>
+          <input type="text" placeholder="location" ref={ el => this.location = el }/>
+          <input type="date" placeholder="date" ref={ el => this.date = el }/>
+          <input type="time" placeholder="time" ref={ el => this.time = el }/>
+          <input type="text" placeholder="adminID" ref= {el => this.adminID = el}/>
+          <input type="email" placeholder="email" ref= {el => this.email = el}/>
+          <input type="submit"/>  
+          */
+      <div className="App">
+        <header className="App-header">
+          <h1 id="flashMobTitle" className="App-title">Capone</h1>
+          <div id="flashMobDescription">{data.sponser}</div>
+        </header> 
+          <img src={data["bannerImage"]}></img>
+          <h1 id="flashMobName">{data.title}</h1>
+          <div>
+            <div id="flashMobDate">{data.time + " " + data.date}</div>
+            <div id="flashMobTime">{data.date}</div>
             <div>
-              <div>{data.time + " " + data.date}</div>
-              <div>{data.location}</div>
-              <div>
-                <iframe title="Video" width="420" height="345" src="https://www.youtube.com/embed/XGSy3_Czz8k">
-                </iframe>
-              </div>
-              {data.peopleIntrested + " interested "}
-              <input type="button"></input>
-              <p> {data.announcments[0].text}</p>
+              <iframe width="420" height="345" src="https://www.youtube.com/embed/XGSy3_Czz8k">
+              </iframe>
             </div>
+            {data.peopleInterested + " interested "}
+            <input type="button"></input>
+            <p> {data.announcments[0].text}</p>
           </div>
-       </div>
+        </div>
+	    </div>
     );
   }
 }
