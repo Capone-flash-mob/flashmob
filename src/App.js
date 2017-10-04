@@ -87,6 +87,7 @@ class App extends Component {
         'announcements': 'this.announements.value'
         // not sure that we need ot have 'uid' as part of the flashmob schema,
         // but do we need to include an 'eventID' or something of the sort?
+        */
     };
 
     /* Send the message to Firebase */
@@ -139,13 +140,8 @@ class App extends Component {
               <div align="center">
                 <input className="App-input" type="submit"/>
               </div>
-              <ul>
-                { /* Render the list of messages */
-                  this.state.flashmobs.map( flashmob => <li key={flashmob.id}>{flashmob.details.name}</li> )
-                }
-              </ul>
             </form>
-          </div>       
+          </div>
           /*
           <input type="text" placeholder="name"ref={ el => this.name = el }/>
           <input type="text" placeholder="description" ref={ el => this.description = el }/>
@@ -154,13 +150,13 @@ class App extends Component {
           <input type="time" placeholder="time" ref={ el => this.time = el }/>
           <input type="text" placeholder="adminID" ref= {el => this.adminID = el}/>
           <input type="email" placeholder="email" ref= {el => this.email = el}/>
-          <input type="submit"/>  
+          <input type="submit"/>
           */
       <div className="App">
         <header className="App-header">
           <h1 id="flashMobTitle" className="App-title">Capone</h1>
           <div id="flashMobDescription">{data.sponser}</div>
-        </header> 
+        </header>
           <img src={data["bannerImage"]}></img>
           <h1 id="flashMobName">{data.title}</h1>
           <div>
