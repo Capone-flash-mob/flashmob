@@ -1,6 +1,6 @@
 .App {
   text-align: center;
-  font-family: Lato;
+  font-family: 'Lato';
 }
 
 .App-logo {
@@ -16,7 +16,6 @@
 }
 
 .App-title {
-  font-family: 'Lato';
   text-transform: uppercase;
   font-size: 2.0em;
   letter-spacing: 0.2em;
@@ -26,13 +25,48 @@
   font-size: large;
 }
 
-.App-input-name[type=text] {
-  display: block;
+.App-form {
   width: 75%;
+}
+
+.button {
+  display: block;
+  font-size: calc(6px + 0.5vw);
+  text-align: center;
+  width: 40%;
+  min-width: 50px;
+  height: 50px;
+  padding: 8px 20px;
+  margin: 4px;
+  box-sizing: border-box;
+}
+
+.App-input-large[type=text] {
+  display: inline-block;
+  font-size: calc(12px + 0.5vw);
+  text-align: center;
+  width: 82%;
+  height: 300px;
+  padding: 12px 20px;
+  margin: 20px 0;
+  box-sizing: border-box;
+  border: 2px dashed;
+  border-color: #808080;
+}
+
+
+.App-input-small[type=text] {
+  display: inline-block;
+  font-size: calc(12px + 0.5vw);
+  text-align: center;
+  width: 40%;
+  min-width: 150px;
   height: 100px;
   padding: 12px 20px;
-  margin: 8px 0;
+  margin: 16px;
   box-sizing: border-box;
+  border: 2px dashed;
+  border-color: #808080;
 }
 
 .App-input[type=submit] {

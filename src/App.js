@@ -86,17 +86,43 @@ class App extends Component {
         <div>
           <div className="App">
             <header className="App-header">
-              <h1 className="App-title">Capone</h1>
+              <h1 className="App-title"> capone </h1>
               <span>Login</span>
             </header>
           </div>
-          <div>
-            <form onSubmit={this.addFlashmob.bind(this)}>
-              <label for="fname"> Event Name </label>
-              <input className="App-input-name" type="text" placeholder="Event name..." ref={ el => this.name = el }/>
-              <input className="App-input" type="text" placeholder="Description" ref={ el => this.desc = el }/>
-              <input className="App-input" type="text" placeholder="Location" ref={ el => this.loc = el }/>
-              <input className="App-input" type="submit"/>
+          <div align="center">
+            <form className="App-form" onSubmit={this.addFlashmob.bind(this)}>
+              <div align="center" style={{position: 'relative'}}>
+                <input className="App-input-large" type="text" placeholder="event banner image..." ref={ el => this.bannerImg = el}/>
+                <div align="center" style={{position: 'absolute', top: '0', left: '0', right:'0', padding:'100px'}}>
+                  <input className="App-input-small" type="text" placeholder="event name..." ref={ el => this.name = el }/>
+                </div>
+              </div>
+              <div align="center">
+                <span>
+                  <input className="App-input-small" type="text" placeholder="event date and time..." ref={ el => this.date = el }/>
+                  <input className="App-input-small" type="text" placeholder="event choreographer..." ref={ el => this.adminEmail = el }/>
+                </span>
+                <span>
+                  <input className="App-input-small" type="text" placeholder="event location..." ref={ el => this.loc = el }/>
+                  <input className="App-input-small" type="text" placeholder="event choreographer email..." ref={ el => this.adminID = el }/>
+                </span>
+              </div>
+              <div align="center">
+                <span>
+                  <input className="App-input-small" type="text" placeholder="maximum numer of people..." ref={ el => this.maxPeople = el }/>
+                  <button className="button" vertical-align="middle"><span> I am interested! </span></button>
+                </span>
+              </div>
+              <div align="center">
+                <input className="App-input-large" type="text" placeholder="dance choreography video..." ref={ el => this.video = el }/>
+              </div>
+              <div align="center">
+                <input className="App-input-large" type="text" placeholder="event location image..." ref={ el => this.locImg = el }/>
+              </div>
+              <div align="center">
+                <input className="App-input" type="submit"/>
+              </div>
               <ul>
                 { /* Render the list of messages */
                   this.state.flashmobs.map( flashmob => <li key={flashmob.id}>{flashmob.details.name}</li> )
