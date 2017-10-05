@@ -61,12 +61,7 @@ class App extends Component {
   render() {
     return (
         <div>
-          <div className="App">
-            <header className="App-header">
-              <h1 className="App-title"> capone </h1>
-              <span>Login</span>
-            </header>
-          </div>
+
           <div align="center">
             <form className="App-form" onSubmit={this.addFlashmob.bind(this)}>
               <div align="center" style={{position: 'relative'}}>
@@ -102,15 +97,6 @@ class App extends Component {
               </div>
             </form>
           </div>
-          
-          <input type="text" placeholder="name"ref={ el => this.name = el }/>
-          <input type="text" placeholder="description" ref={ el => this.description = el }/>
-          <input type="text" placeholder="location" ref={ el => this.location = el }/>
-          <input type="date" placeholder="date" ref={ el => this.date = el }/>
-          <input type="time" placeholder="time" ref={ el => this.time = el }/>
-          <input type="text" placeholder="adminID" ref= {el => this.adminID = el}/>
-          <input type="email" placeholder="email" ref= {el => this.email = el}/>
-          <input type="submit"/>
 
       <div className="App">
         <header className="App-header">
