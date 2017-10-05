@@ -2,9 +2,14 @@ import React, { Component } from 'react';
 import fire from './fire';
 import logo from './logo.svg';
 import './App.css';
-// Functions
+import {BrowserRouter as Router} from 'react-router-dom';
+//////////////////////////////////////////////////////////////////////////////
+// Regular Javascript Functions
+//////////////////////////////////////////////////////////////////////////////
 
+//////////////////////////////////////////////////////////////////////////////
 // Data
+//////////////////////////////////////////////////////////////////////////////
 function getData(config) {
   return {
     title: "Thriller",
@@ -26,11 +31,33 @@ function getData(config) {
     ]
   }
 }
+//////////////////////////////////////////////////////////////////////////////
 // Preprocessing of data
+//////////////////////////////////////////////////////////////////////////////
 var data = getData(1234)
+//////////////////////////////////////////////////////////////////////////////
+// Components - these are like C++ classes for HTML
+//////////////////////////////////////////////////////////////////////////////
+/*All new components must at least have this code*/
+function ExampleProp(props){
+  return (
+      <div>
 
-// Rendering
-class App extends Component {
+      </div>
+    );
+}
+// Creates a headline banner with our logo and a login button
+function Headline(props){
+  return(
+  <div className="App">
+    <header className="App-header">
+      <h1 className="App-title"> capone </h1>
+      <span>Login</span>
+    </header>
+  </div>);
+}
+// Creates a basic form that lists contents when submit is clicked
+class SubscriberForm extends Component{
   constructor(props) {
     super(props);
     this.state = { flashmobs: [] }; // <- set up react state
@@ -81,42 +108,59 @@ class App extends Component {
      * the rest should be displayed on the page for the specific flashmob. We'll need to work
      * out the routes for both of these ASAP so that we can separate the two
     */
+    render(){
+      return (
+          <div>
+            <form onSubmit={this.addFlashmob.bind(this)}>
+              <input type="text" placeholder="Name" ref={ el => this.name = el }/>
+              <input type="text" placeholder="Description" ref={ el => this.desc = el }/>
+              <input type="text" placeholder="Location" ref={ el => this.loc = el }/>
+              <input type="submit"/>
+              <ul>
+                { /* Render the list of messages */
+                  this.state.flashmobs.map( flashmob => <li key={flashmob.id}>{flashmob.details.name}</li> )
+                }
+              </ul>
+            </form>
+          </div>
+        );
+    }
+}
+// Creates a page where users can view mob details
+function MobPublicView(props){
+  return(
+    <div className="App">
+      <img src={data["bannerImage"]}></img>
+      <h1>{data.title}</h1>
+      <div>
+        <div>{data.time + " " + data.date}</div>
+        <div>{data.location}</div>
+        <div>
+          <iframe width="420" height="345" src="https://www.youtube.com/embed/XGSy3_Czz8k">
+          </iframe>
+        </div>
+        {data.peopleIntrested + " interested "}
+        <input type="button"></input>
+        <p> {data.announcments[0].text}</p>
+      </div>
+    </div>
+    );
+}
+//////////////////////////////////////////////////////////////////////////////
+// Main - You should only write components, functions, or routes here
+//////////////////////////////////////////////////////////////////////////////
+class App extends Component {
   render() {
     return (
+      //The Router component allows elements inside to use React-router's API
+      <Router>
         <div>
-          <div className="App">
-            <header className="App-header">
-              <h1 className="App-title">Capone</h1>
-              <span>Login</span>
-            </header>
-          </div>
-          <form onSubmit={this.addFlashmob.bind(this)}>
-            <input type="text" placeholder="Name" ref={ el => this.name = el }/>
-            <input type="text" placeholder="Description" ref={ el => this.desc = el }/>
-            <input type="text" placeholder="Location" ref={ el => this.loc = el }/>
-            <input type="submit"/>
-            <ul>
-              { /* Render the list of messages */
-                this.state.flashmobs.map( flashmob => <li key={flashmob.id}>{flashmob.details.name}</li> )
-              }
-            </ul>
-          </form>
-          <div className="App">
-            <img src={data["bannerImage"]}></img>
-            <h1>{data.title}</h1>
-            <div>
-              <div>{data.time + " " + data.date}</div>
-              <div>{data.location}</div>
-              <div>
-                <iframe width="420" height="345" src="https://www.youtube.com/embed/XGSy3_Czz8k">
-                </iframe>
-              </div>
-              {data.peopleIntrested + " interested "}
-              <input type="button"></input>
-              <p> {data.announcments[0].text}</p>
-            </div>
-          </div>
-       </div>
+          <Headline></Headline>
+          {/*@TODO: Ask backend if we even need this*/}
+          {/*<SubscriberForm></SubscriberForm>*/}
+          <MobPublicView></MobPublicView>
+        </div>
+      </Router>
     );
   }
 }
