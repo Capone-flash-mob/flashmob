@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import fire from './fire';
 import logo from './logo.svg';
 import './App.css';
-import {BrowserRouter as Router} from 'react-router-dom';
+import {BrowserRouter as Router, Link, Route} from 'react-router-dom';
 //////////////////////////////////////////////////////////////////////////////
 // Regular Javascript Functions
 //////////////////////////////////////////////////////////////////////////////
@@ -146,6 +146,14 @@ function MobPublicView(props){
     </div>
     );
 }
+// Creates a page where an admin can view and edit mob details
+function MobAdminView(props){
+  return (
+      <div>
+
+      </div>
+    );
+}
 //////////////////////////////////////////////////////////////////////////////
 // Main - You should only write components, functions, or routes here
 //////////////////////////////////////////////////////////////////////////////
@@ -156,9 +164,16 @@ class App extends Component {
       <Router>
         <div>
           <Headline></Headline>
-          {/*@TODO: Ask backend if we even need this*/}
+        {/*@TODO: Ask backend if we even need this, remove if not needed*/}
           {/*<SubscriberForm></SubscriberForm>*/}
-          <MobPublicView></MobPublicView>
+
+          {/*Routes*/}
+          {/*RR will display the component that has a matching path.
+          Variables in the path start with a :colon and can be passed to the component.*/}
+          {/*http://localhost:3000/public/mobID*/}
+          <Route path="/public/:mob" component={MobPublicView}/>
+          {/*@TODO: Convert Admin page into a react component */}
+          <Route path="/admin/:mob" component={MobAdminView}/>
         </div>
       </Router>
     );
