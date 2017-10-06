@@ -3,10 +3,13 @@
 git clone https://github.com/Capone-flash-mob/flashmob.git
 cd flashmob
 npm install
+npm install -g firebase
+npm install -g firebase-tools
 ```
 
 ## How to Run
 ```npm start```
+npm run bd
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
