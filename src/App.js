@@ -18,7 +18,7 @@ function getFlashMob(flashMobId){
 }
 
 // Preprocessing of data
-var thisFlashMob = getFlashMob("-Kv_DgsoprFx0Z4st7Dq");
+// var thisFlashMob = getFlashMob("-Kv_DgsoprFx0Z4st7Dq");
 
 // Rendering
 class App extends Component {
@@ -97,19 +97,7 @@ class App extends Component {
               </div>
             </form>
           </div>
-
-      <div className="App">
-        <header className="App-header">
-          <h1 id="flashMobTitle" className="App-title"></h1>
-          <div id="flashMobDescription"></div>
-        </header>
-          <h1 id="flashMobName"></h1>
-          <div>
-            <div id="flashMobDate"></div>
-            <div id="flashMobTime"></div>
-          </div>
         </div>
-	    </div>
     );
   }
 }
