@@ -18,7 +18,7 @@ function getFlashMob(flashMobId){
 }
 
 // Preprocessing of data
-var thisFlashMob = getFlashMob("-Kv_DgsoprFx0Z4st7Dq");
+// var thisFlashMob = getFlashMob("-Kv_DgsoprFx0Z4st7Dq");
 
 // Rendering
 class App extends Component {
@@ -102,28 +102,7 @@ class App extends Component {
               </div>
             </form>
           </div>
-          
-          <input type="text" placeholder="name"ref={ el => this.name = el }/>
-          <input type="text" placeholder="description" ref={ el => this.description = el }/>
-          <input type="text" placeholder="location" ref={ el => this.location = el }/>
-          <input type="date" placeholder="date" ref={ el => this.date = el }/>
-          <input type="time" placeholder="time" ref={ el => this.time = el }/>
-          <input type="text" placeholder="adminID" ref= {el => this.adminID = el}/>
-          <input type="email" placeholder="email" ref= {el => this.email = el}/>
-          <input type="submit"/>
-
-      <div className="App">
-        <header className="App-header">
-          <h1 id="flashMobTitle" className="App-title"></h1>
-          <div id="flashMobDescription"></div>
-        </header>
-          <h1 id="flashMobName"></h1>
-          <div>
-            <div id="flashMobDate"></div>
-            <div id="flashMobTime"></div>
-          </div>
         </div>
-	    </div>
     );
   }
 }
