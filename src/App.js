@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import fire from './fire';
 import logo from './logo.svg';
-import './App.css';
 import {BrowserRouter as Router, Link, Route} from 'react-router-dom';
 //////////////////////////////////////////////////////////////////////////////
 // Regular Javascript Functions
