@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import fire from './fire';
+import database from './database'
 import logo from './logo.svg';
 import './App.css';
 
@@ -59,6 +60,15 @@ class App extends Component {
       this.setState({ flashmobs: [flashmob].concat(this.state.flashmobs) });
     })
   }
+  editFlashmob(uid, key, value){
+    var flashMobUpdateInstance =  {};
+    flashMobUpdateInstance[key] = value;
+
+    var flashRef = fire.database().ref('flashmobs').child(uid);
+    // Update the ref 
+    flashRef.updateChildren(flashMobUpdateInstance);
+
+  }
   addFlashmob(e){
     e.preventDefault(); // <- prevent form submit from reloading the page
     // Construct flashmob object
@@ -71,23 +81,6 @@ class App extends Component {
         'location': this.location.value,
         'adminID': this.adminID.value,
         'email': this.email.value
-        /* @TODO NEED TO ADD FULL SCHEMA HERE
-          TAKEN FROM getData() FUNCTION ABOVE
-        'loc': this.loc.value,
-        'video': this.video.value,
-        'bannerImg': this.bannerImg.value,
-        'locImg': this.locImg.value,
-        // this may need some work. sponsor may not be needed, instead maybe
-        // display admin name, admin email (ie: choreographer name and email)
-        'sponsor': this.sponsor.value,  // not necessarily the choreographer
-        'adminID': this.adminID.value,  // this is the choreographer
-        'email': this.email.value,      // choreographer email, rename this for clarification
-        'numInterested': 'this.numInterested.value',
-        // not sure how this will work with several announcements
-        'announcements': 'this.announements.value'
-        // not sure that we need ot have 'uid' as part of the flashmob schema,
-        // but do we need to include an 'eventID' or something of the sort?
-        */
     };
 
     /* Send the message to Firebase */
