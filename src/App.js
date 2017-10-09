@@ -63,9 +63,9 @@ function ExampleProp(props){
 // Creates a headline banner with our logo and a login button
 function Headline(props){
   return(
-  <div className="App">
-    <header className="App-header">
-      <h1 className="App-title"> capone </h1>
+  <div className="row">
+    <header className="header">
+      <h1 className="title"> capone </h1>
       <span>Login</span>
     </header>
   </div>);
@@ -113,7 +113,7 @@ function MobAdminView(props){
     // Construct flashmob object
     var flashMobInstance =  {
         'name': this.name.value,
-        'bannerImage': this.bannerImage,
+        'bannerImage': this.bannerImage.value,
         'description': this.description.value,
         'date': this.date.value,
         'time': this.time.value,
@@ -124,7 +124,7 @@ function MobAdminView(props){
         'numInterested': this.numInterested.value,
         'video': this.video.value,
         'locImage': this.locImage.value,
-        'announcements': this.announcements
+        'announcements': this.announcements.value
     };
 
     /* Send the message to Firebase */
@@ -132,38 +132,115 @@ function MobAdminView(props){
     this.inputEl.value = ''; // <- clear the input
   }
   return (
-    <div align="center">
+    <div className="container">
       <form className="App-form" onSubmit={pageData.addFlashmob.bind(pageData)}>
-        <div align="center" style={{position: 'relative'}}>
-          <input className="App-input-large" type="text" placeholder="event banner image..." ref={ el => pageData.bannerImage = el}/>
-          <div align="center" style={{position: 'absolute', top: '0', left: '0', right:'0', padding:'100px'}}>
-            <input className="App-input-small" type="text" placeholder="event name..." ref={ el => pageData.name = el }/>
+        <div className="row">
+          <div className="col-sm-1">
+          </div>
+          <div className="col-sm-10">
+            <input className="input" type="text" placeholder="banner image..." style={{height: '300px'}} ref={ el => pageData.bannerImage = el}/>
+          </div>
+          <div className="col-sm-1">
           </div>
         </div>
-        <div align="center">
-          <span>
-            <input className="App-input-small" type="text" placeholder="event date and time..." ref={ el => pageData.date = el }/>
-            <input className="App-input-small" type="text" placeholder="event choreographer..." ref={ el => pageData.adminEmail = el }/>
-          </span>
-          <span>
-            <input className="App-input-small" type="text" placeholder="event location..." ref={ el => pageData.loc = el }/>
-            <input className="App-input-small" type="text" placeholder="event choreographer email..." ref={ el => pageData.adminID = el }/>
-          </span>
+        <div className="row">
+          <div className="col-sm-1">
+          </div>
+          <div className="col-sm-10">
+            <input className="input" type="text" placeholder="description..." style={{height: '150px'}} ref={ el => pageData.description = el}/>
+          </div>
+          <div className="col-sm-1">
+          </div>
         </div>
-        <div align="center">
-          <span>
-            <input className="App-input-small" type="text" placeholder="maximum numer of people..." ref={ el => pageData.maxPeople = el }/>
-            <button className="button" vertical-align="middle"><span> I am interested! </span></button>
-          </span>
+        <div className="row">
+          <div className="col-sm-1">
+          </div>
+          <div className="col-sm-3">
+            <input className="input" type="text" placeholder="date..." ref={ el => pageData.date = el}/>
+          </div>
+          <div className="col-sm-2">
+            <input className="input" type="text" placeholder="time..." ref={ el => pageData.time = el}/>
+          </div>
+          <div className="col-sm-5">
+            <input className="input" type="text" placeholder="choreographer..." ref={ el => pageData.adminName = el}/>
+          </div>
+          <div className="col-sm-1">
+          </div>
         </div>
-        <div align="center">
-          <input className="App-input-large" type="text" placeholder="dance choreography video..." ref={ el => pageData.video = el }/>
+        <div className="row">
+          <div className="col-sm-1">
+          </div>
+          <div className="col-sm-5">
+            <input className="input" type="text" placeholder="location..." ref={ el => pageData.location = el}/>
+          </div>
+          <div className="col-sm-5">
+            <input className="input" type="text" placeholder="email..." ref={ el => pageData.adminEmail = el}/>
+          </div>
+          <div className="col-sm-1">
+          </div>
         </div>
-        <div align="center">
-          <input className="App-input-large" type="text" placeholder="event location image..." ref={ el => pageData.locImg = el }/>
+        <div className="row">
+          <div className="col-sm-3">
+          </div>
+          <div className="col-sm-6">
+            <div className="col-sm-1">
+            </div>
+            <div className="col-sm-10">
+              <input className="input" type="text" placeholder="maximum number of people..." ref={ el => pageData.numInterested = el}/>
+            </div>
+            <div className="col-sm-1">
+            </div>
+          </div>
+          <div className="col-sm-3">
+          </div>
         </div>
-        <div align="center">
-          <input className="App-input" type="submit"/>
+        <div className="row">
+          <div className="col-sm-3">
+          </div>
+          <div className="col-sm-6">
+            <div className="col-sm-1">
+            </div>
+            <div className="col-sm-10">
+              <button className="button" vertical-align="middle"><span> I am Interested! </span></button>
+            </div>
+            <div className="col-sm-1">
+            </div>
+          </div>
+          <div className="col-sm-3">
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-sm-1">
+          </div>
+          <div className="col-sm-10">
+            <input className="input" type="text" placeholder="video..." style={{height: '300px'}} ref={ el => pageData.video = el}/>
+          </div>
+          <div className="col-sm-1">
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-sm-1">
+          </div>
+          <div className="col-sm-10">
+            <input className="input" type="text" placeholder="location image..." style={{height: '300px'}} ref={ el => pageData.locImage = el}/>
+          </div>
+          <div className="col-sm-1">
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-sm-3">
+          </div>
+          <div className="col-sm-6">
+            <div className="col-sm-2">
+            </div>
+            <div className="col-sm-8">
+              <input className="input" type="submit"/>
+            </div>
+            <div className="col-sm-2">
+            </div>
+          </div>
+          <div className="col-sm-3">
+          </div>
         </div>
       </form>
     </div>
