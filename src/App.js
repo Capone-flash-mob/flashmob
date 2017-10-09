@@ -2,9 +2,27 @@ import React, { Component } from 'react';
 import fire from './fire';
 import database from './database'
 import logo from './logo.svg';
-import './App.css';
+import {BrowserRouter as Router, Link, Route} from 'react-router-dom';
+//////////////////////////////////////////////////////////////////////////////
+// Regular Javascript Functions
+//////////////////////////////////////////////////////////////////////////////
+// Get full flashMob item using flashMobId
+function getFlashMob(flashMobId){
+  var flashMobRef = fire.database().ref('/flashmobs/'+flashMobId);
+  flashMobRef.once("value").then(function(snapshot){
+    console.log(snapshot.val());
+    var flashMobSnap = snapshot.val();
+    document.getElementById("flashMobTitle").innerHTML = flashMobSnap.name;
+    document.getElementById("flashMobDate").innerHTML = flashMobSnap.date + flashMobSnap.time;
+    document.getElementById("flashMobName").innerHTML = flashMobSnap.location;
+    document.getElementById("flashMobDescription").innerHtml = flashMobSnap.description;
+    return flashMobSnap;
+    })
+  }
 
+//////////////////////////////////////////////////////////////////////////////
 // Data
+//////////////////////////////////////////////////////////////////////////////
 function getData(config) {
   return {
     title: "Thriller",
@@ -26,145 +44,230 @@ function getData(config) {
     ]
   }
 }
+//////////////////////////////////////////////////////////////////////////////
+// Preprocessing of data
+//////////////////////////////////////////////////////////////////////////////
+var data = getData()
+// var thisFlashMob = getFlashMob("-Kv_DgsoprFx0Z4st7Dq");
+//////////////////////////////////////////////////////////////////////////////
+// Components - these are like C++ classes for HTML
+//////////////////////////////////////////////////////////////////////////////
+/*All new components must at least have this code*/
+function ExampleProp(props){
+  return (
+      <div>
 
-// Get full flashMob item using flashMobId
-function getFlashMob(flashMobId){
-  var flashMobRef = fire.database().ref('/flashmobs/'+flashMobId);
-  flashMobRef.once("value").then(function(snapshot){
-    console.log(snapshot.val());
-    var flashMobSnap = snapshot.val();
-    document.getElementById("flashMobTitle").innerHTML = flashMobSnap.name;
-    document.getElementById("flashMobDate").innerHTML = flashMobSnap.date + flashMobSnap.time;
-    document.getElementById("flashMobName").innerHTML = flashMobSnap.location;
-    document.getElementById("flashMobDescription").innerHtml = flashMobSnap.description;
-    return flashMobSnap;
-  })
+      </div>
+    );
+}
+// Creates a headline banner with our logo and a login button
+function Headline(props){
+  return(
+  <div className="row">
+    <header className="header">
+      <h1 className="title"> capone </h1>
+      <span>Login</span>
+    </header>
+  </div>);
 }
 
-// Preprocessing of data
-var data = getData(1234);
-var thisFlashMob = getFlashMob("-Kv_DgsoprFx0Z4st7Dq");
-
-// Rendering
-class App extends Component {
-  constructor(props) {
+// Creates a page where users can view mob details
+function MobPublicView(props){
+  return(
+    <div className="App">
+      <img src={data["bannerImage"]}></img>
+      <h1>{data.title}</h1>
+      <div>
+        <div>{data.time + " " + data.date}</div>
+        <div>{data.location}</div>
+        <div>
+          <iframe width="420" height="345" src="https://www.youtube.com/embed/XGSy3_Czz8k">
+          </iframe>
+        </div>
+        {data.peopleIntrested + " interested "}
+        <input type="button"></input>
+        <p> {data.announcments[0].text}</p>
+      </div>
+    </div>
+    );
+}
+// Creates a page where an admin can view and edit mob details
+function MobAdminView(props){
+  /*constructor(props) {
     super(props);
     this.state = { flashmobs: [] }; // <- set up react state
-  }
-  componentWillMount(){
+  }*/
+  /*componentWillMount(){*/
     /* Create reference to messages in Firebase Database */
-    let flashmobsRef = fire.database().ref('flashmobs').orderByKey().limitToLast(100);
-    flashmobsRef.on('child_added', snapshot => {
+    /*let flashmobsRef = fire.database().ref('flashmobs').orderByKey().limitToLast(100);*/
+    /*flashmobsRef.on('child_added', snapshot => {*/
       /* Update React state when message is added at Firebase Database */
-      let flashmob = { details: snapshot.val(), id: snapshot.key };
-      this.setState({ flashmobs: [flashmob].concat(this.state.flashmobs) });
-    })
-  }
-  editFlashmob(uid, key, value){
-    var flashMobUpdateInstance =  {};
-    flashMobUpdateInstance[key] = value;
+      /*let flashmob = { details: snapshot.val(), id: snapshot.key };*/
+      /*this.setState({ flashmobs: [flashmob].concat(this.state.flashmobs) });*/
+    /*})*/
+  /*}*/
+  var pageData = {}
 
-    var flashRef = fire.database().ref('flashmobs').child(uid);
-    // Update the ref 
-    flashRef.updateChildren(flashMobUpdateInstance);
-
-  }
-  addFlashmob(e){
+  pageData.addFlashmob = function (e){
     e.preventDefault(); // <- prevent form submit from reloading the page
     // Construct flashmob object
     var flashMobInstance =  {
         'name': this.name.value,
+        'bannerImage': this.bannerImage.value,
+        'description': this.description.value,
         'date': this.date.value,
         'time': this.time.value,
-        // do we really need a description?
-        'description': this.description.value,
         'location': this.location.value,
         'adminID': this.adminID.value,
-        'email': this.email.value
+        'adminName': this.adminName.value,
+        'adminEmail': this.adminEmail.value,
+        'numInterested': this.numInterested.value,
+        'video': this.video.value,
+        'locImage': this.locImage.value,
+        'announcements': this.announcements.value
     };
 
     /* Send the message to Firebase */
     fire.database().ref('flashmobs').push(flashMobInstance);
     this.inputEl.value = ''; // <- clear the input
   }
-    /* The form for submission should be placed on the admin edit page to create the flashmob
-     * the rest should be displayed on the page for the specific flashmob. We'll need to work
-     * out the routes for both of these ASAP so that we can separate the two
-    */
-  render() {
-    return (
-        <div>
-          <div className="App">
-            <header className="App-header">
-              <h1 className="App-title"> capone </h1>
-              <span>Login</span>
-            </header>
+  return (
+    <div className="container">
+      <form className="App-form" onSubmit={pageData.addFlashmob.bind(pageData)}>
+        <div className="row">
+          <div className="col-sm-1">
           </div>
-          <div align="center">
-            <form className="App-form" onSubmit={this.addFlashmob.bind(this)}>
-              <div align="center" style={{position: 'relative'}}>
-                <input className="App-input-large" type="text" placeholder="event banner image..." ref={ el => this.bannerImg = el}/>
-                <div align="center" style={{position: 'absolute', top: '0', left: '0', right:'0', padding:'100px'}}>
-                  <input className="App-input-small" type="text" placeholder="event name..." ref={ el => this.name = el }/>
-                </div>
-              </div>
-              <div align="center">
-                <span>
-                  <input className="App-input-small" type="text" placeholder="event date and time..." ref={ el => this.date = el }/>
-                  <input className="App-input-small" type="text" placeholder="event choreographer..." ref={ el => this.adminEmail = el }/>
-                </span>
-                <span>
-                  <input className="App-input-small" type="text" placeholder="event location..." ref={ el => this.loc = el }/>
-                  <input className="App-input-small" type="text" placeholder="event choreographer email..." ref={ el => this.adminID = el }/>
-                </span>
-              </div>
-              <div align="center">
-                <span>
-                  <input className="App-input-small" type="text" placeholder="maximum numer of people..." ref={ el => this.maxPeople = el }/>
-                  <button className="button" vertical-align="middle"><span> I am interested! </span></button>
-                </span>
-              </div>
-              <div align="center">
-                <input className="App-input-large" type="text" placeholder="dance choreography video..." ref={ el => this.video = el }/>
-              </div>
-              <div align="center">
-                <input className="App-input-large" type="text" placeholder="event location image..." ref={ el => this.locImg = el }/>
-              </div>
-              <div align="center">
-                <input className="App-input" type="submit"/>
-              </div>
-            </form>
+          <div className="col-sm-10">
+            <input className="input" type="text" placeholder="banner image..." style={{height: '300px'}} ref={ el => pageData.bannerImage = el}/>
           </div>
-          /*
-          <input type="text" placeholder="name"ref={ el => this.name = el }/>
-          <input type="text" placeholder="description" ref={ el => this.description = el }/>
-          <input type="text" placeholder="location" ref={ el => this.location = el }/>
-          <input type="date" placeholder="date" ref={ el => this.date = el }/>
-          <input type="time" placeholder="time" ref={ el => this.time = el }/>
-          <input type="text" placeholder="adminID" ref= {el => this.adminID = el}/>
-          <input type="email" placeholder="email" ref= {el => this.email = el}/>
-          <input type="submit"/>
-          */
-      <div className="App">
-        <header className="App-header">
-          <h1 id="flashMobTitle" className="App-title">Capone</h1>
-          <div id="flashMobDescription">{data.sponser}</div>
-        </header>
-          <img src={data["bannerImage"]}></img>
-          <h1 id="flashMobName">{data.title}</h1>
-          <div>
-            <div id="flashMobDate">{data.time + " " + data.date}</div>
-            <div id="flashMobTime">{data.date}</div>
-            <div>
-              <iframe width="420" height="345" src="https://www.youtube.com/embed/XGSy3_Czz8k">
-              </iframe>
-            </div>
-            {data.peopleInterested + " interested "}
-            <input type="button"></input>
-            <p> {data.announcments[0].text}</p>
+          <div className="col-sm-1">
           </div>
         </div>
-	    </div>
+        <div className="row">
+          <div className="col-sm-1">
+          </div>
+          <div className="col-sm-10">
+            <input className="input" type="text" placeholder="description..." style={{height: '150px'}} ref={ el => pageData.description = el}/>
+          </div>
+          <div className="col-sm-1">
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-sm-1">
+          </div>
+          <div className="col-sm-3">
+            <input className="input" type="text" placeholder="date..." ref={ el => pageData.date = el}/>
+          </div>
+          <div className="col-sm-2">
+            <input className="input" type="text" placeholder="time..." ref={ el => pageData.time = el}/>
+          </div>
+          <div className="col-sm-5">
+            <input className="input" type="text" placeholder="choreographer..." ref={ el => pageData.adminName = el}/>
+          </div>
+          <div className="col-sm-1">
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-sm-1">
+          </div>
+          <div className="col-sm-5">
+            <input className="input" type="text" placeholder="location..." ref={ el => pageData.location = el}/>
+          </div>
+          <div className="col-sm-5">
+            <input className="input" type="text" placeholder="email..." ref={ el => pageData.adminEmail = el}/>
+          </div>
+          <div className="col-sm-1">
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-sm-3">
+          </div>
+          <div className="col-sm-6">
+            <div className="col-sm-1">
+            </div>
+            <div className="col-sm-10">
+              <input className="input" type="text" placeholder="maximum number of people..." ref={ el => pageData.numInterested = el}/>
+            </div>
+            <div className="col-sm-1">
+            </div>
+          </div>
+          <div className="col-sm-3">
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-sm-3">
+          </div>
+          <div className="col-sm-6">
+            <div className="col-sm-1">
+            </div>
+            <div className="col-sm-10">
+              <button className="button" vertical-align="middle"><span> I am Interested! </span></button>
+            </div>
+            <div className="col-sm-1">
+            </div>
+          </div>
+          <div className="col-sm-3">
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-sm-1">
+          </div>
+          <div className="col-sm-10">
+            <input className="input" type="text" placeholder="video..." style={{height: '300px'}} ref={ el => pageData.video = el}/>
+          </div>
+          <div className="col-sm-1">
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-sm-1">
+          </div>
+          <div className="col-sm-10">
+            <input className="input" type="text" placeholder="location image..." style={{height: '300px'}} ref={ el => pageData.locImage = el}/>
+          </div>
+          <div className="col-sm-1">
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-sm-3">
+          </div>
+          <div className="col-sm-6">
+            <div className="col-sm-2">
+            </div>
+            <div className="col-sm-8">
+              <input className="input" type="submit"/>
+            </div>
+            <div className="col-sm-2">
+            </div>
+          </div>
+          <div className="col-sm-3">
+          </div>
+        </div>
+      </form>
+    </div>
+    );
+}
+//////////////////////////////////////////////////////////////////////////////
+// Main - You should only write components, functions, or routes here
+//////////////////////////////////////////////////////////////////////////////
+class App extends Component {
+  render() {
+    return (
+      //The Router component allows elements inside to use React-router's API
+      <Router>
+        <div>
+          <Headline></Headline>
+        {/*@TODO: Ask backend if we even need this, remove if not needed*/}
+          {/*<SubscriberForm></SubscriberForm>*/}
+
+          {/*Routes*/}
+          {/*RR will display the component that has a matching path.
+          Variables in the path start with a :colon and can be passed to the component.*/}
+          {/*http://localhost:3000/public/mobID*/}
+          <Route path="/public/:mob" component={MobPublicView}/>
+          {/*@TODO: Convert Admin page into a react component */}
+          <Route path="/admin/:mob" component={MobAdminView}/>
+        </div>
+      </Router>
     );
   }
 }
