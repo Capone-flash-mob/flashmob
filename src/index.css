@@ -1,10 +1,12 @@
 body {
+  background-color: #f4f8ff;
   margin: 0;
   padding: 0;
   font-family: 'Lato', sans-serif;
   text-align: center;
 }
 
+/*Header component*/
 .header {
   background-color: #222;
   height: 125px;
@@ -18,6 +20,7 @@ body {
   letter-spacing: 0.2em;
 }
 
+/*Mob Admin View Component*/
 .button {
   font-size: calc(6px + 0.5vw);
   text-align: center;
@@ -43,4 +46,64 @@ body {
   padding: 12px 20px;
   margin: 8px 0;
   box-sizing: border-box;
+}
+
+/*Mob Public View Component*/
+.announcements{
+  background-color: white;
+  height: 150px;
+  font-size: calc(12px + 0.5vw);
+  width: 100%;
+  text-align: center;
+  padding: 12px 20px;
+  margin: 20px 0;
+  box-sizing: border-box;
+  /*border: 2px dotted;*/
+  border: 2px solid;
+  border-color: lightgrey;
+}
+.banner{
+  height: 300px;
+  font-size: calc(12px + 0.5vw);
+  width: 100%;
+  text-align: center;
+  padding: 12px 20px;
+  margin: 20px 0;
+  box-sizing: border-box;
+  /*border: 2px dotted;*/
+  border: 2px;
+}
+.description{
+  background-color: white;
+  height: 150px;
+  font-size: calc(12px + 0.5vw);
+  width: 100%;
+  text-align: center;
+  padding: 12px 20px;
+  margin: 20px 0;
+  box-sizing: border-box;
+  /*border: 2px dotted;*/
+  border: 2px solid;
+  border-color: lightgrey;
+}
+.infobox{
+  background-color: white;
+  font-size: calc(12px + 0.5vw);
+  width: 100%;
+  text-align: center;
+  padding: 12px 20px;
+  margin: 20px 0;
+  box-sizing: border-box;
+  /*border: 2px dotted;*/
+  border: 2px solid;
+  border-color: lightgrey;
+}
+.media{
+  height: 300px;
+  width: 100%;
+  padding: 12px 20px;
+  margin: 20px 0;
+  box-sizing: border-box;
+  /*border: 2px dotted;*/
+  border: 2px;
 }

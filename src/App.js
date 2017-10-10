@@ -24,17 +24,20 @@ function getFlashMob(flashMobId){
 //////////////////////////////////////////////////////////////////////////////
 function getData(config) {
   return {
+    adminName: "Jessica",
     title: "Thriller",
+    description:"We're having a flash mob at the county fair!",
     date: "10-2-2017",
     time: "3:00pm",
     location: "1350 Texas Dr",
     routineVideo: "https://youtu.be/dQw4w9WgXcQ",
     bannerImage: "https://dustn.tv/free-resources/social-covers/facebook-cover-photo-template.jpg",
-    locationImg: "https://dustn.tv/free-resources/social-covers/facebook-cover-photo-template.jpg",
+    locationImg: "http://www.alfano.com/wp-content/uploads/2014/04/opus-portfolio-placeholder-300x300.png",
     sponser: "Oreos",
     adminID: "o438yt480ht48ty4o8gto84elgh8to4ht8o37ogf",
     contactEmail: "theflashmobsters@gmail.com",
     uid: "NOT_LOGGED_IN",
+    video: "https://www.youtube.com/embed/XGSy3_Czz8k",
     peopleIntrested: 247,
     announcments: [
       {text:" Don't forget to wear yellow!", adminID:"o438yt480ht48ty4o8gto84elgh8to4ht8o37ogf", date:"10-3-2017"},
@@ -44,7 +47,7 @@ function getData(config) {
   }
 }
 //////////////////////////////////////////////////////////////////////////////
-// Preprocessing of data
+// Preprocessing of data - These are accessable on all pages
 //////////////////////////////////////////////////////////////////////////////
 var data = getData()
 // var thisFlashMob = getFlashMob("-Kv_DgsoprFx0Z4st7Dq");
@@ -62,9 +65,9 @@ function ExampleProp(props){
 // Creates a headline banner with our logo and a login button
 function Headline(props){
   return(
-  <div className="row">
-    <header className="header">
-      <h1 className="title"> capone </h1>
+  <div class="row">
+    <header class="header">
+      <h1 class="title"> capone </h1>
       <span>Login</span>
     </header>
   </div>);
@@ -73,19 +76,131 @@ function Headline(props){
 // Creates a page where users can view mob details
 function MobPublicView(props){
   return(
-    <div className="App">
-      <img src={data["bannerImage"]}></img>
-      <h1>{data.title}</h1>
-      <div>
-        <div>{data.time + " " + data.date}</div>
-        <div>{data.location}</div>
-        <div>
-          <iframe width="420" height="345" src="https://www.youtube.com/embed/XGSy3_Czz8k">
-          </iframe>
+    <div>
+      <div class="row">
+          <img src={data.bannerImage} class="img-responsive media center-block"></img>
+      </div>
+      <div class="row">
+        <div class="col-sm-1">
         </div>
-        {data.peopleIntrested + " interested "}
-        <input type="button"></input>
-        <p> {data.announcments[0].text}</p>
+        <div class="col-sm-10">
+          <div class="infobox">
+          <h1>{data.title}</h1>
+          </div>
+        </div>
+        <div class="col-sm-1">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-1">
+        </div>
+        <div class="col-sm-10">
+          <div class="description">
+          <p>{data.description}</p>
+          </div>
+        </div>
+        <div class="col-sm-1">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-1">
+        </div>
+        <div class="col-sm-3">
+          <div class="infobox">
+          {data.date}
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="infobox">
+          {data.time}
+          </div>
+        </div>
+        <div class="col-sm-5">
+          <div class="infobox">
+          {data.adminName}
+          </div>
+        </div>
+        <div class="col-sm-1">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-1">
+        </div>
+        <div class="col-sm-5">
+          <div class="infobox">
+          {data.location}
+          </div>
+        </div>
+        <div class="col-sm-5">
+          <div class="infobox">
+          {data.contactEmail}
+          </div>
+        </div>
+        <div class="col-sm-1">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-3">
+        </div>
+        <div class="col-sm-6">
+          <div class="col-sm-1">
+          </div>
+          <div class="col-sm-10">
+            <div class="infobox">
+            {data.peopleIntrested + " Interested "}
+            </div>
+          </div>
+          <div class="col-sm-1">
+          </div>
+        </div>
+        <div class="col-sm-3">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-3">
+        </div>
+        <div class="col-sm-6">
+          <div class="col-sm-1">
+          </div>
+          <div class="col-sm-10">
+            <button class="button" vertical-align="middle"><span> I am Interested! </span></button>
+          </div>
+          <div class="col-sm-1">
+          </div>
+        </div>
+        <div class="col-sm-3">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-1">
+        </div>
+        <div class="col-sm-10">
+        <iframe class="media center-block" src="https://www.youtube.com/embed/XGSy3_Czz8k?controls=1">
+        </iframe>
+        </div>
+        <div class="col-sm-1">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-1">
+        </div>
+        <div class="col-sm-10">
+          <img src={data.locationImg} class="img-fluid media center-block"></img>
+        </div>
+        <div class="col-sm-1">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-1">
+        </div>
+        <div class="col-sm-10">
+          <div class="announcements">
+            <strong>Announcments: </strong>
+            <p> {data.announcments[0].text}</p>
+          </div>
+        </div>
+        <div class="col-sm-1">
+        </div>
       </div>
     </div>
     );
@@ -131,114 +246,114 @@ function MobAdminView(props){
     this.inputEl.value = ''; // <- clear the input
   }
   return (
-    <div className="container">
-      <form className="App-form" onSubmit={pageData.addFlashmob.bind(pageData)}>
-        <div className="row">
-          <div className="col-sm-1">
+    <div>
+      <form class="App-form" onSubmit={pageData.addFlashmob.bind(pageData)}>
+        <div class="row">
+          <div class="col-sm-1">
           </div>
-          <div className="col-sm-10">
-            <input className="input" type="text" placeholder="banner image..." style={{height: '300px'}} ref={ el => pageData.bannerImage = el}/>
+          <div class="col-sm-10">
+            <input class="input" type="text" placeholder="banner image..." style={{height: '300px'}} ref={ el => pageData.bannerImage = el}/>
           </div>
-          <div className="col-sm-1">
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-sm-1">
-          </div>
-          <div className="col-sm-10">
-            <input className="input" type="text" placeholder="description..." style={{height: '150px'}} ref={ el => pageData.description = el}/>
-          </div>
-          <div className="col-sm-1">
+          <div class="col-sm-1">
           </div>
         </div>
-        <div className="row">
-          <div className="col-sm-1">
+        <div class="row">
+          <div class="col-sm-1">
           </div>
-          <div className="col-sm-3">
-            <input className="input" type="text" placeholder="date..." ref={ el => pageData.date = el}/>
+          <div class="col-sm-10">
+            <input class="input" type="text" placeholder="description..." style={{height: '150px'}} ref={ el => pageData.description = el}/>
           </div>
-          <div className="col-sm-2">
-            <input className="input" type="text" placeholder="time..." ref={ el => pageData.time = el}/>
-          </div>
-          <div className="col-sm-5">
-            <input className="input" type="text" placeholder="choreographer..." ref={ el => pageData.adminName = el}/>
-          </div>
-          <div className="col-sm-1">
+          <div class="col-sm-1">
           </div>
         </div>
-        <div className="row">
-          <div className="col-sm-1">
+        <div class="row">
+          <div class="col-sm-1">
           </div>
-          <div className="col-sm-5">
-            <input className="input" type="text" placeholder="location..." ref={ el => pageData.location = el}/>
+          <div class="col-sm-3">
+            <input class="input" type="text" placeholder="date..." ref={ el => pageData.date = el}/>
           </div>
-          <div className="col-sm-5">
-            <input className="input" type="text" placeholder="email..." ref={ el => pageData.adminEmail = el}/>
+          <div class="col-sm-2">
+            <input class="input" type="text" placeholder="time..." ref={ el => pageData.time = el}/>
           </div>
-          <div className="col-sm-1">
+          <div class="col-sm-5">
+            <input class="input" type="text" placeholder="choreographer..." ref={ el => pageData.adminName = el}/>
           </div>
-        </div>
-        <div className="row">
-          <div className="col-sm-3">
-          </div>
-          <div className="col-sm-6">
-            <div className="col-sm-1">
-            </div>
-            <div className="col-sm-10">
-              <input className="input" type="text" placeholder="maximum number of people..." ref={ el => pageData.numInterested = el}/>
-            </div>
-            <div className="col-sm-1">
-            </div>
-          </div>
-          <div className="col-sm-3">
+          <div class="col-sm-1">
           </div>
         </div>
-        <div className="row">
-          <div className="col-sm-3">
+        <div class="row">
+          <div class="col-sm-1">
           </div>
-          <div className="col-sm-6">
-            <div className="col-sm-1">
-            </div>
-            <div className="col-sm-10">
-              <button className="button" vertical-align="middle"><span> I am Interested! </span></button>
-            </div>
-            <div className="col-sm-1">
-            </div>
+          <div class="col-sm-5">
+            <input class="input" type="text" placeholder="location..." ref={ el => pageData.location = el}/>
           </div>
-          <div className="col-sm-3">
+          <div class="col-sm-5">
+            <input class="input" type="text" placeholder="email..." ref={ el => pageData.adminEmail = el}/>
+          </div>
+          <div class="col-sm-1">
           </div>
         </div>
-        <div className="row">
-          <div className="col-sm-1">
+        <div class="row">
+          <div class="col-sm-3">
           </div>
-          <div className="col-sm-10">
-            <input className="input" type="text" placeholder="video..." style={{height: '300px'}} ref={ el => pageData.video = el}/>
+          <div class="col-sm-6">
+            <div class="col-sm-1">
+            </div>
+            <div class="col-sm-10">
+              <input class="input" type="text" placeholder="maximum number of people..." ref={ el => pageData.numInterested = el}/>
+            </div>
+            <div class="col-sm-1">
+            </div>
           </div>
-          <div className="col-sm-1">
+          <div class="col-sm-3">
           </div>
         </div>
-        <div className="row">
-          <div className="col-sm-1">
+        <div class="row">
+          <div class="col-sm-3">
           </div>
-          <div className="col-sm-10">
-            <input className="input" type="text" placeholder="location image..." style={{height: '300px'}} ref={ el => pageData.locImage = el}/>
+          <div class="col-sm-6">
+            <div class="col-sm-1">
+            </div>
+            <div class="col-sm-10">
+              <button class="button" vertical-align="middle"><span> I am Interested! </span></button>
+            </div>
+            <div class="col-sm-1">
+            </div>
           </div>
-          <div className="col-sm-1">
+          <div class="col-sm-3">
           </div>
         </div>
-        <div className="row">
-          <div className="col-sm-3">
+        <div class="row">
+          <div class="col-sm-1">
           </div>
-          <div className="col-sm-6">
-            <div className="col-sm-2">
+          <div class="col-sm-10">
+            <input class="input" type="text" placeholder="video..." style={{height: '300px'}} ref={ el => pageData.video = el}/>
+          </div>
+          <div class="col-sm-1">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-1">
+          </div>
+          <div class="col-sm-10">
+            <input class="input" type="text" placeholder="location image..." style={{height: '300px'}} ref={ el => pageData.locImage = el}/>
+          </div>
+          <div class="col-sm-1">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-3">
+          </div>
+          <div class="col-sm-6">
+            <div class="col-sm-2">
             </div>
-            <div className="col-sm-8">
-              <input className="input" type="submit"/>
+            <div class="col-sm-8">
+              <input class="input" type="submit"/>
             </div>
-            <div className="col-sm-2">
+            <div class="col-sm-2">
             </div>
           </div>
-          <div className="col-sm-3">
+          <div class="col-sm-3">
           </div>
         </div>
       </form>
@@ -253,7 +368,7 @@ class App extends Component {
     return (
       //The Router component allows elements inside to use React-router's API
       <Router>
-        <div>
+        <div class="container">
           <Headline></Headline>
         {/*@TODO: Ask backend if we even need this, remove if not needed*/}
           {/*<SubscriberForm></SubscriberForm>*/}
