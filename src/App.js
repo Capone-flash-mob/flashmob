@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import fire from './fire';
+import database from './database'
 import logo from './logo.svg';
 import {BrowserRouter as Router, Link, Route} from 'react-router-dom';
 //////////////////////////////////////////////////////////////////////////////
