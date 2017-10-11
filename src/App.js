@@ -4,65 +4,13 @@ import database from './database'
 import logo from './logo.svg';
 import {BrowserRouter as Router, Link, Route} from 'react-router-dom';
 //////////////////////////////////////////////////////////////////////////////
-// Regular Javascript Functions
-//////////////////////////////////////////////////////////////////////////////
-// Get full flashMob item using flashMobId
-function getFlashMob(flashMobId){
-  var flashMobRef = fire.database().ref('/flashmobs/'+flashMobId);
-  flashMobRef.once("value").then(function(snapshot){
-    console.log(snapshot.val());
-    var flashMobSnap = snapshot.val();
-    document.getElementById("flashMobTitle").innerHTML = flashMobSnap.name;
-    document.getElementById("flashMobDate").innerHTML = flashMobSnap.date + flashMobSnap.time;
-    document.getElementById("flashMobName").innerHTML = flashMobSnap.location;
-    document.getElementById("flashMobDescription").innerHtml = flashMobSnap.description;
-    return flashMobSnap;
-    })
-  }
-
-//////////////////////////////////////////////////////////////////////////////
-// Data
-//////////////////////////////////////////////////////////////////////////////
-function getData(config) {
-  return {
-    adminName: "Jessica",
-    title: "Thriller",
-    description:"We're having a flash mob at the county fair!",
-    date: "10-2-2017",
-    time: "3:00pm",
-    location: "1350 Texas Dr",
-    routineVideo: "https://youtu.be/dQw4w9WgXcQ",
-    bannerImage: "https://dustn.tv/free-resources/social-covers/facebook-cover-photo-template.jpg",
-    locationImg: "http://www.alfano.com/wp-content/uploads/2014/04/opus-portfolio-placeholder-300x300.png",
-    sponser: "Oreos",
-    adminID: "o438yt480ht48ty4o8gto84elgh8to4ht8o37ogf",
-    contactEmail: "theflashmobsters@gmail.com",
-    uid: "NOT_LOGGED_IN",
-    video: "https://www.youtube.com/embed/XGSy3_Czz8k",
-    peopleIntrested: 247,
-    announcments: [
-      {text:" Don't forget to wear yellow!", adminID:"o438yt480ht48ty4o8gto84elgh8to4ht8o37ogf", date:"10-3-2017"},
-      {text:" Don't forget to wear black!", adminID:"o438yt480ht48ty4o8gto84elgh8to4ht8o37ogf", date:"10-1-2017"},
-      {text:" Don't forget to wear maroon!", adminID:"o438yt480ht48ty4o8gto84elgh8to4ht8o37ogf", date:"10-9-2017"}
-    ]
-  }
-}
-//////////////////////////////////////////////////////////////////////////////
 // Preprocessing of data - These are accessable on all pages
 //////////////////////////////////////////////////////////////////////////////
-var data = getData()
 // var thisFlashMob = getFlashMob("-Kv_DgsoprFx0Z4st7Dq");
 //////////////////////////////////////////////////////////////////////////////
 // Components - these are like C++ classes for HTML
 //////////////////////////////////////////////////////////////////////////////
-/*All new components must at least have this code*/
-function ExampleProp(props){
-  return (
-      <div>
 
-      </div>
-    );
-}
 // Creates a headline banner with our logo and a login button
 function Headline(props){
   return(
@@ -75,194 +23,53 @@ function Headline(props){
 }
 
 // Creates a page where users can view mob details
-function MobPublicView(props){
-  return(
-    <div>
-      <div class="row">
-          <img src={data.bannerImage} class="img-responsive media center-block"></img>
-      </div>
-      <div class="row">
-        <div class="col-sm-1">
+class MobPublicView extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      flashmob_uid: props.match.params.mobid,
+      flashmob: null
+    };
+  }
+  componentDidMount() {
+    console.log('AAAAAAAAA');
+    var self = this;
+    database.getFlashMob(this.state.flashmob_uid, function(flashmob){
+      console.log('Received flashmob data for uid', self.state.flashmob_uid, 'with data:', flashmob);
+      console.log('Self:', self);
+      self.setState({
+        flashmob_uid: self.state.flashmob_uid,
+        flashmob: flashmob
+      });
+    });
+  }
+  render(){
+    if (this.state.flashmob == null){
+      return (<div> LOAAAAAAAAADING!!!!!!!!!!!! </div> );
+    }
+    return(
+      <div>
+        <div class="row">
+            <img src={this.state.flashmob.bannerImage} class="img-responsive media center-block"></img>
         </div>
-        <div class="col-sm-10">
-          <div class="infobox">
-          <h1>{data.title}</h1>
-          </div>
-        </div>
-        <div class="col-sm-1">
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-1">
-        </div>
-        <div class="col-sm-10">
-          <div class="description">
-          <p>{data.description}</p>
-          </div>
-        </div>
-        <div class="col-sm-1">
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-1">
-        </div>
-        <div class="col-sm-3">
-          <div class="infobox">
-          {data.date}
-          </div>
-        </div>
-        <div class="col-sm-2">
-          <div class="infobox">
-          {data.time}
-          </div>
-        </div>
-        <div class="col-sm-5">
-          <div class="infobox">
-          {data.adminName}
-          </div>
-        </div>
-        <div class="col-sm-1">
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-1">
-        </div>
-        <div class="col-sm-5">
-          <div class="infobox">
-          {data.location}
-          </div>
-        </div>
-        <div class="col-sm-5">
-          <div class="infobox">
-          {data.contactEmail}
-          </div>
-        </div>
-        <div class="col-sm-1">
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-3">
-        </div>
-        <div class="col-sm-6">
+        <div class="row">
           <div class="col-sm-1">
           </div>
           <div class="col-sm-10">
             <div class="infobox">
-            {data.peopleIntrested + " Interested "}
+            <h1>{this.state.flashmob.title}</h1>
             </div>
           </div>
           <div class="col-sm-1">
           </div>
         </div>
-        <div class="col-sm-3">
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-3">
-        </div>
-        <div class="col-sm-6">
-          <div class="col-sm-1">
-          </div>
-          <div class="col-sm-10">
-            <button class="button" vertical-align="middle"><span> I am Interested! </span></button>
-          </div>
-          <div class="col-sm-1">
-          </div>
-        </div>
-        <div class="col-sm-3">
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-1">
-        </div>
-        <div class="col-sm-10">
-        <iframe class="media center-block" src="https://www.youtube.com/embed/XGSy3_Czz8k?controls=1">
-        </iframe>
-        </div>
-        <div class="col-sm-1">
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-1">
-        </div>
-        <div class="col-sm-10">
-          <img src={data.locationImg} class="img-fluid media center-block"></img>
-        </div>
-        <div class="col-sm-1">
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-1">
-        </div>
-        <div class="col-sm-10">
-          <div class="announcements">
-            <strong>Announcments: </strong>
-            <p> {data.announcments[0].text}</p>
-          </div>
-        </div>
-        <div class="col-sm-1">
-        </div>
-      </div>
-    </div>
-    );
-}
-// Creates a page where an admin can view and edit mob details
-function MobAdminView(props){
-  /*constructor(props) {
-    super(props);
-    this.state = { flashmobs: [] }; // <- set up react state
-  }*/
-  /*componentWillMount(){*/
-    /* Create reference to messages in Firebase Database */
-    /*let flashmobsRef = fire.database().ref('flashmobs').orderByKey().limitToLast(100);*/
-    /*flashmobsRef.on('child_added', snapshot => {*/
-      /* Update React state when message is added at Firebase Database */
-      /*let flashmob = { details: snapshot.val(), id: snapshot.key };*/
-      /*this.setState({ flashmobs: [flashmob].concat(this.state.flashmobs) });*/
-    /*})*/
-  /*}*/
-  var pageData = {}
-
-  pageData.addFlashmob = function (e){
-    e.preventDefault(); // <- prevent form submit from reloading the page
-    // Construct flashmob object
-    var flashMobInstance =  {
-        'name': this.name.value,
-        'bannerImage': this.bannerImage.value,
-        'description': this.description.value,
-        'date': this.date.value,
-        'time': this.time.value,
-        'location': this.location.value,
-        'adminID': this.adminID.value,
-        'adminName': this.adminName.value,
-        'adminEmail': this.adminEmail.value,
-        'numInterested': this.numInterested.value,
-        'video': this.video.value,
-        'locImage': this.locImage.value,
-        'announcements': this.announcements.value
-    };
-
-    /* Send the message to Firebase */
-    fire.database().ref('flashmobs').push(flashMobInstance);
-    this.inputEl.value = ''; // <- clear the input
-  }
-  return (
-    <div>
-      <form class="App-form" onSubmit={pageData.addFlashmob.bind(pageData)}>
         <div class="row">
           <div class="col-sm-1">
           </div>
           <div class="col-sm-10">
-            <input class="input" type="text" placeholder="banner image..." style={{height: '300px'}} ref={ el => pageData.bannerImage = el}/>
-          </div>
-          <div class="col-sm-1">
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-1">
-          </div>
-          <div class="col-sm-10">
-            <input class="input" type="text" placeholder="description..." style={{height: '150px'}} ref={ el => pageData.description = el}/>
+            <div class="description">
+            <p>{this.state.flashmob.description}</p>
+            </div>
           </div>
           <div class="col-sm-1">
           </div>
@@ -271,13 +78,19 @@ function MobAdminView(props){
           <div class="col-sm-1">
           </div>
           <div class="col-sm-3">
-            <input class="input" type="text" placeholder="date..." ref={ el => pageData.date = el}/>
+            <div class="infobox">
+            {this.state.flashmob.date}
+            </div>
           </div>
           <div class="col-sm-2">
-            <input class="input" type="text" placeholder="time..." ref={ el => pageData.time = el}/>
+            <div class="infobox">
+            {this.state.flashmob.time}
+            </div>
           </div>
           <div class="col-sm-5">
-            <input class="input" type="text" placeholder="choreographer..." ref={ el => pageData.adminName = el}/>
+            <div class="infobox">
+            {this.state.flashmob.adminName}
+            </div>
           </div>
           <div class="col-sm-1">
           </div>
@@ -286,10 +99,14 @@ function MobAdminView(props){
           <div class="col-sm-1">
           </div>
           <div class="col-sm-5">
-            <input class="input" type="text" placeholder="location..." ref={ el => pageData.location = el}/>
+            <div class="infobox">
+            {this.state.flashmob.location}
+            </div>
           </div>
           <div class="col-sm-5">
-            <input class="input" type="text" placeholder="email..." ref={ el => pageData.adminEmail = el}/>
+            <div class="infobox">
+            {this.state.flashmob.contactEmail}
+            </div>
           </div>
           <div class="col-sm-1">
           </div>
@@ -301,7 +118,9 @@ function MobAdminView(props){
             <div class="col-sm-1">
             </div>
             <div class="col-sm-10">
-              <input class="input" type="text" placeholder="maximum number of people..." ref={ el => pageData.numInterested = el}/>
+              <div class="infobox">
+              {this.state.flashmob.peopleIntrested + " Interested "}
+              </div>
             </div>
             <div class="col-sm-1">
             </div>
@@ -328,7 +147,8 @@ function MobAdminView(props){
           <div class="col-sm-1">
           </div>
           <div class="col-sm-10">
-            <input class="input" type="text" placeholder="video..." style={{height: '300px'}} ref={ el => pageData.video = el}/>
+          <iframe class="media center-block" src="https://www.youtube.com/embed/XGSy3_Czz8k?controls=1">
+          </iframe>
           </div>
           <div class="col-sm-1">
           </div>
@@ -337,34 +157,184 @@ function MobAdminView(props){
           <div class="col-sm-1">
           </div>
           <div class="col-sm-10">
-            <input class="input" type="text" placeholder="location image..." style={{height: '300px'}} ref={ el => pageData.locImage = el}/>
+            <img src={this.state.flashmob.locationImg} class="img-fluid media center-block"></img>
           </div>
           <div class="col-sm-1">
           </div>
         </div>
         <div class="row">
-          <div class="col-sm-3">
+          <div class="col-sm-1">
           </div>
-          <div class="col-sm-6">
-            <div class="col-sm-2">
-            </div>
-            <div class="col-sm-8">
-              <input class="input" type="submit"/>
-            </div>
-            <div class="col-sm-2">
+          <div class="col-sm-10">
+            <div class="announcements">
+              <strong>Announcments: </strong>
+              <p> {this.state.flashmob.announcments[0].text}</p>
             </div>
           </div>
-          <div class="col-sm-3">
+          <div class="col-sm-1">
           </div>
         </div>
-      </form>
-    </div>
-    );
+      </div>
+      );
+  }
+}
+// Creates a page where an admin can view and edit mob details
+class MobAdminView extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      flashmob_uid: props.match.params.mobid,
+      flashmob: null
+    };
+  }
+  handleChange(event){
+    // Does this work?
+    /*var flashMobInstance =  {
+      'name': this.name.value,
+      'bannerImage': this.bannerImage.value,
+      'description': this.description.value,
+      'date': this.date.value,
+      'time': this.time.value,
+      'location': this.location.value,
+      'adminID': this.adminID.value,
+      'adminName': this.adminName.value,
+      'adminEmail': this.adminEmail.value,
+      'numInterested': this.numInterested.value,
+      'video': this.video.value,
+      'locationImg': this.locImage.value,
+    }*/
+  }
+  handleSubmit(event){
+    /*event.preventDefault(); // <- prevent form submit from reloading the page
+  }
+
+  render() {
+    var pageData = {}
+
+    return (
+      <div>
+        <form class="App-form" onSubmit={this.state.handleSubmit}>
+          <div class="row">
+            <div class="col-sm-1">
+            </div>
+            <div class="col-sm-10">
+              <input class="input" type="text" placeholder="banner image..." style={{height: '300px'}} name="bannerImage" onChange={this.handleChange}/>
+            </div>
+            <div class="col-sm-1">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-1">
+            </div>
+            <div class="col-sm-10">
+              <input class="input" type="text" placeholder="description..." style={{height: '150px'}} name="description" onChange={this.handleChange}/>
+            </div>
+            <div class="col-sm-1">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-1">
+            </div>
+            <div class="col-sm-3">
+              <input class="input" type="text" placeholder="date..." name="date" onChange={this.handleChange}/>
+            </div>
+            <div class="col-sm-2">
+              <input class="input" type="text" placeholder="time..." name="time" onChange={this.handleChange}/>
+            </div>
+            <div class="col-sm-5">
+              <input class="input" type="text" placeholder="choreographer..." name="choreographer" onChange={this.handleChange}/>
+            </div>
+            <div class="col-sm-1">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-1">
+            </div>
+            <div class="col-sm-5">
+              <input class="input" type="text" placeholder="location..." name="location" onChange={this.handleChange}/>
+            </div>
+            <div class="col-sm-5">
+              <input class="input" type="text" placeholder="email..." name="email" onChange={this.handleChange}/>
+            </div>
+            <div class="col-sm-1">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-3">
+            </div>
+            <div class="col-sm-6">
+              <div class="col-sm-1">
+              </div>
+              <div class="col-sm-10">
+                <input class="input" type="text" placeholder="maximum number of people..." name="personLimit" onChange={this.handleChange}/>
+              </div>
+              <div class="col-sm-1">
+              </div>
+            </div>
+            <div class="col-sm-3">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-3">
+            </div>
+            <div class="col-sm-6">
+              <div class="col-sm-1">
+              </div>
+              <div class="col-sm-10">
+                <button class="button" vertical-align="middle"><span> I am Interested! </span></button>
+              </div>
+              <div class="col-sm-1">
+              </div>
+            </div>
+            <div class="col-sm-3">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-1">
+            </div>
+            <div class="col-sm-10">
+              <input class="input" type="text" placeholder="video..." style={{height: '300px'}} name="video" onChange={this.handleChange}/>
+            </div>
+            <div class="col-sm-1">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-1">
+            </div>
+            <div class="col-sm-10">
+              <input class="input" type="text" placeholder="location image..." style={{height: '300px'}} name="locationImg" onChange={this.handleChange}/>
+            </div>
+            <div class="col-sm-1">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-3">
+            </div>
+            <div class="col-sm-6">
+              <div class="col-sm-2">
+              </div>
+              <div class="col-sm-8">
+                <input class="input" type="submit"/>
+              </div>
+              <div class="col-sm-2">
+              </div>
+            </div>
+            <div class="col-sm-3">
+            </div>
+          </div>
+        </form>
+      </div>
+      );
+    }
 }
 //////////////////////////////////////////////////////////////////////////////
 // Main - You should only write components, functions, or routes here
 //////////////////////////////////////////////////////////////////////////////
 class App extends Component {
+  constructor(props) {
+    super(props);
+    /*this.state = {};*/
+  }
   render() {
     return (
       //The Router component allows elements inside to use React-router's API
@@ -378,9 +348,9 @@ class App extends Component {
           {/*RR will display the component that has a matching path.
           Variables in the path start with a :colon and can be passed to the component.*/}
           {/*http://localhost:3000/public/mobID*/}
-          <Route path="/public/:mob" component={MobPublicView}/>
+          <Route path="/public/:mobid" component={MobPublicView}/>
           {/*@TODO: Convert Admin page into a react component */}
-          <Route path="/admin/:mob" component={MobAdminView}/>
+          <Route path="/admin/:mobid" component={MobAdminView}/>
         </div>
       </Router>
     );
