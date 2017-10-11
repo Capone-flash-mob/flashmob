@@ -8,6 +8,8 @@ var database = {
         flashMobRef.once("value").then(function(snapshot){
             console.log(snapshot.val());
             var flashMobSnap = snapshot.val();
+            // TODO: REMOVE TEMPORARY ADDITION OF ELEMENT
+            flashMobSnap['announcments'] = ['a', 'b']
             callback(flashMobSnap);
         })
     },
@@ -38,7 +40,10 @@ var database = {
 
     addFlashmob: function(flashMobInstance){
         // Send flashmob to firebase
-        fire.database().ref('flashmobs').push(flashMobInstance);
+        flashMobInstance['interested'] = 0;
+        var flashmobRef = fire.database().ref('flashmobs').push(flashMobInstance);
+        console.log('flashmob ref:', flashmobRef);
+        return flashmobRef.key;
     }
 }
 

@@ -3,6 +3,7 @@ import fire from './fire';
 import database from './database'
 import logo from './logo.svg';
 import {BrowserRouter as Router, Link, Route} from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 //////////////////////////////////////////////////////////////////////////////
 // Preprocessing of data - These are accessable on all pages
 //////////////////////////////////////////////////////////////////////////////
@@ -32,11 +33,9 @@ class MobPublicView extends Component {
     };
   }
   componentDidMount() {
-    console.log('AAAAAAAAA');
     var self = this;
     database.getFlashMob(this.state.flashmob_uid, function(flashmob){
       console.log('Received flashmob data for uid', self.state.flashmob_uid, 'with data:', flashmob);
-      console.log('Self:', self);
       self.setState({
         flashmob_uid: self.state.flashmob_uid,
         flashmob: flashmob
@@ -89,7 +88,7 @@ class MobPublicView extends Component {
           </div>
           <div class="col-sm-5">
             <div class="infobox">
-            {this.state.flashmob.adminName}
+            {this.state.flashmob.choreographer}
             </div>
           </div>
           <div class="col-sm-1">
@@ -105,7 +104,7 @@ class MobPublicView extends Component {
           </div>
           <div class="col-sm-5">
             <div class="infobox">
-            {this.state.flashmob.contactEmail}
+            {this.state.flashmob.email}
             </div>
           </div>
           <div class="col-sm-1">
@@ -119,7 +118,7 @@ class MobPublicView extends Component {
             </div>
             <div class="col-sm-10">
               <div class="infobox">
-              {this.state.flashmob.peopleIntrested + " Interested "}
+              {this.state.flashmob.interested + " Interested "}
               </div>
             </div>
             <div class="col-sm-1">
@@ -186,26 +185,26 @@ class MobAdminView extends Component {
       flashmob_uid: props.match.params.mobid,
       flashmob: null
     };
+
+    // Bind context
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
   handleChange(event){
-    // Does this work?
-    /*var flashMobInstance =  {
-      'name': this.name.value,
-      'bannerImage': this.bannerImage.value,
-      'description': this.description.value,
-      'date': this.date.value,
-      'time': this.time.value,
-      'location': this.location.value,
-      'adminID': this.adminID.value,
-      'adminName': this.adminName.value,
-      'adminEmail': this.adminEmail.value,
-      'numInterested': this.numInterested.value,
-      'video': this.video.value,
-      'locationImg': this.locImage.value,
-    }*/
+    const name = event.target.name;
+    const value = event.target.value;
+    console.log('State:', this.state);
+    this.setState({
+      [name]: value
+    });
   }
   handleSubmit(event){
-    /*event.preventDefault(); // <- prevent form submit from reloading the page
+    event.preventDefault(); // <- prevent form submit from reloading the page*/
+    console.log('Form is being sumitted!\nCurrent State is:', this.state);
+    const flashmobKey = database.addFlashmob(this.state);
+    alert('Successfully added new mob');
+    // Redirect to created flash mob
+    this.props.history.push("/public/" + flashmobKey);
   }
 
   render() {
@@ -213,7 +212,7 @@ class MobAdminView extends Component {
 
     return (
       <div>
-        <form class="App-form" onSubmit={this.state.handleSubmit}>
+        <form class="App-form" onSubmit={this.handleSubmit}>
           <div class="row">
             <div class="col-sm-1">
             </div>
