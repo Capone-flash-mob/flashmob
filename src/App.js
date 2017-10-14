@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import fire from './fire';
 import database from './database'
+import firebase from 'firebase';
 import logo from './logo.svg';
 import {BrowserRouter as Router, Link, Route} from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
@@ -156,7 +157,7 @@ class MobPublicView extends Component {
           <div class="col-sm-1">
           </div>
           <div class="col-sm-10">
-            <img src={this.state.flashmob.locationImg} class="img-fluid media center-block"></img>
+            <img src={this.state.flashmob.locationImage} class="img-fluid media center-block"></img>
           </div>
           <div class="col-sm-1">
           </div>
@@ -189,9 +190,11 @@ class MobAdminView extends Component {
     // Bind context
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleImage = this.handleImage.bind(this);
   }
   handleChange(event){
     const name = event.target.name;
+
     const value = event.target.value;
     console.log('State:', this.state);
     this.setState({
@@ -201,11 +204,63 @@ class MobAdminView extends Component {
   handleSubmit(event){
     event.preventDefault(); // <- prevent form submit from reloading the page*/
     console.log('Form is being sumitted!\nCurrent State is:', this.state);
+    this.setState({
+      flashmob: this.state,
+    });
     const flashmobKey = database.addFlashmob(this.state);
     alert('Successfully added new mob');
     // Redirect to created flash mob
     this.props.history.push("/public/" + flashmobKey);
   }
+
+  handleImage(event){
+    const currentImage = event.target.files[0];
+    const name = event.target.name;
+
+    const path = event.target.path
+
+    var storageRef = fire.storage().ref("BannerImges");
+    var uploadTask = storageRef.child(this.state.flashmob_uid + '/BannerImage').put(currentImage); 
+    var self = this;
+    uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
+    function(snapshot) {
+    // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+    var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+    console.log('Upload is ' + progress + '% done');
+    switch (snapshot.state) {
+      case firebase.storage.TaskState.PAUSED: // or 'paused'
+        console.log('Upload is paused');
+        break;
+      case firebase.storage.TaskState.RUNNING: // or 'running'
+        console.log('Upload is running');
+        break;
+     }
+   }, function(error) {
+  }, function() {
+  // Upload completed successfully, now we can get the download URL
+    var downloadURL = uploadTask.snapshot.downloadURL;
+    switch(name){
+      case "bannerImageSub":
+               console.log("banener image changed");
+
+        var myFlashMob = self.state.flashmob;
+        self.setState({
+          flashmob: myFlashMob,
+          bannerImage: downloadURL,
+        });
+        break;
+       case "locationImageSub":
+         console.log("loaction image changed");
+         var myFlashMob = self.state.flashmob;
+        self.setState({
+          flashmob: myFlashMob,
+          locationImage: downloadURL,
+        });
+        break;
+      }
+    } 
+  );
+}
 
   render() {
     var pageData = {}
@@ -216,9 +271,16 @@ class MobAdminView extends Component {
           <div class="row">
             <div class="col-sm-1">
             </div>
+            {this.state.bannerImage === '' ? 
             <div class="col-sm-10">
-              <input class="input" type="text" placeholder="banner image..." style={{height: '300px'}} name="bannerImage" onChange={this.handleChange}/>
+                <input class="input" type="file" onChange={this.handleImage}/>
             </div>
+             :
+              <div class="col-sm-10">
+                <img id="BannerImgId" src={this.state.bannerImage} class="img-responsive media center-block"></img>
+                <input class="input" name="bannerImageSub" type="file" onChange={this.handleImage}/>
+              </div>
+               }
             <div class="col-sm-1">
             </div>
           </div>
@@ -300,9 +362,16 @@ class MobAdminView extends Component {
           <div class="row">
             <div class="col-sm-1">
             </div>
+            {this.state.locationImage === '' ? 
             <div class="col-sm-10">
-              <input class="input" type="text" placeholder="location image..." style={{height: '300px'}} name="locationImg" onChange={this.handleChange}/>
+                <input class="input" type="file" onChange={this.handleImage}/>
             </div>
+             :
+              <div class="col-sm-10">
+                <img id="BannerImgId" src={this.state.locationImage} class="img-responsive media center-block"></img>
+                <input class="input" name="locationImageSub" type="file" onChange={this.handleImage}/>
+              </div>
+               }
             <div class="col-sm-1">
             </div>
           </div>
