@@ -14,6 +14,15 @@ var database = {
         })
     },
 
+    getAllFlashMobs: function(callback){
+        var allMobs = fire.database().ref('/flashmobs');
+        allMobs.once("value").then(function(snapshot){
+            console.log(snapshot.val());
+            var flashMobsSnap = snapshot.val();
+            callback(flashMobsSnap);
+        })
+    },
+
     editFlashmob: function(uid, key, value){
         var flashMobUpdateInstance =  {};
         flashMobUpdateInstance[key] = value;

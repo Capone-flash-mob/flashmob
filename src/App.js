@@ -395,6 +395,45 @@ class MobAdminView extends Component {
       );
     }
 }
+
+
+//Create homepage
+class HomeView extends Component {
+  constructor(props) {
+    super(props);
+    
+  }
+
+  componentDidMount() {
+    var self = this;
+    database.getAllFlashMobs(function(flashmobs){
+      self.setState({
+        allMobs: flashmobs,
+      });
+    });
+  }
+  render(){
+    if (this.state == null){
+      return (<div> LOAAAAAAAAADING!!!!!!!!!!!! </div> );
+    }
+    var flashList = Object.keys(this.state.allMobs);
+    console.log("list is " + flashList)
+    return(
+      <div>
+       <div class="col-sm-10">
+       </div>
+       <div class="col-sm-10">
+          <ul>
+            {flashList.map((number) =>
+                <li>{number}</li>
+              )
+            }
+          </ul>
+        </div>
+      </div>
+      );
+  }
+}
 //////////////////////////////////////////////////////////////////////////////
 // Main - You should only write components, functions, or routes here
 //////////////////////////////////////////////////////////////////////////////
@@ -419,6 +458,8 @@ class App extends Component {
           <Route path="/public/:mobid" component={MobPublicView}/>
           {/*@TODO: Convert Admin page into a react component */}
           <Route path="/admin/:mobid" component={MobAdminView}/>
+          {/*@TODO: Convert Admin page into a react component */}
+          <Route path="" component = {HomeView}/>
         </div>
       </Router>
     );
