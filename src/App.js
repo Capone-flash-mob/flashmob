@@ -401,7 +401,7 @@ class MobAdminView extends Component {
 class HomeView extends Component {
   constructor(props) {
     super(props);
-    
+    this.handleLink = this.handleLink.bind(this);
   }
 
   componentDidMount() {
@@ -412,6 +412,13 @@ class HomeView extends Component {
       });
     });
   }
+
+  handleLink(event){
+    console.log("clicked" + event.target.id);
+    this.props.history.push("/public/" + event.target.id);
+
+  }
+
   render(){
     if (this.state == null){
       return (<div> LOAAAAAAAAADING!!!!!!!!!!!! </div> );
@@ -425,7 +432,7 @@ class HomeView extends Component {
        <div class="col-sm-10">
           <ul>
             {flashList.map((number) =>
-                <li>{number}</li>
+                <li id={number} onClick={this.handleLink} key={number} name={number}>{number}</li>
               )
             }
           </ul>
