@@ -3,8 +3,9 @@ import fire from './fire';
 import database from './database'
 import firebase from 'firebase';
 import logo from './logo.svg';
-import {BrowserRouter as Router, Link, Route} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Link, IndexRoute} from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
+import ReactDOM from 'react-dom';
 //////////////////////////////////////////////////////////////////////////////
 // Preprocessing of data - These are accessable on all pages
 //////////////////////////////////////////////////////////////////////////////
@@ -16,16 +17,24 @@ import { withRouter } from 'react-router-dom';
 // Creates a headline banner with our logo and a login button
 function Headline(props){
   return(
-  <div class="row">
-    <header class="header">
-      <h1 class="title"> capone </h1>
-      <span>Login</span>
-    </header>
+  <div class="container">
+    <div class="row">
+      <header class="header">
+        <h1 class="title"> capone </h1>
+        <div class="col-sm-1">
+          <Link to="/register">Log In</Link>
+        </div>
+
+        <div class="col-sm-1">
+           <Link to="/register">Sign Up</Link>
+        </div>
+      </header>
+    </div>
   </div>);
 }
 
 // Creates a page where users can view mob details
-class MobPublicView extends Component {
+class MobPublicView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -194,7 +203,6 @@ class MobAdminView extends Component {
   }
   handleChange(event){
     const name = event.target.name;
-
     const value = event.target.value;
     console.log('State:', this.state);
     this.setState({
@@ -216,7 +224,6 @@ class MobAdminView extends Component {
   handleImage(event){
     const currentImage = event.target.files[0];
     const name = event.target.name;
-
     const path = event.target.path
 
     var storageRef = fire.storage().ref("BannerImges");
@@ -397,6 +404,7 @@ class MobAdminView extends Component {
 }
 
 
+
 //Create homepage
 class HomeView extends Component {
   constructor(props) {
@@ -414,29 +422,88 @@ class HomeView extends Component {
   }
 
   handleLink(event){
+      event.preventDefault(); // <- prevent form submit from reloading the page*/
     console.log("clicked" + event.target.id);
     this.props.history.push("/public/" + event.target.id);
-
   }
+  
 
   render(){
     if (this.state == null){
       return (<div> LOAAAAAAAAADING!!!!!!!!!!!! </div> );
     }
+    var pointStyle = {
+      cursor: 'pointer',
+    }
     var flashList = Object.keys(this.state.allMobs);
     console.log("list is " + flashList)
     return(
       <div>
+       <div class="col-sm-10">ALL FLASHMOBS</div>
        <div class="col-sm-10">
-       </div>
-       <div class="col-sm-10">
-          <ul>
             {flashList.map((number) =>
-                <li id={number} onClick={this.handleLink} key={number} name={number}>{number}</li>
+              <div class="row">
+                <Link to={"/public/" + number} id={number}>{number}</Link>
+              </div>
               )
             }
-          </ul>
         </div>
+      </div>
+      );
+  }
+}
+
+
+class RegisterView extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  componentDidMount() {
+    var self = this;
+    }
+
+  handleLink(event){
+  }
+  
+
+  render() {
+
+    var pointStyle = {
+      cursor: 'pointer',
+    }
+    return(
+       <div>
+        <form class="App-form" onSubmit={this.handleSubmit}>
+          <div class="row">
+            <div class="col-sm-5">
+              <div>First Name:</div>
+              <input class="input" placeholder="First Name" type="text" name="firstName"/>
+            </div>  
+            <div class="col-sm-5">
+            <div>Last Name:</div>
+               <input class="input" placeholder="Last Name" type="text" name="lastName"/>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-10">
+            <div>Password:</div>
+              <input class="input" placeholder="Password" type="password" name="password"/>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-10">
+            <div>Confirrm Password:</div>
+               <input class="input" placeholder="Confirm Password" type="password" name="conPassword"/>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-10">
+            <div>Email:</div>
+                <input class="input" placeholder="Email" type="email" name="email"/>
+            </div>
+          </div>
+        </form>
       </div>
       );
   }
@@ -447,14 +514,15 @@ class HomeView extends Component {
 class App extends Component {
   constructor(props) {
     super(props);
-    /*this.state = {};*/
+        /*this.state = {};*/
   }
+
   render() {
     return (
       //The Router component allows elements inside to use React-router's API
       <Router>
-        <div class="container">
-          <Headline></Headline>
+        <div>
+        <Headline></Headline>
         {/*@TODO: Ask backend if we even need this, remove if not needed*/}
           {/*<SubscriberForm></SubscriberForm>*/}
 
@@ -465,12 +533,15 @@ class App extends Component {
           <Route path="/public/:mobid" component={MobPublicView}/>
           {/*@TODO: Convert Admin page into a react component */}
           <Route path="/admin/:mobid" component={MobAdminView}/>
-          {/*@TODO: Convert Admin page into a react component */}
-          <Route path="" component = {HomeView}/>
+          {/*@TODO: Convert Home page into a react component */}
+          <Route path="/home" component = {HomeView}/>
+          {/*@TODO: Convert SignIn page into a react component */}
+          <Route path="/register" component={RegisterView}/>
         </div>
       </Router>
     );
   }
 }
+
 
 export default App;
