@@ -59,7 +59,10 @@ class MobPublicView extends React.Component {
     return(
       <div>
         <div class="row">
-            <img src={this.state.flashmob.bannerImage} class="img-responsive media center-block"></img>
+            <img
+            src={this.state.flashmob.bannerImage}
+            class="img-responsive media center-block"
+            alt=""></img>
         </div>
         <div class="row">
           <div class="col-sm-1">
@@ -166,7 +169,10 @@ class MobPublicView extends React.Component {
           <div class="col-sm-1">
           </div>
           <div class="col-sm-10">
-            <img src={this.state.flashmob.locationImage} class="img-fluid media center-block"></img>
+            <img
+            src={this.state.flashmob.locationImage}
+            class="img-fluid media center-block"
+            alt="The event location."></img>
           </div>
           <div class="col-sm-1">
           </div>
@@ -224,10 +230,10 @@ class MobAdminView extends Component {
   handleImage(event){
     const currentImage = event.target.files[0];
     const name = event.target.name;
-    const path = event.target.path
+    /*const path = event.target.path*/
 
     var storageRef = fire.storage().ref("BannerImges");
-    var uploadTask = storageRef.child(this.state.flashmob_uid + '/BannerImage').put(currentImage); 
+    var uploadTask = storageRef.child(this.state.flashmob_uid + '/BannerImage').put(currentImage);
     var self = this;
     uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
     function(snapshot) {
@@ -246,11 +252,12 @@ class MobAdminView extends Component {
   }, function() {
   // Upload completed successfully, now we can get the download URL
     var downloadURL = uploadTask.snapshot.downloadURL;
+    var myFlashMob;
     switch(name){
       case "bannerImageSub":
                console.log("banener image changed");
 
-        var myFlashMob = self.state.flashmob;
+        myFlashMob = self.state.flashmob;
         self.setState({
           flashmob: myFlashMob,
           bannerImage: downloadURL,
@@ -258,19 +265,18 @@ class MobAdminView extends Component {
         break;
        case "locationImageSub":
          console.log("loaction image changed");
-         var myFlashMob = self.state.flashmob;
+         myFlashMob = self.state.flashmob;
         self.setState({
           flashmob: myFlashMob,
           locationImage: downloadURL,
         });
         break;
       }
-    } 
+    }
   );
 }
 
   render() {
-    var pageData = {}
 
     return (
       <div>
@@ -278,13 +284,17 @@ class MobAdminView extends Component {
           <div class="row">
             <div class="col-sm-1">
             </div>
-            {this.state.bannerImage === '' ? 
+            {this.state.bannerImage === '' ?
             <div class="col-sm-10">
                 <input class="input" type="file" onChange={this.handleImage}/>
             </div>
              :
               <div class="col-sm-10">
-                <img id="BannerImgId" src={this.state.bannerImage} class="img-responsive media center-block"></img>
+                <img
+                id="BannerImgId"
+                src={this.state.bannerImage}
+                class="img-responsive media center-block"
+                alt=""></img>
                 <input class="input" name="bannerImageSub" type="file" onChange={this.handleImage}/>
               </div>
                }
@@ -369,13 +379,17 @@ class MobAdminView extends Component {
           <div class="row">
             <div class="col-sm-1">
             </div>
-            {this.state.locationImage === '' ? 
+            {this.state.locationImage === '' ?
             <div class="col-sm-10">
                 <input class="input" type="file" onChange={this.handleImage}/>
             </div>
              :
               <div class="col-sm-10">
-                <img id="BannerImgId" src={this.state.locationImage} class="img-responsive media center-block"></img>
+                <img
+                id="BannerImgId"
+                src={this.state.locationImage}
+                class="img-responsive media center-block"
+                alt="The event location."></img>
                 <input class="input" name="locationImageSub" type="file" onChange={this.handleImage}/>
               </div>
                }
@@ -426,14 +440,11 @@ class HomeView extends Component {
     console.log("clicked" + event.target.id);
     this.props.history.push("/public/" + event.target.id);
   }
-  
+
 
   render(){
     if (this.state == null){
       return (<div> LOAAAAAAAAADING!!!!!!!!!!!! </div> );
-    }
-    var pointStyle = {
-      cursor: 'pointer',
     }
     var flashList = Object.keys(this.state.allMobs);
     console.log("list is " + flashList)
@@ -455,17 +466,13 @@ class HomeView extends Component {
 
 
 class RegisterView extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
     var self = this;
     }
 
   handleLink(event){
   }
-  
+
 
   render() {
 
@@ -479,7 +486,7 @@ class RegisterView extends Component {
             <div class="col-sm-5">
               <div>First Name:</div>
               <input class="input" placeholder="First Name" type="text" name="firstName"/>
-            </div>  
+            </div>
             <div class="col-sm-5">
             <div>Last Name:</div>
                <input class="input" placeholder="Last Name" type="text" name="lastName"/>
@@ -512,11 +519,6 @@ class RegisterView extends Component {
 // Main - You should only write components, functions, or routes here
 //////////////////////////////////////////////////////////////////////////////
 class App extends Component {
-  constructor(props) {
-    super(props);
-        /*this.state = {};*/
-  }
-
   render() {
     return (
       //The Router component allows elements inside to use React-router's API
