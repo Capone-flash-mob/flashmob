@@ -438,7 +438,7 @@ class HomeView extends Component {
   handleLink(event){
       event.preventDefault(); // <- prevent form submit from reloading the page*/
     console.log("clicked" + event.target.id);
-    this.props.history.push("/public/" + event.target.id);
+    this.props.history.push("/mob/" + event.target.id);
   }
 
 
@@ -454,7 +454,7 @@ class HomeView extends Component {
        <div class="col-sm-10">
             {flashList.map((number) =>
               <div class="row">
-                <Link to={"/public/" + number} id={number}>{number}</Link>
+                <Link to={"/mob/" + number} id={number}>{number}</Link>
               </div>
               )
             }
