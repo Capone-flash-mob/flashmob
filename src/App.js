@@ -525,19 +525,14 @@ class App extends Component {
       <Router>
         <div>
         <Headline></Headline>
-        {/*@TODO: Ask backend if we even need this, remove if not needed*/}
-          {/*<SubscriberForm></SubscriberForm>*/}
 
           {/*Routes*/}
           {/*RR will display the component that has a matching path.
           Variables in the path start with a :colon and can be passed to the component.*/}
           {/*http://localhost:3000/public/mobID*/}
-          <Route path="/public/:mobid" component={MobPublicView}/>
-          {/*@TODO: Convert Admin page into a react component */}
-          <Route path="/admin/:mobid" component={MobAdminView}/>
-          {/*@TODO: Convert Home page into a react component */}
-          <Route path="/home" component = {HomeView}/>
-          {/*@TODO: Convert SignIn page into a react component */}
+          <Route path="/mob/:mobid" component={MobPublicView}/>
+          <Route path="/create" component={MobAdminView}/>
+          <Route path="/" component = {HomeView}/>
           <Route path="/register" component={RegisterView}/>
         </div>
       </Router>
