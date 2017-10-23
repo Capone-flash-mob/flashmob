@@ -514,7 +514,10 @@ class RegisterView extends Component {
 class googleLogin extends Component{
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      showAuth: "block",
+      showSignout: "none"
+    };
     console.log("-----------------------------------------1");
   }
 
@@ -564,12 +567,12 @@ class googleLogin extends Component{
  updateSigninStatus(isSignedIn) {
    console.log("----------------------4");
    if (isSignedIn) {
-     this.authorizeButton.style.display = 'none';
-     this.signoutButton.style.display = 'block';
+     this.state.showAuth = 'none';
+     this.state.showSignout = 'block';
      this.listFiles();
    } else {
-     this.authorizeButton.style.display = 'block';
-     this.signoutButton.style.display = 'none';
+     this.state.showAuth = 'block';
+     this.state.showSignout = 'none';
    }
  }
 
@@ -625,10 +628,8 @@ class googleLogin extends Component{
       <div>
         <p>Drive API Quickstart</p>
         {/*<!--Add buttons to initiate auth sequence and sign out-->*/}
-        {/*<button id="authorize-button" style="display: none;">Authorize</button>*/}
-        <button id="authorize-button" style="display: none;">Authorize</button>
-        {/*<button id="signout-button" style="display: none;">Sign Out</button>*/}
-        <button id="signout-button" style="display: none;">Sign Out</button>
+        <button id="authorize-button" style={{display: this.state.showAuth}}>Authorize</button>
+        <button id="signout-button" style={{display: this.state.showSignout}}>Sign Out</button>
         <pre id="content"></pre>
       </div>
     );
