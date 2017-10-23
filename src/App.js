@@ -521,8 +521,6 @@ class googleLogin extends Component{
     console.log("-----------------------------------------1");
   }
 
- authorizeButton = document.getElementById('authorize-button');
- signoutButton = document.getElementById('signout-button');
 
  /**
   *  Initializes the API client library and sets up sign-in state
@@ -543,12 +541,10 @@ class googleLogin extends Component{
     obj["scope"] = 'https://www.googleapis.com/auth/drive.metadata.readonly';
    gapi.client.init(obj).then(function () {
      // Listen for sign-in state changes.
-     gapi.auth2.getAuthInstance().isSignedIn.listen(self.updateSigninStatus);
+     gapi.auth2.getAuthInstance().isSignedIn.listen(self.updateSigninStatus.bind(this));
 
      // Handle the initial sign-in state.
      self.updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
-     self.authorizeButton.onclick = self.handleAuthClick;
-     self.signoutButton.onclick = self.handleSignoutClick;
    });
  }
 
@@ -628,8 +624,18 @@ class googleLogin extends Component{
       <div>
         <p>Drive API Quickstart</p>
         {/*<!--Add buttons to initiate auth sequence and sign out-->*/}
-        <button id="authorize-button" style={{display: this.state.showAuth}}>Authorize</button>
-        <button id="signout-button" style={{display: this.state.showSignout}}>Sign Out</button>
+        <button
+        id="authorize-button"
+        style={{display: this.state.showAuth}}
+        onClick={this.handleAuthClick}>
+        Authorize
+        </button>
+        <button
+        id="signout-button"
+        style={{display: this.state.showSignout}}
+        onClick={this.handleSignoutClick}>
+        Sign Out
+        </button>
         <pre id="content"></pre>
       </div>
     );
