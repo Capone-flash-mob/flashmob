@@ -6,6 +6,7 @@ import logo from './logo.svg';
 import {BrowserRouter as Router, Route, Link, IndexRoute} from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
 import ReactDOM from 'react-dom';
+import gapi from './gapi'
 //////////////////////////////////////////////////////////////////////////////
 // Preprocessing of data - These are accessable on all pages
 //////////////////////////////////////////////////////////////////////////////
@@ -227,7 +228,7 @@ class MobAdminView extends Component {
     const path = event.target.path
 
     var storageRef = fire.storage().ref("BannerImges");
-    var uploadTask = storageRef.child(this.state.flashmob_uid + '/BannerImage').put(currentImage); 
+    var uploadTask = storageRef.child(this.state.flashmob_uid + '/BannerImage').put(currentImage);
     var self = this;
     uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
     function(snapshot) {
@@ -265,7 +266,7 @@ class MobAdminView extends Component {
         });
         break;
       }
-    } 
+    }
   );
 }
 
@@ -278,7 +279,7 @@ class MobAdminView extends Component {
           <div class="row">
             <div class="col-sm-1">
             </div>
-            {this.state.bannerImage === '' ? 
+            {this.state.bannerImage === '' ?
             <div class="col-sm-10">
                 <input class="input" type="file" onChange={this.handleImage}/>
             </div>
@@ -369,7 +370,7 @@ class MobAdminView extends Component {
           <div class="row">
             <div class="col-sm-1">
             </div>
-            {this.state.locationImage === '' ? 
+            {this.state.locationImage === '' ?
             <div class="col-sm-10">
                 <input class="input" type="file" onChange={this.handleImage}/>
             </div>
@@ -426,7 +427,7 @@ class HomeView extends Component {
     console.log("clicked" + event.target.id);
     this.props.history.push("/public/" + event.target.id);
   }
-  
+
 
   render(){
     if (this.state == null){
@@ -465,7 +466,7 @@ class RegisterView extends Component {
 
   handleLink(event){
   }
-  
+
 
   render() {
 
@@ -479,7 +480,7 @@ class RegisterView extends Component {
             <div class="col-sm-5">
               <div>First Name:</div>
               <input class="input" placeholder="First Name" type="text" name="firstName"/>
-            </div>  
+            </div>
             <div class="col-sm-5">
             <div>Last Name:</div>
                <input class="input" placeholder="Last Name" type="text" name="lastName"/>
@@ -506,6 +507,138 @@ class RegisterView extends Component {
         </form>
       </div>
       );
+  }
+}
+
+// Allows a user to grant us access to their google drive
+class googleLogin extends Component{
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
+  // Client ID and API key from the Developer Console
+ CLIENT_ID = '873484662570-llocoft6cvqr4rksup2j4a27cbu49df4.apps.googleusercontent.com';
+ API_KEY = 'AIzaSyAWsOMuD2IvgMa_DtqEKJKmmG279bWOBpc';
+
+ // Array of API discovery doc URLs for APIs used by the quickstart
+ DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"];
+
+ // Authorization scopes required by the API; multiple scopes can be
+ // included, separated by spaces.
+ SCOPES = 'https://www.googleapis.com/auth/drive.metadata.readonly';
+
+ authorizeButton = document.getElementById('authorize-button');
+ signoutButton = document.getElementById('signout-button');
+
+ /**
+  *  Initializes the API client library and sets up sign-in state
+  *  listeners.
+  */
+  initClient() {
+   gapi.client.init({
+     apiKey: this.API_KEY,
+     clientId: this.CLIENT_ID,
+     discoveryDocs: this.DISCOVERY_DOCS,
+     scope: this.SCOPES
+   }).then(function () {
+     // Listen for sign-in state changes.
+     gapi.auth2.getAuthInstance().isSignedIn.listen(this.updateSigninStatus);
+
+     // Handle the initial sign-in state.
+     this.updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+     this.authorizeButton.onclick = this.handleAuthClick;
+     this.signoutButton.onclick = this.handleSignoutClick;
+   });
+ }
+
+ /**
+  *  On load, called to load the auth2 library and API client library.
+  */
+ handleClientLoad() {
+   gapi.load('client:auth2', this.initClient);
+ }
+
+ /**
+  *  Called when the signed in status changes, to update the UI
+  *  appropriately. After a sign-in, the API is called.
+  */
+ updateSigninStatus(isSignedIn) {
+   if (isSignedIn) {
+     this.authorizeButton.style.display = 'none';
+     this.signoutButton.style.display = 'block';
+     this.listFiles();
+   } else {
+     this.authorizeButton.style.display = 'block';
+     this.signoutButton.style.display = 'none';
+   }
+ }
+
+ /**
+  *  Sign in the user upon button click.
+  */
+ handleAuthClick(event) {
+   gapi.auth2.getAuthInstance().signIn();
+ }
+
+ /**
+  *  Sign out the user upon button click.
+  */
+ handleSignoutClick(event) {
+   gapi.auth2.getAuthInstance().signOut();
+ }
+
+ /**
+  * Append a pre element to the body containing the given message
+  * as its text node. Used to display the results of the API call.
+  *
+  * @param {string} message Text to be placed in pre element.
+  */
+ appendPre(message) {
+   var pre = document.getElementById('content');
+   var textContent = document.createTextNode(message + '\n');
+   pre.appendChild(textContent);
+ }
+
+ /**
+  * Print files.
+  */
+ listFiles() {
+   gapi.client.drive.files.list({
+     'pageSize': 10,
+     'fields': "nextPageToken, files(id, name)"
+   }).then(function(response) {
+     this.appendPre('Files:');
+     var files = response.result.files;
+     if (files && files.length > 0) {
+       for (var i = 0; i < files.length; i++) {
+         var file = files[i];
+         this.appendPre(file.name + ' (' + file.id + ')');
+       }
+     } else {
+       this.appendPre('No files found.');
+     }
+   });
+ }
+
+  render(){
+    return (
+      <div>
+        <p>Drive API Quickstart</p>
+        {/*<!--Add buttons to initiate auth sequence and sign out-->*/}
+        <button id="authorize-button" style="display: none;">Authorize</button>
+        <button id="signout-button" style="display: none;">Sign Out</button>
+        <pre id="content"></pre>
+      </div>
+    );
+  }
+  componentDidMount(){
+    const script = document.createElement("script");
+    script.src = "https://apis.google.com/js/api.js";
+    script.async = true;
+    document.body.appendChild(script);
+    /*this.onload = function(){};*/
+    this.handleClientLoad();
   }
 }
 //////////////////////////////////////////////////////////////////////////////
