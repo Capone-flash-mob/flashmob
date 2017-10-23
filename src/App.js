@@ -42,6 +42,7 @@ class MobPublicView extends React.Component {
       flashmob: null
     };
   }
+
   componentDidMount() {
     var self = this;
     database.getFlashMob(this.state.flashmob_uid, function(flashmob){
@@ -52,6 +53,7 @@ class MobPublicView extends React.Component {
       });
     });
   }
+
   render(){
     if (this.state.flashmob == null){
       return (<div> LOAAAAAAAAADING!!!!!!!!!!!! </div> );
@@ -187,6 +189,7 @@ class MobPublicView extends React.Component {
       );
   }
 }
+
 // Creates a page where an admin can view and edit mob details
 class MobAdminView extends Component {
   constructor(props) {
@@ -195,12 +198,12 @@ class MobAdminView extends Component {
       flashmob_uid: props.match.params.mobid,
       flashmob: null
     };
-
     // Bind context
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleImage = this.handleImage.bind(this);
   }
+
   handleChange(event){
     const name = event.target.name;
     const value = event.target.value;
@@ -209,6 +212,7 @@ class MobAdminView extends Component {
       [name]: value
     });
   }
+
   handleSubmit(event){
     event.preventDefault(); // <- prevent form submit from reloading the page*/
     console.log('Form is being sumitted!\nCurrent State is:', this.state);
@@ -227,67 +231,68 @@ class MobAdminView extends Component {
     const path = event.target.path
 
     var storageRef = fire.storage().ref("BannerImges");
-    var uploadTask = storageRef.child(this.state.flashmob_uid + '/BannerImage').put(currentImage); 
+    var uploadTask = storageRef.child(this.state.flashmob_uid + '/BannerImage').put(currentImage);
     var self = this;
     uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
-    function(snapshot) {
-    // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-    var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-    console.log('Upload is ' + progress + '% done');
-    switch (snapshot.state) {
-      case firebase.storage.TaskState.PAUSED: // or 'paused'
-        console.log('Upload is paused');
-        break;
-      case firebase.storage.TaskState.RUNNING: // or 'running'
-        console.log('Upload is running');
-        break;
-     }
-   }, function(error) {
-  }, function() {
-  // Upload completed successfully, now we can get the download URL
-    var downloadURL = uploadTask.snapshot.downloadURL;
-    switch(name){
-      case "bannerImageSub":
-               console.log("banener image changed");
+      function(snapshot) {
+        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+        var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log('Upload is ' + progress + '% done');
+        switch (snapshot.state) {
+          case firebase.storage.TaskState.PAUSED: // or 'paused'
+            console.log('Upload is paused');
+            break;
+          case firebase.storage.TaskState.RUNNING: // or 'running'
+            console.log('Upload is running');
+            break;
+        }
+      },
+      function(error) {
+      },
+      function() {
+        // Upload completed successfully, now we can get the download URL
+        var downloadURL = uploadTask.snapshot.downloadURL;
+        switch(name){
+          case "bannerImageSub":
+            console.log("banener image changed");
+            var myFlashMob = self.state.flashmob;
+            self.setState({
+              flashmob: myFlashMob,
+              bannerImage: downloadURL,
+            });
+            break;
 
-        var myFlashMob = self.state.flashmob;
-        self.setState({
-          flashmob: myFlashMob,
-          bannerImage: downloadURL,
-        });
-        break;
-       case "locationImageSub":
-         console.log("loaction image changed");
-         var myFlashMob = self.state.flashmob;
-        self.setState({
-          flashmob: myFlashMob,
-          locationImage: downloadURL,
-        });
-        break;
+          case "locationImageSub":
+            console.log("loaction image changed");
+            var myFlashMob = self.state.flashmob;
+            self.setState({
+              flashmob: myFlashMob,
+              locationImage: downloadURL,
+            });
+            break;
+        }
       }
-    } 
-  );
-}
+    );
+  }
 
   render() {
     var pageData = {}
-
     return (
       <div>
         <form class="App-form" onSubmit={this.handleSubmit}>
           <div class="row">
             <div class="col-sm-1">
             </div>
-            {this.state.bannerImage === '' ? 
-            <div class="col-sm-10">
+            {this.state.bannerImage === '' ?
+              <div class="col-sm-10">
                 <input class="input" type="file" onChange={this.handleImage}/>
-            </div>
-             :
+              </div>
+            :
               <div class="col-sm-10">
                 <img id="BannerImgId" src={this.state.bannerImage} class="img-responsive media center-block"></img>
                 <input class="input" name="bannerImageSub" type="file" onChange={this.handleImage}/>
               </div>
-               }
+             }
             <div class="col-sm-1">
             </div>
           </div>
@@ -369,7 +374,7 @@ class MobAdminView extends Component {
           <div class="row">
             <div class="col-sm-1">
             </div>
-            {this.state.locationImage === '' ? 
+            {this.state.locationImage === '' ?
             <div class="col-sm-10">
                 <input class="input" type="file" onChange={this.handleImage}/>
             </div>
@@ -403,9 +408,7 @@ class MobAdminView extends Component {
     }
 }
 
-
-
-//Create homepage
+// Creates a page to view all mobs
 class HomeView extends Component {
   constructor(props) {
     super(props);
@@ -426,7 +429,6 @@ class HomeView extends Component {
     console.log("clicked" + event.target.id);
     this.props.history.push("/public/" + event.target.id);
   }
-  
 
   render(){
     if (this.state == null){
@@ -453,7 +455,6 @@ class HomeView extends Component {
   }
 }
 
-
 class RegisterView extends Component {
   constructor(props) {
     super(props);
@@ -465,7 +466,7 @@ class RegisterView extends Component {
 
   handleLink(event){
   }
-  
+
 
   render() {
 
@@ -479,7 +480,7 @@ class RegisterView extends Component {
             <div class="col-sm-5">
               <div>First Name:</div>
               <input class="input" placeholder="First Name" type="text" name="firstName"/>
-            </div>  
+            </div>
             <div class="col-sm-5">
             <div>Last Name:</div>
                <input class="input" placeholder="Last Name" type="text" name="lastName"/>

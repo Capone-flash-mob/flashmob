@@ -9,7 +9,7 @@ var database = {
             console.log(snapshot.val());
             var flashMobSnap = snapshot.val();
             // TODO: REMOVE TEMPORARY ADDITION OF ELEMENT
-            flashMobSnap['announcments'] = ['a', 'b']
+            flashMobSnap['announcements'] = ['a', 'b']
             callback(flashMobSnap);
         })
     },
