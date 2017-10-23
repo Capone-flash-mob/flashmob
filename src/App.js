@@ -515,18 +515,15 @@ class googleLogin extends Component{
   constructor(props) {
     super(props);
     this.state = {};
+    // Client ID and API key from the Developer Console
+    this.CLIENT_ID = '873484662570-llocoft6cvqr4rksup2j4a27cbu49df4.apps.googleusercontent.com';
+    this.API_KEY = 'AIzaSyAWsOMuD2IvgMa_DtqEKJKmmG279bWOBpc';
+    // Array of API discovery doc URLs for APIs used by the quickstart
+    this.DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"];
+    // Authorization scopes required by the API; multiple scopes can be
+    // included, separated by spaces.
+    this.SCOPES = 'https://www.googleapis.com/auth/drive.metadata.readonly';
   }
-
-  // Client ID and API key from the Developer Console
- CLIENT_ID = '873484662570-llocoft6cvqr4rksup2j4a27cbu49df4.apps.googleusercontent.com';
- API_KEY = 'AIzaSyAWsOMuD2IvgMa_DtqEKJKmmG279bWOBpc';
-
- // Array of API discovery doc URLs for APIs used by the quickstart
- DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"];
-
- // Authorization scopes required by the API; multiple scopes can be
- // included, separated by spaces.
- SCOPES = 'https://www.googleapis.com/auth/drive.metadata.readonly';
 
  authorizeButton = document.getElementById('authorize-button');
  signoutButton = document.getElementById('signout-button');
@@ -534,14 +531,15 @@ class googleLogin extends Component{
  /**
   *  Initializes the API client library and sets up sign-in state
   *  listeners.
+  * Note: This code is called from different scope than your website code
   */
   initClient() {
-   gapi.client.init({
-     apiKey: this.API_KEY,
-     clientId: this.CLIENT_ID,
-     discoveryDocs: this.DISCOVERY_DOCS,
-     scope: this.SCOPES
-   }).then(function () {
+    var obj = {};
+    obj["apiKey"] = 'AIzaSyAWsOMuD2IvgMa_DtqEKJKmmG279bWOBpc';
+    obj["clientId"] = '873484662570-llocoft6cvqr4rksup2j4a27cbu49df4.apps.googleusercontent.com';
+    obj["discoveryDocs"] = ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"];
+    obj["scope"] = 'https://www.googleapis.com/auth/drive.metadata.readonly';
+   gapi.client.init(obj).then(function () {
      // Listen for sign-in state changes.
      gapi.auth2.getAuthInstance().isSignedIn.listen(this.updateSigninStatus);
 
@@ -626,18 +624,15 @@ class googleLogin extends Component{
       <div>
         <p>Drive API Quickstart</p>
         {/*<!--Add buttons to initiate auth sequence and sign out-->*/}
-        <button id="authorize-button" style="display: none;">Authorize</button>
-        <button id="signout-button" style="display: none;">Sign Out</button>
+        {/*<button id="authorize-button" style="display: none;">Authorize</button>*/}
+        <button id="authorize-button">Authorize</button>
+        {/*<button id="signout-button" style="display: none;">Sign Out</button>*/}
+        <button id="signout-button">Sign Out</button>
         <pre id="content"></pre>
       </div>
     );
   }
   componentDidMount(){
-    const script = document.createElement("script");
-    script.src = "https://apis.google.com/js/api.js";
-    script.async = true;
-    document.body.appendChild(script);
-    /*this.onload = function(){};*/
     this.handleClientLoad();
   }
 }
@@ -664,6 +659,7 @@ class App extends Component {
           <Route path="/admin/:mobid" component={MobAdminView}/>
           <Route path="/home" component = {HomeView}/>
           <Route path="/register" component={RegisterView}/>
+          <Route path="/googleLogin" component={googleLogin}/>
         </div>
       </Router>
     );
