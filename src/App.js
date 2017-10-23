@@ -515,14 +515,7 @@ class googleLogin extends Component{
   constructor(props) {
     super(props);
     this.state = {};
-    // Client ID and API key from the Developer Console
-    this.CLIENT_ID = '873484662570-llocoft6cvqr4rksup2j4a27cbu49df4.apps.googleusercontent.com';
-    this.API_KEY = 'AIzaSyAWsOMuD2IvgMa_DtqEKJKmmG279bWOBpc';
-    // Array of API discovery doc URLs for APIs used by the quickstart
-    this.DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"];
-    // Authorization scopes required by the API; multiple scopes can be
-    // included, separated by spaces.
-    this.SCOPES = 'https://www.googleapis.com/auth/drive.metadata.readonly';
+    console.log("-----------------------------------------1");
   }
 
  authorizeButton = document.getElementById('authorize-button');
@@ -534,19 +527,25 @@ class googleLogin extends Component{
   * Note: This code is called from different scope than your website code
   */
   initClient() {
+    console.log("----------------------3");
+    var self = this;
     var obj = {};
+      // Client ID and API key from the Developer Console
     obj["apiKey"] = 'AIzaSyAWsOMuD2IvgMa_DtqEKJKmmG279bWOBpc';
     obj["clientId"] = '873484662570-llocoft6cvqr4rksup2j4a27cbu49df4.apps.googleusercontent.com';
+    // Array of API discovery doc URLs for APIs used by the quickstart
     obj["discoveryDocs"] = ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"];
+    // Authorization scopes required by the API; multiple scopes can be
+    // included, separated by spaces.
     obj["scope"] = 'https://www.googleapis.com/auth/drive.metadata.readonly';
    gapi.client.init(obj).then(function () {
      // Listen for sign-in state changes.
-     gapi.auth2.getAuthInstance().isSignedIn.listen(this.updateSigninStatus);
+     gapi.auth2.getAuthInstance().isSignedIn.listen(self.updateSigninStatus);
 
      // Handle the initial sign-in state.
-     this.updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
-     this.authorizeButton.onclick = this.handleAuthClick;
-     this.signoutButton.onclick = this.handleSignoutClick;
+     self.updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+     self.authorizeButton.onclick = self.handleAuthClick;
+     self.signoutButton.onclick = self.handleSignoutClick;
    });
  }
 
@@ -554,7 +553,8 @@ class googleLogin extends Component{
   *  On load, called to load the auth2 library and API client library.
   */
  handleClientLoad() {
-   gapi.load('client:auth2', this.initClient);
+   console.log("----------------------2");
+   gapi.load('client:auth2', this.initClient.bind(this));
  }
 
  /**
@@ -562,6 +562,7 @@ class googleLogin extends Component{
   *  appropriately. After a sign-in, the API is called.
   */
  updateSigninStatus(isSignedIn) {
+   console.log("----------------------4");
    if (isSignedIn) {
      this.authorizeButton.style.display = 'none';
      this.signoutButton.style.display = 'block';
@@ -625,15 +626,17 @@ class googleLogin extends Component{
         <p>Drive API Quickstart</p>
         {/*<!--Add buttons to initiate auth sequence and sign out-->*/}
         {/*<button id="authorize-button" style="display: none;">Authorize</button>*/}
-        <button id="authorize-button">Authorize</button>
+        <button id="authorize-button" style="display: none;">Authorize</button>
         {/*<button id="signout-button" style="display: none;">Sign Out</button>*/}
-        <button id="signout-button">Sign Out</button>
+        <button id="signout-button" style="display: none;">Sign Out</button>
         <pre id="content"></pre>
       </div>
     );
   }
   componentDidMount(){
+    console.log("----------------------1");
     this.handleClientLoad();
+    console.log("----------------------5");
   }
 }
 //////////////////////////////////////////////////////////////////////////////
