@@ -1,3 +1,4 @@
+/* eslint-disable */
 var gapi = window.gapi = window.gapi || {};
 gapi._bs = new Date().getTime();
 (function() {
