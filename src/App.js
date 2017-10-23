@@ -532,7 +532,7 @@ class App extends Component {
           {/*http://localhost:3000/public/mobID*/}
           <Route path="/mob/:mobid" component={MobPublicView}/>
           <Route path="/create" component={MobAdminView}/>
-          <Route path="/" component = {HomeView}/>
+          <Route exact path="/" component = {HomeView}/>
           <Route path="/register" component={RegisterView}/>
         </div>
       </Router>
