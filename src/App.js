@@ -202,7 +202,6 @@ class MobAdminView extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      flashmob_uid: props.match.params.mobid,
       flashmob: null
     };
     // Bind context
@@ -519,7 +518,7 @@ class RegisterView extends Component {
 }
 
 // Allows a user to grant us access to their google drive
-class googleLogin extends Component{
+class GoogleLogin extends Component{
   constructor(props) {
     super(props);
     this.state = {
@@ -638,10 +637,44 @@ class googleLogin extends Component{
     this.handleClientLoad();
   }
 }
+
+class demo extends Component{
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+  render(){
+    var style = {
+      backgroundColor: "rgb(255,0,255)",
+      height: "5px"
+    };
+    return(
+      <div>
+        <div class="row" style={style}> </div>
+        <Headline></Headline>
+        <div class="row" style={style}> </div>
+        {/*<MobPublicView></MobPublicView>*/}
+        <div class="row" style={style}> </div>
+        <MobAdminView></MobAdminView>
+        <div class="row" style={style}> </div>
+        <HomeView></HomeView>
+        <div class="row" style={style}> </div>
+        <RegisterView></RegisterView>
+        <div class="row" style={style}> </div>
+        <GoogleLogin></GoogleLogin>
+        <div class="row" style={style}> </div>
+      </div>
+    );
+  }
+}
 //////////////////////////////////////////////////////////////////////////////
 // Main - You should only write components, functions, or routes here
 //////////////////////////////////////////////////////////////////////////////
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
   render() {
     return (
       //The Router component allows elements inside to use React-router's API
@@ -657,7 +690,7 @@ class App extends Component {
           <Route path="/create" component={MobAdminView}/>
           <Route exact path="/" component = {HomeView}/>
           <Route path="/register" component={RegisterView}/>
-          <Route path="/googleLogin" component={googleLogin}/>
+          <Route path="/demo" component={demo}/>
         </div>
       </Router>
     );
