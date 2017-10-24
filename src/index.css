@@ -41,6 +41,14 @@ body {
   border-color: #808080;
 }
 
+.input[type=file] {
+  font-size: calc(8px + 0.5vw);
+  text-align: center;
+  padding: 12px 20px;
+  margin: 20px 0;
+  border-color: #808080;
+}
+
 .input[type=submit] {
   width: 100%;
   padding: 12px 20px;

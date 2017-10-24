@@ -287,14 +287,14 @@ class MobAdminView extends Component {
       <div>
         <form class="App-form" onSubmit={this.handleSubmit}>
           <div class="row">
-            <div class="col-sm-1">
+            <div class="col-sm-2">
             </div>
             {this.state.bannerImage === '' ?
-              <div class="col-sm-10">
+              <div class="col-sm-8">
                 <input class="input" type="file" onChange={this.handleImage}/>
               </div>
             :
-              <div class="col-sm-10">
+              <div class="col-sm-8">
                 <img
                 id="BannerImgId"
                 src={this.state.bannerImage}
@@ -303,55 +303,55 @@ class MobAdminView extends Component {
                 <input class="input" name="bannerImageSub" type="file" onChange={this.handleImage}/>
               </div>
              }
-            <div class="col-sm-1">
+            <div class="col-sm-2">
             </div>
           </div>
           <div class="row">
-            <div class="col-sm-1">
+            <div class="col-sm-2">
             </div>
-            <div class="col-sm-10">
+            <div class="col-sm-8">
               <input class="input" type="text" placeholder="description..." style={{height: '150px'}} name="description" onChange={this.handleChange}/>
             </div>
-            <div class="col-sm-1">
+            <div class="col-sm-2">
             </div>
           </div>
           <div class="row">
-            <div class="col-sm-1">
+            <div class="col-sm-2">
             </div>
-            <div class="col-sm-3">
+            <div class="col-sm-2">
               <input class="input" type="text" placeholder="date..." name="date" onChange={this.handleChange}/>
             </div>
             <div class="col-sm-2">
               <input class="input" type="text" placeholder="time..." name="time" onChange={this.handleChange}/>
             </div>
-            <div class="col-sm-5">
+            <div class="col-sm-4">
               <input class="input" type="text" placeholder="choreographer..." name="choreographer" onChange={this.handleChange}/>
             </div>
-            <div class="col-sm-1">
+            <div class="col-sm-2">
             </div>
           </div>
           <div class="row">
-            <div class="col-sm-1">
+            <div class="col-sm-2">
             </div>
-            <div class="col-sm-5">
+            <div class="col-sm-4">
               <input class="input" type="text" placeholder="location..." name="location" onChange={this.handleChange}/>
             </div>
-            <div class="col-sm-5">
+            <div class="col-sm-4">
               <input class="input" type="text" placeholder="email..." name="email" onChange={this.handleChange}/>
             </div>
-            <div class="col-sm-1">
+            <div class="col-sm-2">
             </div>
           </div>
           <div class="row">
             <div class="col-sm-3">
             </div>
             <div class="col-sm-6">
-              <div class="col-sm-1">
+              <div class="col-sm-2">
               </div>
-              <div class="col-sm-10">
+              <div class="col-sm-8">
                 <input class="input" type="text" placeholder="maximum number of people..." name="personLimit" onChange={this.handleChange}/>
               </div>
-              <div class="col-sm-1">
+              <div class="col-sm-2">
               </div>
             </div>
             <div class="col-sm-3">
@@ -361,35 +361,35 @@ class MobAdminView extends Component {
             <div class="col-sm-3">
             </div>
             <div class="col-sm-6">
-              <div class="col-sm-1">
+              <div class="col-sm-2">
               </div>
-              <div class="col-sm-10">
+              <div class="col-sm-8">
                 <button class="button" vertical-align="middle"><span> I am Interested! </span></button>
               </div>
-              <div class="col-sm-1">
+              <div class="col-sm-2">
               </div>
             </div>
             <div class="col-sm-3">
             </div>
           </div>
           <div class="row">
-            <div class="col-sm-1">
+            <div class="col-sm-2">
             </div>
-            <div class="col-sm-10">
+            <div class="col-sm-8">
               <input class="input" type="text" placeholder="video..." style={{height: '300px'}} name="video" onChange={this.handleChange}/>
             </div>
-            <div class="col-sm-1">
+            <div class="col-sm-2">
             </div>
           </div>
           <div class="row">
-            <div class="col-sm-1">
+            <div class="col-sm-2">
             </div>
             {this.state.locationImage === '' ?
-            <div class="col-sm-10">
+            <div class="col-sm-8">
                 <input class="input" type="file" onChange={this.handleImage}/>
             </div>
              :
-              <div class="col-sm-10">
+              <div class="col-sm-8">
                 <img
                 id="BannerImgId"
                 src={this.state.locationImage}
@@ -398,7 +398,7 @@ class MobAdminView extends Component {
                 <input class="input" name="locationImageSub" type="file" onChange={this.handleImage}/>
               </div>
                }
-            <div class="col-sm-1">
+            <div class="col-sm-2">
             </div>
           </div>
           <div class="row">
