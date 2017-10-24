@@ -645,23 +645,23 @@ class demo extends Component{
   render(){
     var style = {
       backgroundColor: "rgb(255,0,255)",
-      height: "10px"
+      height: "2em"
     };
     return(
       <div>
-        <div class="row" style={style}> </div>
+        <div class="row" style={style}>Headline  </div>
         <Headline></Headline>
-        <div class="row" style={style}> </div>
+        <div class="row" style={style}>MobPublicView  </div>
         {/*<MobPublicView></MobPublicView>*/}
-        <div class="row" style={style}> </div>
+        <div class="row" style={style}>MobAdminView  </div>
         <MobAdminView></MobAdminView>
-        <div class="row" style={style}> </div>
+        <div class="row" style={style}>HomeView  </div>
         <HomeView></HomeView>
-        <div class="row" style={style}> </div>
+        <div class="row" style={style}>RegisterView  </div>
         <RegisterView></RegisterView>
-        <div class="row" style={style}> </div>
+        <div class="row" style={style}>GoogleLogin  </div>
         <GoogleLogin></GoogleLogin>
-        <div class="row" style={style}> </div>
+        <div class="row" style={style}>  </div>
       </div>
     );
   }
