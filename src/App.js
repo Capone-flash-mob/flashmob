@@ -615,7 +615,6 @@ class GoogleLogin extends Component{
   render(){
     return (
       <div>
-        <p>Drive API Quickstart</p>
         {/*<!--Add buttons to initiate auth sequence and sign out-->*/}
         <button
         id="authorize-button"
@@ -646,7 +645,7 @@ class demo extends Component{
   render(){
     var style = {
       backgroundColor: "rgb(255,0,255)",
-      height: "5px"
+      height: "10px"
     };
     return(
       <div>
