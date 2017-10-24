@@ -510,7 +510,7 @@ class RegisterView extends Component {
   }
 }
 
-// Button that allows a user to grant us access to their google drive
+// Allows a user to grant us access to their google drive
 class googleLogin extends Component{
   constructor(props) {
     super(props);
@@ -538,7 +538,7 @@ class googleLogin extends Component{
     obj["scope"] = 'https://www.googleapis.com/auth/drive.metadata.readonly';
    gapi.client.init(obj).then(function () {
      // Listen for sign-in state changes.
-     gapi.auth2.getAuthInstance().isSignedIn.listen(self.updateSigninStatus.bind(this));
+     gapi.auth2.getAuthInstance().isSignedIn.listen(self.updateSigninStatus.bind(self));
 
      // Handle the initial sign-in state.
      self.updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
@@ -562,7 +562,6 @@ class googleLogin extends Component{
         showAuth:'none',
         showSignout:'block'
       });
-     this.printFiles();
    }
    else {
      this.setState({
@@ -594,12 +593,11 @@ class googleLogin extends Component{
      'pageSize': 10,
      'fields': "nextPageToken, files(id, name)"
    }).then(function(response) {
-     console.log('Files:');
      var files = response.result.files;
      if (files && files.length > 0) {
        for (var i = 0; i < files.length; i++) {
          var file = files[i];
-         console.log(file.name + ' (' + file.id + ')');
+         console.log("Files:" + file.name + ' ID:' + file.id + ')');
        }
      } else {
        console.log('No files found.');
