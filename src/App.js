@@ -510,7 +510,7 @@ class RegisterView extends Component {
   }
 }
 
-// Allows a user to grant us access to their google drive
+// Button that allows a user to grant us access to their google drive
 class googleLogin extends Component{
   constructor(props) {
     super(props);
@@ -518,17 +518,14 @@ class googleLogin extends Component{
       showAuth: "block",
       showSignout: "none"
     };
-    console.log("-----------------------------------------1");
   }
 
 
  /**
   *  Initializes the API client library and sets up sign-in state
   *  listeners.
-  * Note: This code is called from different scope than your website code
   */
   initClient() {
-    console.log("----------------------3");
     var self = this;
     var obj = {};
       // Client ID and API key from the Developer Console
@@ -552,7 +549,6 @@ class googleLogin extends Component{
   *  On load, called to load the auth2 library and API client library.
   */
  handleClientLoad() {
-   console.log("----------------------2");
    gapi.load('client:auth2', this.initClient.bind(this));
  }
 
@@ -561,14 +557,18 @@ class googleLogin extends Component{
   *  appropriately. After a sign-in, the API is called.
   */
  updateSigninStatus(isSignedIn) {
-   console.log("----------------------4");
    if (isSignedIn) {
-     this.state.showAuth = 'none';
-     this.state.showSignout = 'block';
-     this.listFiles();
-   } else {
-     this.state.showAuth = 'block';
-     this.state.showSignout = 'none';
+      this.setState({
+        showAuth:'none',
+        showSignout:'block'
+      });
+     this.printFiles();
+   }
+   else {
+     this.setState({
+       showAuth:'block',
+       showSignout:'none'
+     });
    }
  }
 
@@ -587,34 +587,22 @@ class googleLogin extends Component{
  }
 
  /**
-  * Append a pre element to the body containing the given message
-  * as its text node. Used to display the results of the API call.
-  *
-  * @param {string} message Text to be placed in pre element.
+  * Print an authorized user's filenames and ids.
   */
- appendPre(message) {
-   var pre = document.getElementById('content');
-   var textContent = document.createTextNode(message + '\n');
-   pre.appendChild(textContent);
- }
-
- /**
-  * Print files.
-  */
- listFiles() {
+ printFiles() {
    gapi.client.drive.files.list({
      'pageSize': 10,
      'fields': "nextPageToken, files(id, name)"
    }).then(function(response) {
-     this.appendPre('Files:');
+     console.log('Files:');
      var files = response.result.files;
      if (files && files.length > 0) {
        for (var i = 0; i < files.length; i++) {
          var file = files[i];
-         this.appendPre(file.name + ' (' + file.id + ')');
+         console.log(file.name + ' (' + file.id + ')');
        }
      } else {
-       this.appendPre('No files found.');
+       console.log('No files found.');
      }
    });
  }
@@ -641,9 +629,7 @@ class googleLogin extends Component{
     );
   }
   componentDidMount(){
-    console.log("----------------------1");
     this.handleClientLoad();
-    console.log("----------------------5");
   }
 }
 //////////////////////////////////////////////////////////////////////////////
