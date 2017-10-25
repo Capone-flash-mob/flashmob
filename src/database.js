@@ -16,12 +16,17 @@ var database = {
 
     getAllFlashMobs: function(callback){
         var allMobs = fire.database().ref('/flashmobs');
+        var allFlashMobs = [];
         allMobs.once("value").then(function(snapshot){
-            console.log(snapshot.val());
-            var flashMobsSnap = snapshot.val();
-            callback(flashMobsSnap);
-        })
-    },
+                snapshot.forEach(function(item){
+                    var myItem = item.val();
+                    myItem.key = item.key
+                    allFlashMobs.push(myItem);
+                    //console.log("ITEM: " + myitem.key);
+                })
+                callback(allFlashMobs);
+            })
+        },
 
     editFlashmob: function(uid, key, value){
         var flashMobUpdateInstance =  {};

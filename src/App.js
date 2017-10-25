@@ -448,18 +448,35 @@ class HomeView extends Component {
     if (this.state == null){
       return (<div> LOAAAAAAAAADING!!!!!!!!!!!! </div> );
     }
-    var flashList = Object.keys(this.state.allMobs);
-    console.log("list is " + flashList)
+
+
+    const flashList = this.state.allMobs;
+    console.log("YAYAYAYA " + flashList[0].key);
     return(
-      <div>
-       <div class="col-sm-10">ALL FLASHMOBS</div>
-       <div class="col-sm-10">
-            {flashList.map((number) =>
-              <div class="row">
-                <Link to={"/mob/" + number} id={number}>{number}</Link>
+      <div key="a" style={{border: "10px"}}>
+       <div class="col-sm-12" style={{border: "10px"}}>ALL FLASHMOBS</div>
+       <div class="row" style={{border: "10px"}}>
+       <div key="bigdiv" class="col-sm-12">
+            {
+              flashList.map((key) =>
+              <div key={key + "value"} class="row">
+                <div class="row">
+                    <img
+                    src={key.bannerImage}
+                    class="img-responsive media center-block"
+                    alt=""></img>
+                </div>
+                <Link to={"/mob/" + key.key}>Go To Page</Link>
+                <h1 key={key}>{"Description: " + key.description}</h1>
+                <h2 >{"Choreographer: " + key.choreographer}</h2>
+                <h3 >{"Date: " + key.date}</h3>
+                <h3 >{"Time: " + key.time}</h3>
+                <hr style={{height:"30px"}}/>
               </div>
               )
             }
+        </div>
+        
         </div>
       </div>
       );
