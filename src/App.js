@@ -481,37 +481,57 @@ class HomeView extends Component {
     const flashList = this.state.allMobs;
     console.log("YAYAYAYA " + flashList[0].key);
     return(
-      <div key="a" >
-       <div class="col-sm-12" style={styleDiv}>ALL FLASHMOBS</div>
-       <div class="row" style={styleDiv}>
-       <div key="bigdiv" class="col-sm-12">
-            {
-              flashList.map((key) =>
-            <div class="col-sm-6" style={styleDiv}>
-              <div key={key + "value"} class="row">
-                <div class="row">
-                    <img
-                    src={key.bannerImage}
-                    class="img-responsive media center-block"
-                    alt=""></img>
-                </div>
-                <Link to={"/mob/" + key.key}>Go To Page</Link>
-                <h1 key={key}>{"Description: " + key.description}</h1>
-                <h2 >{"Choreographer: " + key.choreographer}</h2>
-                <h3 >{"Date: " + key.date}</h3>
-                <h3 >{"Time: " + key.time}</h3>
-                <hr style={{height:"dd30px"}}/>
-              </div>
-              </div>
-              )
-            }
+      <div class="content">
+        <div class="col-sm-2">
         </div>
-
+        <div class="col-sm-8">
+          {flashList.map((key) =>
+            <div class="col-sm-6">
+              <div class="mob-infobox">
+                <img src={key.bannerImage} style={{height: '200px', width: '100%'}} class="img-responsive media center-block" alt=""></img>
+                <p> {key.description} </p>
+                <p> {key.date}, {key.time} </p>
+                <p> {key.location} </p>
+              </div>
+            </div>
+          )}
+        </div>
+        <div class="col-sm-2">
         </div>
       </div>
-      );
+    );
   }
 }
+
+{/*
+  <div key="a" >
+    <div class="col-sm-12" style={styleDiv}>ALL FLASHMOBS</div>
+    <div class="row" style={styleDiv}>
+      <div key="bigdiv" class="col-sm-12">
+        {
+        flashList.map((key) =>
+          <div class="col-sm-6" style={styleDiv}>
+            <div key={key + "value"} class="row">
+              <div class="row">
+                  <img
+                  src={key.bannerImage}
+                  class="img-responsive media center-block"
+                  alt=""></img>
+              </div>
+              <Link to={"/mob/" + key.key}>Go To Page</Link>
+              <h1 key={key}>{"Description: " + key.description}</h1>
+              <h2 >{"Choreographer: " + key.choreographer}</h2>
+              <h3 >{"Date: " + key.date}</h3>
+              <h3 >{"Time: " + key.time}</h3>
+              <hr style={{height:"dd30px"}}/>
+            </div>
+          </div>
+        )
+        }
+      </div>
+    </div>
+  </div>
+*/}
 
 class RegisterView extends Component {
   componentDidMount() {

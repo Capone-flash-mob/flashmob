@@ -6,7 +6,7 @@ body {
   text-align: center;
 }
 
-/*Header component*/
+/* Header Component */
 .header {
   background-color: #222;
   height: 125px;
@@ -24,13 +24,27 @@ body {
   bottom: 0px;
   overflow-y: auto;
 }
+
 .title {
   text-transform: uppercase;
   font-size: 2.0em;
   letter-spacing: 0.2em;
 }
 
-/*Mob Admin View Component*/
+/* Mob Home View Component */
+.mob-infobox {
+  font-size: 4px;
+  height: 400px;
+  background-color: white;
+  font-size: calc(12px + 0.5vw);
+  text-align: left;
+  margin: 20px 0;
+  padding: 8px 20px;
+  box-sizing: border-box;
+  border: 2px solid lightgrey;
+}
+
+/* Mob Admin View Component */
 .button {
   font-size: calc(6px + 0.5vw);
   text-align: center;
@@ -80,7 +94,7 @@ body {
   border: 2px solid #808080;
 }
 
-/*Mob Public View Component*/
+/* Mob Public View Component */
 .announcements{
   background-color: white;
   height: 150px;
@@ -90,10 +104,10 @@ body {
   padding: 12px 20px;
   margin: 20px 0;
   box-sizing: border-box;
-  /*border: 2px dotted;*/
   border: 2px solid;
   border-color: lightgrey;
 }
+
 .banner{
   height: 300px;
   font-size: calc(12px + 0.5vw);
@@ -102,9 +116,9 @@ body {
   padding: 12px 20px;
   margin: 20px 0;
   box-sizing: border-box;
-  /*border: 2px dotted;*/
   border: 2px;
 }
+
 .description{
   background-color: white;
   height: 150px;
@@ -114,10 +128,10 @@ body {
   padding: 12px 20px;
   margin: 20px 0;
   box-sizing: border-box;
-  /*border: 2px dotted;*/
   border: 2px solid;
   border-color: lightgrey;
 }
+
 .infobox{
   background-color: white;
   font-size: calc(12px + 0.5vw);
@@ -126,16 +140,15 @@ body {
   padding: 12px 20px;
   margin: 20px 0;
   box-sizing: border-box;
-  /*border: 2px dotted;*/
   border: 2px solid;
   border-color: lightgrey;
 }
+
 .media{
   height: 300px;
   width: 100%;
   padding: 12px 20px;
   margin: 20px 0;
   box-sizing: border-box;
-  /*border: 2px dotted;*/
   border: 2px;
 }
