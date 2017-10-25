@@ -42,7 +42,6 @@ var database = {
             'name': name,
             'date': date,
             'time': time,
-            // do we really need a description?
             'description': description,
             'location': loc,
             'adminID': adminID,
