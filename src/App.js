@@ -289,6 +289,15 @@ class MobAdminView extends Component {
           <div class="row">
             <div class="col-sm-2">
             </div>
+            <div class="col-sm-8">
+              <input class="input" type="text" placeholder="title..." name="title" onChange={this.handleChange}/>
+            </div>
+            <div class="col-sm-2">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-2">
+            </div>
             {this.state.bannerImage === '' ?
               <div class="col-sm-8">
                 <input class="input" type="file" onChange={this.handleImage}/>
@@ -429,7 +438,7 @@ class HomeView extends Component {
     this.handleLink = this.handleLink.bind(this);
   }
 
-  
+
 
   componentDidMount() {
     var self = this;
@@ -451,10 +460,10 @@ class HomeView extends Component {
       return (<div> LOAAAAAAAAADING!!!!!!!!!!!! </div> );
     }
 
-  var colors = ['silver', 'gray', 'red', 'maroon', 'yellow', 'olive', 'lime', 'green', 
-              'aqua', 'teal', 'blue', 'navy', 'fuchsia', 'purple']; 
+  var colors = ['silver', 'gray', 'red', 'maroon', 'yellow', 'olive', 'lime', 'green',
+              'aqua', 'teal', 'blue', 'navy', 'fuchsia', 'purple'];
 
-  var rand = Math.floor((Math.random() * 8)); 
+  var rand = Math.floor((Math.random() * 8));
   const styleDiv = {
     border:'2px solid #000000',
     backgroundColor: colors[rand],
@@ -467,7 +476,7 @@ class HomeView extends Component {
        <div class="row" style={styleDiv}>
        <div key="bigdiv" class="col-sm-12">
             {
-              flashList.map((key) =>  
+              flashList.map((key) =>
             <div class="col-sm-6" style={styleDiv}>
               <div key={key + "value"} class="row">
                 <div class="row">
@@ -487,7 +496,7 @@ class HomeView extends Component {
               )
             }
         </div>
-        
+
         </div>
       </div>
       );
