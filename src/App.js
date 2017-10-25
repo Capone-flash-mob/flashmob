@@ -429,6 +429,8 @@ class HomeView extends Component {
     this.handleLink = this.handleLink.bind(this);
   }
 
+  
+
   componentDidMount() {
     var self = this;
     database.getAllFlashMobs(function(flashmobs){
@@ -449,17 +451,24 @@ class HomeView extends Component {
       return (<div> LOAAAAAAAAADING!!!!!!!!!!!! </div> );
     }
 
+  var colors = ['silver', 'gray', 'red', 'maroon', 'yellow', 'olive', 'lime', 'green', 
+              'aqua', 'teal', 'blue', 'navy', 'fuchsia', 'purple']; 
 
+  var rand = Math.floor((Math.random() * 8)); 
+  const styleDiv = {
+    border:'2px solid #000000',
+    backgroundColor: colors[rand],
+  }
     const flashList = this.state.allMobs;
     console.log("YAYAYAYA " + flashList[0].key);
     return(
-      <div key="a" style={{border: "10px"}}>
-       <div class="col-sm-12" style={{border: "10px"}}>ALL FLASHMOBS</div>
-       <div class="row" style={{border: "10px"}}>
+      <div key="a" >
+       <div class="col-sm-12" style={styleDiv}>ALL FLASHMOBS</div>
+       <div class="row" style={styleDiv}>
        <div key="bigdiv" class="col-sm-12">
             {
-              flashList.map((key) =>
-              <div class="col-sm-6">
+              flashList.map((key) =>  
+            <div class="col-sm-6" style={styleDiv}>
               <div key={key + "value"} class="row">
                 <div class="row">
                     <img
