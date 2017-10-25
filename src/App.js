@@ -459,6 +459,7 @@ class HomeView extends Component {
        <div key="bigdiv" class="col-sm-12">
             {
               flashList.map((key) =>
+              <div class="col-sm-6">
               <div key={key + "value"} class="row">
                 <div class="row">
                     <img
@@ -471,7 +472,8 @@ class HomeView extends Component {
                 <h2 >{"Choreographer: " + key.choreographer}</h2>
                 <h3 >{"Date: " + key.date}</h3>
                 <h3 >{"Time: " + key.time}</h3>
-                <hr style={{height:"30px"}}/>
+                <hr style={{height:"dd30px"}}/>
+              </div>
               </div>
               )
             }
