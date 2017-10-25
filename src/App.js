@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import fire from './fire';
 import database from './database'
 import firebase from 'firebase';
-import logo from './logo.svg';
 import {BrowserRouter as Router, Route, Link, IndexRoute} from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
 import ReactDOM from 'react-dom';
@@ -18,23 +17,19 @@ import gapi from './gapi'
 // Creates a headline banner with our logo and a login button
 function Headline(props){
   return(
-    <div class="row">
-      <header class="header">
-        <h1 class="title"> capone </h1>
-        <div class="col-sm-2">
-        </div>
-        <div class="col-sm-1">
-          <Link to="/register">Log In</Link>
-        </div>
-        <div class="col-sm-1">
-           <Link to="/register">Sign Up</Link>
-        </div>
-      </header>
-    </div>);
+    <header class="header">
+      <ul class="list-inline ul">
+        <li class="list-inline-item"><h1 class="title">capone</h1></li>
+        <li class="list-inline-item" style={{float: 'center'}}><Link to="/create">Create a Flashmob</Link></li>
+        <li class="list-inline-item" style={{float: 'center'}}><Link to="/register">Login</Link></li>
+        <li class="list-inline-item" style={{float: 'center'}}><Link to="/register">Register</Link></li>
+      </ul>
+    </header>
+  );
 }
 
 // Creates a page where users can view mob details
-class MobPublicView extends React.Component {
+class PublicView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -197,7 +192,7 @@ class MobPublicView extends React.Component {
 }
 
 // Creates a page where an admin can view and edit mob details
-class MobAdminView extends Component {
+class CreateView extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -547,7 +542,7 @@ class RegisterView extends Component {
       cursor: 'pointer',
     }
     return(
-       <div>
+       <div class="content">
         <form class="App-form" onSubmit={this.handleSubmit}>
           <div class="row">
             <div class="col-sm-5">
@@ -716,10 +711,10 @@ class demo extends Component{
       <div>
         <div class="row" style={style}>Headline  </div>
         <Headline></Headline>
-        <div class="row" style={style}>MobPublicView  </div>
-        {/*<MobPublicView></MobPublicView>*/}
-        <div class="row" style={style}>MobAdminView  </div>
-        <MobAdminView></MobAdminView>
+        <div class="row" style={style}>PublicView  </div>
+        {/*<PublicView></PublicView>*/}
+        <div class="row" style={style}>CreateView  </div>
+        <CreateView></CreateView>
         <div class="row" style={style}>HomeView  </div>
         <HomeView></HomeView>
         <div class="row" style={style}>RegisterView  </div>
@@ -750,8 +745,8 @@ class App extends Component {
           {/*RR will display the component that has a matching path.
           Variables in the path start with a :colon and can be passed to the component.*/}
           {/*http://localhost:3000/public/mobID*/}
-          <Route path="/mob/:mobid" component={MobPublicView}/>
-          <Route path="/create" component={MobAdminView}/>
+          <Route path="/mob/:mobid" component={PublicView}/>
+          <Route path="/create" component={CreateView}/>
           <Route exact path="/" component = {HomeView}/>
           <Route path="/register" component={RegisterView}/>
           <Route path="/demo" component={demo}/>
