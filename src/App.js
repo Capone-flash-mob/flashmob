@@ -18,20 +18,19 @@ import gapi from './gapi'
 // Creates a headline banner with our logo and a login button
 function Headline(props){
   return(
-  <div class="container">
     <div class="row">
       <header class="header">
         <h1 class="title"> capone </h1>
+        <div class="col-sm-2">
+        </div>
         <div class="col-sm-1">
           <Link to="/register">Log In</Link>
         </div>
-
         <div class="col-sm-1">
            <Link to="/register">Sign Up</Link>
         </div>
       </header>
-    </div>
-  </div>);
+    </div>);
 }
 
 // Creates a page where users can view mob details
@@ -60,7 +59,7 @@ class MobPublicView extends React.Component {
       return (<div> LOAAAAAAAAADING!!!!!!!!!!!! </div> );
     }
     return(
-      <div>
+      <div class="content">
         <div class="row">
             <img
             src={this.state.flashmob.bannerImage}
@@ -210,6 +209,10 @@ class MobAdminView extends Component {
     this.handleImage = this.handleImage.bind(this);
   }
 
+  addInputField(event){
+
+  }
+
   handleChange(event){
     const name = event.target.name;
     const value = event.target.value;
@@ -284,7 +287,7 @@ class MobAdminView extends Component {
   render() {
     var pageData = {}
     return (
-      <div>
+      <div class="content">
         <form class="App-form" onSubmit={this.handleSubmit}>
           <div class="row">
             <div class="col-sm-2">
@@ -393,6 +396,15 @@ class MobAdminView extends Component {
           <div class="row">
             <div class="col-sm-2">
             </div>
+            <div class="col-sm-1">
+              <button class="add-button" onClick={this.addInputField}> + video </button>
+            </div>
+            <div class="col-sm-2">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-2">
+            </div>
             {this.state.locationImage === '' ?
             <div class="col-sm-8">
                 <input class="input" type="file" onChange={this.handleImage}/>
@@ -437,8 +449,6 @@ class HomeView extends Component {
     super(props);
     this.handleLink = this.handleLink.bind(this);
   }
-
-
 
   componentDidMount() {
     var self = this;
@@ -511,7 +521,6 @@ class RegisterView extends Component {
   handleLink(event){
   }
 
-
   render() {
 
     var pointStyle = {
@@ -563,7 +572,6 @@ class GoogleLogin extends Component{
       showSignout: "none"
     };
   }
-
 
  /**
   *  Initializes the API client library and sets up sign-in state
@@ -716,7 +724,7 @@ class App extends Component {
       //The Router component allows elements inside to use React-router's API
       <Router>
         <div>
-        <Headline></Headline>
+          <Headline></Headline>
 
           {/*Routes*/}
           {/*RR will display the component that has a matching path.
@@ -732,6 +740,5 @@ class App extends Component {
     );
   }
 }
-
 
 export default App;
