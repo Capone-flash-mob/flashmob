@@ -487,6 +487,7 @@ class HomeView extends Component {
                 <p> {key.description} </p>
                 <p> {key.date}, {key.time} </p>
                 <p> {key.location} </p>
+                <Link to={"mob/" + key.key}>Click to visit</Link>
               </div>
             </div>
           )}
