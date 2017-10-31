@@ -289,7 +289,7 @@ class CreateView extends Component {
             <div class="col-sm-2">
             </div>
             <div class="col-sm-8">
-              <input class="input" type="text" placeholder="title..." name="title" onChange={this.handleChange}/>
+              <input class="input" type="text" placeholder="title..." name="name" onChange={this.handleChange}/>
             </div>
             <div class="col-sm-2">
             </div>

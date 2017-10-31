@@ -38,14 +38,34 @@ body {
 /* Mob Home View Component */
 .mob-infobox {
   font-size: 4px;
-  height: 400px;
   background-color: white;
   font-size: calc(12px + 0.5vw);
   text-align: left;
   margin: 20px 0;
-  padding: 8px 20px;
   box-sizing: border-box;
-  border: 2px solid lightgrey;
+}
+
+.mob-infobox-details{
+  width: 100%;
+  height: 168px;
+  position: relative;
+  border: 3px solid rgba(0, 0, 0, 0.12);
+  border-top: 0px;
+  margin-top: -6px;
+  padding-left:10px;
+  padding-top:5px;
+}
+.mob-infobox-title {
+  display: block;
+  font-size: 31px;
+}
+.mob-infobox-date-and-time {
+  display: block;
+  color: gray;
+}
+.mob-infobox-location {
+  display: block;
+  color: gray;
 }
 
 /* Mob Admin View Component */

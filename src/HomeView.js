@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import database from './database'
 import {BrowserRouter as Router, Route, Link, IndexRoute} from 'react-router-dom';
+import YouTube from 'react-youtube'
 // Creates a page to view all mobs
-class HomeView extends Component {
+var HomeView = class HomeView extends Component {
   constructor(props) {
     super(props);
     this.handleLink = this.handleLink.bind(this);
@@ -30,7 +31,10 @@ class HomeView extends Component {
 
   var colors = ['silver', 'gray', 'red', 'maroon', 'yellow', 'olive', 'lime', 'green',
               'aqua', 'teal', 'blue', 'navy', 'fuchsia', 'purple'];
-
+  const opts = {
+        height: '200',
+        width: '100%',
+      };
   var rand = Math.floor((Math.random() * 8));
   const styleDiv = {
     border:'2px solid #000000',
@@ -46,11 +50,16 @@ class HomeView extends Component {
           {flashList.map((key) =>
             <div class="col-sm-6">
               <div class="mob-infobox">
-                <img src={key.bannerImage} style={{height: '200px', width: '100%'}} class="img-responsive media center-block" alt=""></img>
-                <p> {key.description} </p>
-                <p> {key.date}, {key.time} </p>
-                <p> {key.location} </p>
-                <Link to={"mob/" + key.key}>Click to visit</Link>
+                <YouTube
+                  opts={opts}
+                  videoId="D59v74k5flU"
+                />
+                <div class="mob-infobox-details">
+                  <span class="mob-infobox-title"> {key.name} </span>
+                  <span class="mob-infobox-location"> {key.location} </span>
+                  <span class="mob-infobox-date-and-time"> {key.date}, {key.time} </span>
+                  <Link to={"mob/" + key.key}>Click to visit</Link>
+                </div>
               </div>
             </div>
           )}
