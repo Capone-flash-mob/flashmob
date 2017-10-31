@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import database from './database'
 import fire from './fire';
 import firebase from 'firebase';
-
+import YouTube from 'react-youtube';
 import {BrowserRouter as Router, Route, Link, IndexRoute} from 'react-router-dom';
 // Creates a page to view all mobs
 class UserView extends Component {
@@ -13,9 +13,12 @@ class UserView extends Component {
 
   componentDidMount() {
     var self = this;
-      var userID = this.props.match.params.userid
+    
+
+    var userID = this.props.match.params.userid
 
     database.getMyFlashMobs(userID, function(flashmobs){
+      console.log("SETTING STATE");
       self.setState({
           myMobs: flashmobs,
         });
@@ -41,34 +44,39 @@ class UserView extends Component {
       margin: '-50px auto 10px', 
     }
     const flashList = this.state.myMobs;
+    const opts = {
+        height: '200',
+        width: '100%',
+      };
+
     return(
       <div class="content">
-      
-        <div class="col-sm-12">
-          <h2 style={{float: 'center'}}>YOUR FLASHMOBS</h2>
-          {flashList.map((key) =>
-            <div class="col-sm-4">
-              <div class="mob-infobox">
-                <img src={key.bannerImage} style={{height: '200px', width: '100%'}} class="img-responsive media center-block" alt=""></img>
-                <p> {key.description} </p>
-                <p> {key.date}, {key.time} </p>
-                <p> {key.location} </p>
-                <Link to={"mob/" + key.key}>Click to visit</Link>
+        <h1 class="col-sm-8">YOUR FLASHMOBS</h1>
+        <div class="row">
+          <div class="col-sm-2">
+          </div>
+          <div class="col-sm-8">
+            {flashList.map((key) =>
+              <div class="col-sm-6">
+                <Link to={"mob/" + key.key} style={{ textDecoration: 'none'}}>
+                  <div class="mob-infobox">
+                    <YouTube
+                      opts={opts}
+                      videoId="D59v74k5flU"
+                    />
+                    <div class="mob-infobox-details">
+                      <span class="mob-infobox-title"> {key.name} </span>
+                      <span class="mob-infobox-location"> {key.location} </span>
+                      <span class="mob-infobox-date-and-time"> {key.date}, {key.time} </span>
+                    </div>
+                  </div>
+                </Link>
               </div>
-              <div class="col-sm-8"></div>
-            </div>
-
-           
-          )}
+            )}
+          </div>
         </div>
-                   
-
-    
         <div class="col-sm-2">
         </div>
-        <div class="row">
-        </div>
-        <hr style={{height:'1px', border:'none',color:'#333',backgroundColor:'#333'}}></hr>
       </div>
     );
   }
