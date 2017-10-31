@@ -76,37 +76,40 @@ class Headline extends React.Component{
     })
   }
 
-render(){
-
-
+  render(){
     if (this.state.authenticated == 'true') {
       console.log("USER FOUND");
       var user = firebase.auth().currentUser;
       return (
-         <header class="header">
-            <ul class="list-inline ul">
-              <li class="list-inline-item"><Link class="title" style={{textDecoration: 'none', color: 'white'}} to="/" ><h1>capone</h1></Link></li>
-              <li class="list-inline-item" style={{float: 'center'}}><Link to="/create">Create a Flashmob</Link></li>
-              <li class="list-inline-item pull-right" style={{float: 'pull-right'}}>{user.displayName}</li>
-              <button class="btn btn-primary pull-right" onClick={this.signOut}>Sign Out</button>
-            </ul>
-          </header>)
+        <header class="header" id="menu">
+          <ul class="list-inline ul">
+            <li class="list-inline-item" style={{float: 'center'}}><Link to="/create">Create a Flashmob</Link></li>
+            <li class="list-inline-item" style={{float: 'center'}}><Link to="/about">About</Link></li>
+            <li class="list-inline-item"><Link class="title" style={{textDecoration: 'none', color: 'white'}} to="/" ><h1>capone</h1></Link></li>
+            <li class="list-inline-item pull-right" style={{float: 'pull-right'}}>{user.displayName}</li>
+            <button class="btn btn-primary pull-right" onClick={this.signOut}>Sign Out</button>
+          </ul>
+        </header>
+      );
     }
-     else {
+    else {
       console.log("USER NOT FOUND");
       return(
-          <header class="header">
-            <ul class="list-inline ul">
-              <li class="list-inline-item"><Link class="title" style={{textDecoration: 'none', color: 'white'}} to="/" ><h1>capone</h1></Link></li>
-              <li class="list-inline-item" style={{float: 'center'}}><Link to="/create">Create a Flashmob</Link></li>
-              <button class="btn btn-primary pull-right" vertical-align="center" onClick={this.signIn} style={{float: 'center'}}><span>Sign In</span></button>
-            </ul>
-          </header>
-        );
-      }
+        <header class="header" id="menu">
+          <ul id="menu-left">
+            <li id="li-left"><Link to="/create">Create a Flashmob</Link></li>
+            <li id="li-left"><Link to="/about">About</Link></li>
+          </ul>
+          <Link id="titleMenu" style={{textDecoration: 'none', color: 'white'}} to="/"><h1>capone</h1></Link>
+          <ul id="menu-right">
+            <li id="li-right" onClick={this.signIn}><a>Sign In</a></li>
+            <li id="li-right"><a>Sign Up</a></li>
+          </ul>
+        </header>
+      );
     }
   }
-
+}
 
 // Creates a page where users can view mob details
 class PublicView extends React.Component {
@@ -536,38 +539,7 @@ class CreateView extends Component {
     }
 }
 
-
-
-{/*
-  <div key="a" >
-    <div class="col-sm-12" style={styleDiv}>ALL FLASHMOBS</div>
-    <div class="row" style={styleDiv}>
-      <div key="bigdiv" class="col-sm-12">
-        {
-        flashList.map((key) =>
-          <div class="col-sm-6" style={styleDiv}>
-            <div key={key + "value"} class="row">
-              <div class="row">
-                  <img
-                  src={key.bannerImage}
-                  class="img-responsive media center-block"
-                  alt=""></img>
-              </div>
-              <Link to={"/mob/" + key.key}>Go To Page</Link>
-              <h1 key={key}>{"Description: " + key.description}</h1>
-              <h2 >{"Choreographer: " + key.choreographer}</h2>
-              <h3 >{"Date: " + key.date}</h3>
-              <h3 >{"Time: " + key.time}</h3>
-              <hr style={{height:"dd30px"}}/>
-            </div>
-          </div>
-        )
-        }
-      </div>
-    </div>
-  </div>
-*/}
-
+// Creates a page where users can register
 class RegisterView extends Component {
   componentDidMount() {
     var self = this;
@@ -777,7 +749,7 @@ class App extends Component {
     };
   }
 
-  
+
 
   render() {
     return (

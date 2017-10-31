@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import database from './database'
 import {BrowserRouter as Router, Route, Link, IndexRoute} from 'react-router-dom';
+
 // Creates a page to view all mobs
 class HomeView extends Component {
   constructor(props) {
@@ -28,14 +29,16 @@ class HomeView extends Component {
       return (<div> LOAAAAAAAAADING!!!!!!!!!!!! </div> );
     }
 
-  var colors = ['silver', 'gray', 'red', 'maroon', 'yellow', 'olive', 'lime', 'green',
-              'aqua', 'teal', 'blue', 'navy', 'fuchsia', 'purple'];
+    var colors = ['silver', 'gray', 'red', 'maroon', 'yellow', 'olive', 'lime', 'green',
+                'aqua', 'teal', 'blue', 'navy', 'fuchsia', 'purple'];
 
-  var rand = Math.floor((Math.random() * 8));
-  const styleDiv = {
-    border:'2px solid #000000',
-    backgroundColor: colors[rand],
-  }
+    var rand = Math.floor((Math.random() * 8));
+
+    const styleDiv = {
+      border:'2px solid #000000',
+      backgroundColor: colors[rand],
+    }
+
     const flashList = this.state.allMobs;
     console.log("YAYAYAYA " + flashList[0].key);
     return(
