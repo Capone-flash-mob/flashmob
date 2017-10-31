@@ -13,6 +13,16 @@ var database = {
             callback(flashMobSnap);
         })
     },
+    signInUser: function(userId, userEmail, userName, emailVerified){
+        var newUser = {
+            'userId': userId,
+            'Email': userEmail,
+            'Name': userName,
+            'emailVerified': emailVerified,
+        };
+        var usersRef = fire.database().ref('/users/' + userId).update(newUser);
+        return usersRef.key;
+    },
 
     getAllFlashMobs: function(callback){
         var allMobs = fire.database().ref('/flashmobs');

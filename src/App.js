@@ -16,18 +16,96 @@ import gapi from './gapi'
 //////////////////////////////////////////////////////////////////////////////
 
 // Creates a headline banner with our logo and a login button
-function Headline(props){
-  return(
-    <header class="header">
-      <ul class="list-inline ul">
-        <li class="list-inline-item"><h1 class="title">capone</h1></li>
-        <li class="list-inline-item" style={{float: 'center'}}><Link to="/create">Create a Flashmob</Link></li>
-        <li class="list-inline-item" style={{float: 'center'}}><Link to="/register">Login</Link></li>
-        <li class="list-inline-item" style={{float: 'center'}}><Link to="/register">Register</Link></li>
-      </ul>
-    </header>
-  );
-}
+var provider = new firebase.auth.GoogleAuthProvider();
+
+class Headline extends React.Component{
+
+    constructor(props) {
+    super(props);
+    this.state = {
+      authenticated: 'false'
+    };
+
+        this.signIn = this.signIn.bind(this);
+        this.signOut = this.signOut.bind(this);
+
+  }
+
+   componentWillMount() {
+    var self = this;
+      firebase.auth().onAuthStateChanged(function(user) {
+        if(user){
+        self.setState({
+            authenticated: 'true',
+        })
+      } else {
+        self.setState({
+          authenticated: 'false',
+        })
+      }
+      })
+    }
+
+
+  signIn(e){
+    e.preventDefault();
+    firebase.auth().signInWithPopup(provider).then(function(result){
+      var credential = result.credential;
+      var user = result.user;
+      var userid = user.uid;
+      var userEmail = user.email;
+      var userName = user.displayName;
+      var emailVerified = user.emailVerified;
+
+      database.signInUser(userid, userEmail, userName, emailVerified);
+      this.setState({
+        authenticated: 'true',
+      });
+    }).catch(function(error){
+    })
+  }
+
+  signOut(e){
+    e.preventDefault();
+    firebase.auth().signOut().then((user) => {
+      this.setState({
+        authenticated: 'false',
+      })
+
+    })
+  }
+
+render(){
+
+
+    if (this.state.authenticated == 'true') {
+      console.log("USER FOUND");
+      var user = firebase.auth().currentUser;
+      return (
+         <header class="header">
+            <ul class="list-inline ul">
+              <li class="list-inline-item"><h1 class="title">capone</h1></li>
+              <li class="list-inline-item" style={{float: 'center'}}><Link to="/create">Create a Flashmob</Link></li>
+              <li class="list-inline-item pull-right" style={{float: 'pull-right'}}>{user.displayName}</li>
+              <button class="btn btn-primary pull-right" onClick={this.signOut}>Sign Out</button>
+            </ul>
+          </header>)
+    }
+     else {
+      console.log("USER NOT FOUND");
+      return(
+          <header class="header">
+            <ul class="list-inline ul">
+              <li class="list-inline-item"><h1 class="title">capone</h1></li>
+              <li class="list-inline-item" style={{float: 'center'}}><Link to="/create">Create a Flashmob</Link></li>
+              <button class="btn btn-primary pull-right" vertical-align="center" onClick={this.signIn} style={{float: 'center'}}><span>Sign In</span></button>
+            </ul>
+          </header>
+        );
+      }
+    }
+  }
+
 
 // Creates a page where users can view mob details
 class PublicView extends React.Component {
@@ -675,8 +753,13 @@ class demo extends Component{
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      authenticated: false
+    };
   }
+
+  
+
   render() {
     return (
       //The Router component allows elements inside to use React-router's API
