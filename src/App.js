@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import fire from './fire';
 import HomeView from './HomeView';
-import database from './database'
+import UserView from './UserView';
+import database from './database';
 import firebase from 'firebase';
 import {BrowserRouter as Router, Route, Link, IndexRoute} from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
@@ -87,7 +88,7 @@ render(){
             <ul class="list-inline ul">
               <li class="list-inline-item"><Link class="title" style={{textDecoration: 'none', color: 'white'}} to="/" ><h1>capone</h1></Link></li>
               <li class="list-inline-item" style={{float: 'center'}}><Link to="/create">Create a Flashmob</Link></li>
-              <li class="list-inline-item pull-right" style={{float: 'pull-right'}}>{user.displayName}</li>
+              <li class="list-inline-item pull-right" style={{float: 'pull-right'}}><Link to={"/user/" + user.uid}>{user.displayName}</Link></li>
               <button class="btn btn-primary pull-right" onClick={this.signOut}>Sign Out</button>
             </ul>
           </header>)
@@ -794,6 +795,7 @@ class App extends Component {
           <Route path="/create" component={CreateView}/>
           <Route exact path="/" component = {HomeView}/>
           <Route path="/register" component={RegisterView}/>
+          <Route path="/user/:userid" component={UserView}/>
           <Route path="/demo" component={demo}/>
         </div>
       </Router>
