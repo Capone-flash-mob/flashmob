@@ -1,5 +1,6 @@
 body {
-  background-color: #f4f8ff;
+  /*background-color: #f4f8ff;*/
+  background-color: #ffffff;
   margin: 0;
   padding: 0;
   font-family: 'Lato', sans-serif;
@@ -7,7 +8,7 @@ body {
 
 /* Header Component */
 .header {
-  background-color: #222;
+  background-color: #4484ce;
   height: 80px;
   width: 100%;
   padding-left: 40px;
@@ -43,29 +44,33 @@ body {
   text-align: left;
   margin: 20px 0;
   box-sizing: border-box;
+  box-shadow: 0 2px 10px -2px rgba(22,22,22,0.45);
+  border-color: #E8E8E8 !important;
 }
 
 .mob-infobox-details{
   width: 100%;
-  height: 168px;
-  position: relative;
-  border: 3px solid rgba(0, 0, 0, 0.12);
+  /*border: 3px solid rgba(0, 0, 0, 0.12);*/
   border-top: 0px;
   margin-top: -6px;
-  padding-left:10px;
-  padding-top:5px;
+  padding: 17px 20px 20px 33px;
+  color: gray;
 }
 .mob-infobox-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   display: block;
   font-size: 31px;
+  height: 45px;
+  color: #4484ce;
 }
 .mob-infobox-date-and-time {
   display: block;
-  color: gray;
 }
 .mob-infobox-location {
   display: block;
-  color: gray;
+  margin-bottom: 1px;
 }
 
 /* Mob Admin View Component */
