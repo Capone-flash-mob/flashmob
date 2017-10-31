@@ -5,6 +5,7 @@ import UserView from './UserView';
 import database from './database';
 import firebase from 'firebase';
 import {BrowserRouter as Router, Route, Link, IndexRoute} from 'react-router-dom';
+import YouTube from 'react-youtube';
 import { withRouter } from 'react-router-dom';
 import ReactDOM from 'react-dom';
 import gapi from './gapi'
@@ -113,7 +114,7 @@ class Headline extends React.Component{
           <Link id="titleMenu" style={{textDecoration: 'none', color: 'white'}} to="/"><h1>capone</h1></Link>
           <ul id="menu-right">
             <li id="li-right" style={{cursor: 'pointer'}} onClick={this.signIn}><a>Sign In</a></li>
-            
+
           </ul>
       </header>
       </div>
@@ -127,7 +128,7 @@ class Headline extends React.Component{
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse-elements" aria-controls="navbar-collapse-elements" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse navbar-collapse-elements" id="navbarNavAltMarkup">
+        <div class="collapse navbar-collapse justify-content-beginning navbar-collapse-elements" id="navbarNavAltMarkup">
           <div class="navbar-nav">
             <div class="navbar-link-container">
               <Link class="nav-item nav-link navbar-link" to="/Create">Create a flashmob</Link>
@@ -143,7 +144,7 @@ class Headline extends React.Component{
               <a class="nav-item nav-link navbar-link" onClick={this.signIn}>Log in</a>
             </div>
             <div class="navbar-link-container">
-              <a class="nav-item nav-link navbar-link mr-auto"> Sign up</a>
+              <a class="nav-item nav-link navbar-link mr-auto">Sign up</a>
             </div>
           </div>
         </div>
@@ -193,10 +194,102 @@ class PublicView extends React.Component {
   }
 
   render(){
+    if (this.state.flashmob == null) {
+      return (<div> Loading... </div>);
+    }
+
+    const primary_opts = {
+        height: '400',
+        width: '100%',
+    };
+
+    const secondary_opts = {
+        height: '100',
+        width: '100%',
+    };
+
+    return (
+      <div class="content">
+        <div class="row">
+          <div class="col-sm-1">
+          </div>
+          <div class="col-sm-10">
+            <h1>{this.state.flashmob.title}</h1>
+          </div>
+          <div class="col-sm-1">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-1">
+          </div>
+          <div class="col-sm-10">
+            <p>{this.state.flashmob.description}</p>
+          </div>
+          <div class="col-sm-1">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-1">
+          </div>
+          <div class="col-sm-10">
+            <div class="row">
+              <div class="col-sm-8">
+                <div id="carousel-thumb" class="carousel slide carousel-fade carousel-thumbnails" data-ride="carousel">
+                  <div class="carousel-inner" role="listbox">
+                      <div class="carousel-item active">
+                          <YouTube opts={primary_opts} videoId="D59v74k5flU"/>
+                      </div>
+                      <div class="carousel-item">
+                          <YouTube opts={primary_opts} videoId="D59v74k5flU"/>
+                      </div>
+                      <div class="carousel-item">
+                          <YouTube opts={primary_opts} videoId="D59v74k5flU"/>
+                      </div>
+                  </div>
+                  <a class="carousel-control-prev" href="#carousel-thumb" role="button" data-slide="prev">
+                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                      <span class="sr-only">Previous</span>
+                  </a>
+                  <a class="carousel-control-next" href="#carousel-thumb" role="button" data-slide="next">
+                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                      <span class="sr-only">Next</span>
+                  </a>
+                  <ol class="carousel-indicators">
+                      <li data-target="#carousel-thumb" data-slide-to="0" class="active"><YouTube opts={secondary_opts} videoId="D59v74k5flU"/></li>
+                      <li data-target="#carousel-thumb" data-slide-to="1"><YouTube opts={secondary_opts} videoId="D59v74k5flU"/></li>
+                      <li data-target="#carousel-thumb" data-slide-to="2"><YouTube opts={secondary_opts} videoId="D59v74k5flU"/></li>
+                  </ol>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="row">
+                  <h6>{this.state.flashmob.location}</h6>
+                </div>
+                <div class="row">
+                  <h6>{this.state.flashmob.date}, {this.state.flashmob.time}</h6>
+                </div>
+                <div class="row">
+                  <h6>{this.state.flashmob.choreographer}</h6>
+                </div>
+                <div class="row">
+                  <h6>{this.state.flashmob.email}</h6>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-1">
+          </div>
+        </div>
+      </div>
+    );
+  }
+  /*
+  render(){
     if (this.state.flashmob == null){
       return (<div> LOAAAAAAAAADING!!!!!!!!!!!! </div> );
     }
     return(
+
       <div class="content">
         <div class="row">
             <img
@@ -323,7 +416,7 @@ class PublicView extends React.Component {
           <div class="col-sm-10">
             <div class="announcements">
               <strong>Announcments: </strong>
-              {/*<p> {this.state.flashmob.announcments[0].text}</p>*/}
+              {<p> {this.state.flashmob.announcments[0].text}</p>}
             </div>
           </div>
           <div class="col-sm-1">
@@ -331,7 +424,8 @@ class PublicView extends React.Component {
         </div>
       </div>
       );
-  }
+
+  } */
 }
 
 // Creates a page where an admin can view and edit mob details
