@@ -28,7 +28,6 @@ class Headline extends React.Component{
 
         this.signIn = this.signIn.bind(this);
         this.signOut = this.signOut.bind(this);
-
   }
 
    componentWillMount() {
@@ -65,6 +64,8 @@ class Headline extends React.Component{
     })
   }
 
+
+
   signOut(e){
     e.preventDefault();
     firebase.auth().signOut().then((user) => {
@@ -84,7 +85,7 @@ render(){
       return (
          <header class="header">
             <ul class="list-inline ul">
-              <li class="list-inline-item"><h1 class="title">capone</h1></li>
+              <li class="list-inline-item"><Link class="title" style={{textDecoration: 'none', color: 'white'}} to="/" ><h1>capone</h1></Link></li>
               <li class="list-inline-item" style={{float: 'center'}}><Link to="/create">Create a Flashmob</Link></li>
               <li class="list-inline-item pull-right" style={{float: 'pull-right'}}>{user.displayName}</li>
               <button class="btn btn-primary pull-right" onClick={this.signOut}>Sign Out</button>
@@ -96,7 +97,7 @@ render(){
       return(
           <header class="header">
             <ul class="list-inline ul">
-              <li class="list-inline-item"><h1 class="title">capone</h1></li>
+              <li class="list-inline-item"><Link class="title" style={{textDecoration: 'none', color: 'white'}} to="/" ><h1>capone</h1></Link></li>
               <li class="list-inline-item" style={{float: 'center'}}><Link to="/create">Create a Flashmob</Link></li>
               <button class="btn btn-primary pull-right" vertical-align="center" onClick={this.signIn} style={{float: 'center'}}><span>Sign In</span></button>
             </ul>
@@ -115,6 +116,24 @@ class PublicView extends React.Component {
       flashmob_uid: props.match.params.mobid,
       flashmob: {announcments:[{text:""}]}
     };
+
+
+    this.addFlashMobToUser = this.addFlashMobToUser.bind(this);
+  }
+
+  addFlashMobToUser(e){
+    e.preventDefault();
+      if(firebase.auth().currentUser){
+      var isInt = {
+        'Interested': true,
+        'Admin': false,
+      }
+
+      var userid = firebase.auth().currentUser.uid;
+      var thisFlashMob = this.state.flashmob_uid;
+      var userRef = firebase.database().ref('/users/' + userid + '/MyMobs/' + thisFlashMob);
+      userRef.update(isInt);
+    }
   }
 
   componentDidMount() {
@@ -223,7 +242,7 @@ class PublicView extends React.Component {
             <div class="col-sm-1">
             </div>
             <div class="col-sm-10">
-              <button class="button" vertical-align="middle"><span> I am Interested! </span></button>
+              <button class="button" onClick={this.addFlashMobToUser} vertical-align="middle"><span> I am Interested! </span></button>
             </div>
             <div class="col-sm-1">
             </div>
