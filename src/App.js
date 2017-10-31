@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import fire from './fire';
 import HomeView from './HomeView';
-import database from './database'
+import UserView from './UserView';
+import database from './database';
 import firebase from 'firebase';
 import {BrowserRouter as Router, Route, Link, IndexRoute} from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
@@ -766,6 +767,7 @@ class App extends Component {
           <Route path="/create" component={CreateView}/>
           <Route exact path="/" component = {HomeView}/>
           <Route path="/register" component={RegisterView}/>
+          <Route path="/user/:userid" component={UserView}/>
           <Route path="/demo" component={demo}/>
         </div>
       </Router>
