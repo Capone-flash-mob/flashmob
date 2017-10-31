@@ -81,13 +81,15 @@ class Headline extends React.Component{
       console.log("USER FOUND");
       var user = firebase.auth().currentUser;
       return (
-        <header class="header" id="menu">
-          <ul class="list-inline ul">
-            <li class="list-inline-item" style={{float: 'center'}}><Link to="/create">Create a Flashmob</Link></li>
-            <li class="list-inline-item" style={{float: 'center'}}><Link to="/about">About</Link></li>
-            <li class="list-inline-item"><Link class="title" style={{textDecoration: 'none', color: 'white'}} to="/" ><h1>capone</h1></Link></li>
-            <li class="list-inline-item pull-right" style={{float: 'pull-right'}}>{user.displayName}</li>
-            <button class="btn btn-primary pull-right" onClick={this.signOut}>Sign Out</button>
+         <header class="header" id="menu">
+          <ul id="menu-left">
+            <li id="li-left"><Link to="/create">Create a Flashmob</Link></li>
+            <li id="li-left"><Link to="/about">About</Link></li>
+          </ul>
+          <Link id="titleMenu" style={{textDecoration: 'none', color: 'white'}} to="/"><h1>capone</h1></Link>
+          <ul id="menu-right">
+            <li id="li-right" style={{cursor: 'pointer'}} onClick={this.signOut}><a>Sign Out</a></li>
+            <li id="li-right"><Link to={"/user/" + user.uid}>{user.displayName}</Link></li>
           </ul>
         </header>
       );
@@ -110,8 +112,8 @@ class Headline extends React.Component{
           </ul>
           <Link id="titleMenu" style={{textDecoration: 'none', color: 'white'}} to="/"><h1>capone</h1></Link>
           <ul id="menu-right">
-            <li id="li-right" onClick={this.signIn}><a>Sign In</a></li>
-            <li id="li-right"><a>Sign Up</a></li>
+            <li id="li-right" style={{cursor: 'pointer'}} onClick={this.signIn}><a>Sign In</a></li>
+            
           </ul>
       </header>
       </div>
