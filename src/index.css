@@ -7,6 +7,25 @@ body {
 }
 
 /* Header Component */
+.navbar-title {
+  font-size:35px;
+  color: white;
+  font-weight:bold;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-family: 'Lato', sans-serif;
+}
+
+.navbar-container {
+  background-color: #4484ce;
+  border-radius: 0;
+}
+
+.navbar-link {
+  color:white;
+}
+
+
 #menu {
   margin: 0 0;
   position: absolute;

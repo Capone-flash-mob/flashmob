@@ -76,8 +76,7 @@ class Headline extends React.Component{
 
     })
   }
-
-  render(){
+  /*render(){
     if (this.state.authenticated == 'true') {
       console.log("USER FOUND");
       var user = firebase.auth().currentUser;
@@ -96,19 +95,51 @@ class Headline extends React.Component{
     else {
       console.log("USER NOT FOUND");
       return(
-        <header class="header" id="menu">
-          <ul id="menu-left">
-            <li id="li-left"><Link to="/create">Create a Flashmob</Link></li>
-            <li id="li-left"><Link to="/about">About</Link></li>
+              );
+    }
+  }*/
+  /*render(){
+    return (
+      <div class="row">
+      <header class="navbar">
+          <ul class="nav-item">
+            <li><Link to="/create">Create a Flashmob</Link></li>
+          </ul>
+          <ul class="nav-item">
+            <li><Link to="/about">About</Link></li>
           </ul>
           <Link id="titleMenu" style={{textDecoration: 'none', color: 'white'}} to="/"><h1>capone</h1></Link>
           <ul id="menu-right">
             <li id="li-right" onClick={this.signIn}><a>Sign In</a></li>
             <li id="li-right"><a>Sign Up</a></li>
           </ul>
-        </header>
-      );
-    }
+      </header>
+      </div>
+    );
+  }*/
+
+  render() {
+    return (
+      <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary navbar-container">
+        <a class="navbar-brand navbar-title" href="#">CAPONE</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse-elements" aria-controls="navbar-collapse-elements" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse navbar-collapse-elements" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <a class="nav-item nav-link navbar-link" href="#">Create a flashmob</a>
+            <a class="nav-item nav-link navbar-link" href="#">About</a>
+          </div>
+        </div>
+        <div class="collapse navbar-collapse justify-content-end navbar-collapse-elements" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <a class="nav-item nav-link navbar-link" href="#">Log in</a>
+            <a class="nav-item nav-link navbar-link mr-auto" href="#"> Sign up</a>
+          </div>
+        </div>
+      </nav>
+    );
+
   }
 }
 
@@ -756,7 +787,7 @@ class App extends Component {
     return (
       //The Router component allows elements inside to use React-router's API
       <Router>
-        <div>
+        <div class="container-flex">
           <Headline></Headline>
 
           {/*Routes*/}
