@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import fire from './fire';
 import HomeView from './HomeView';
-import database from './database'
+import UserView from './UserView';
+import database from './database';
 import firebase from 'firebase';
 import {BrowserRouter as Router, Route, Link, IndexRoute} from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
@@ -16,17 +17,99 @@ import gapi from './gapi'
 //////////////////////////////////////////////////////////////////////////////
 
 // Creates a headline banner with our logo and a login button
-function Headline(props){
-  return(
-    <header class="header">
-      <ul class="list-inline ul">
-        <li class="list-inline-item"><h1 class="title">capone</h1></li>
-        <li class="list-inline-item" style={{float: 'center'}}><Link to="/create">Create a Flashmob</Link></li>
-        <li class="list-inline-item" style={{float: 'center'}}><Link to="/register">Login</Link></li>
-        <li class="list-inline-item" style={{float: 'center'}}><Link to="/register">Register</Link></li>
-      </ul>
-    </header>
-  );
+var provider = new firebase.auth.GoogleAuthProvider();
+
+class Headline extends React.Component{
+
+    constructor(props) {
+    super(props);
+    this.state = {
+      authenticated: 'false'
+    };
+
+        this.signIn = this.signIn.bind(this);
+        this.signOut = this.signOut.bind(this);
+  }
+
+   componentWillMount() {
+    var self = this;
+      firebase.auth().onAuthStateChanged(function(user) {
+        if(user){
+        self.setState({
+            authenticated: 'true',
+        })
+      } else {
+        self.setState({
+          authenticated: 'false',
+        })
+      }
+      })
+    }
+
+
+  signIn(e){
+    e.preventDefault();
+    firebase.auth().signInWithPopup(provider).then(function(result){
+      var credential = result.credential;
+      var user = result.user;
+      var userid = user.uid;
+      var userEmail = user.email;
+      var userName = user.displayName;
+      var emailVerified = user.emailVerified;
+
+      database.signInUser(userid, userEmail, userName, emailVerified);
+      this.setState({
+        authenticated: 'true',
+      });
+    }).catch(function(error){
+    })
+  }
+
+
+
+  signOut(e){
+    e.preventDefault();
+    firebase.auth().signOut().then((user) => {
+      this.setState({
+        authenticated: 'false',
+      })
+
+    })
+  }
+
+  render(){
+    if (this.state.authenticated == 'true') {
+      console.log("USER FOUND");
+      var user = firebase.auth().currentUser;
+      return (
+        <header class="header" id="menu">
+          <ul class="list-inline ul">
+            <li class="list-inline-item" style={{float: 'center'}}><Link to="/create">Create a Flashmob</Link></li>
+            <li class="list-inline-item" style={{float: 'center'}}><Link to="/about">About</Link></li>
+            <li class="list-inline-item"><Link class="title" style={{textDecoration: 'none', color: 'white'}} to="/" ><h1>capone</h1></Link></li>
+            <li class="list-inline-item pull-right" style={{float: 'pull-right'}}>{user.displayName}</li>
+            <button class="btn btn-primary pull-right" onClick={this.signOut}>Sign Out</button>
+          </ul>
+        </header>
+      );
+    }
+    else {
+      console.log("USER NOT FOUND");
+      return(
+        <header class="header" id="menu">
+          <ul id="menu-left">
+            <li id="li-left"><Link to="/create">Create a Flashmob</Link></li>
+            <li id="li-left"><Link to="/about">About</Link></li>
+          </ul>
+          <Link id="titleMenu" style={{textDecoration: 'none', color: 'white'}} to="/"><h1>capone</h1></Link>
+          <ul id="menu-right">
+            <li id="li-right" onClick={this.signIn}><a>Sign In</a></li>
+            <li id="li-right"><a>Sign Up</a></li>
+          </ul>
+        </header>
+      );
+    }
+  }
 }
 
 // Creates a page where users can view mob details
@@ -37,6 +120,24 @@ class PublicView extends React.Component {
       flashmob_uid: props.match.params.mobid,
       flashmob: {announcments:[{text:""}]}
     };
+
+
+    this.addFlashMobToUser = this.addFlashMobToUser.bind(this);
+  }
+
+  addFlashMobToUser(e){
+    e.preventDefault();
+      if(firebase.auth().currentUser){
+      var isInt = {
+        'Interested': true,
+        'Admin': false,
+      }
+
+      var userid = firebase.auth().currentUser.uid;
+      var thisFlashMob = this.state.flashmob_uid;
+      var userRef = firebase.database().ref('/users/' + userid + '/MyMobs/' + thisFlashMob);
+      userRef.update(isInt);
+    }
   }
 
   componentDidMount() {
@@ -145,7 +246,7 @@ class PublicView extends React.Component {
             <div class="col-sm-1">
             </div>
             <div class="col-sm-10">
-              <button class="button" vertical-align="middle"><span> I am Interested! </span></button>
+              <button class="button" onClick={this.addFlashMobToUser} vertical-align="middle"><span> I am Interested! </span></button>
             </div>
             <div class="col-sm-1">
             </div>
@@ -439,38 +540,7 @@ class CreateView extends Component {
     }
 }
 
-
-
-{/*
-  <div key="a" >
-    <div class="col-sm-12" style={styleDiv}>ALL FLASHMOBS</div>
-    <div class="row" style={styleDiv}>
-      <div key="bigdiv" class="col-sm-12">
-        {
-        flashList.map((key) =>
-          <div class="col-sm-6" style={styleDiv}>
-            <div key={key + "value"} class="row">
-              <div class="row">
-                  <img
-                  src={key.bannerImage}
-                  class="img-responsive media center-block"
-                  alt=""></img>
-              </div>
-              <Link to={"/mob/" + key.key}>Go To Page</Link>
-              <h1 key={key}>{"Description: " + key.description}</h1>
-              <h2 >{"Choreographer: " + key.choreographer}</h2>
-              <h3 >{"Date: " + key.date}</h3>
-              <h3 >{"Time: " + key.time}</h3>
-              <hr style={{height:"dd30px"}}/>
-            </div>
-          </div>
-        )
-        }
-      </div>
-    </div>
-  </div>
-*/}
-
+// Creates a page where users can register
 class RegisterView extends Component {
   componentDidMount() {
     var self = this;
@@ -675,8 +745,13 @@ class demo extends Component{
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      authenticated: false
+    };
   }
+
+
+
   render() {
     return (
       //The Router component allows elements inside to use React-router's API
@@ -692,6 +767,7 @@ class App extends Component {
           <Route path="/create" component={CreateView}/>
           <Route exact path="/" component = {HomeView}/>
           <Route path="/register" component={RegisterView}/>
+          <Route path="/user/:userid" component={UserView}/>
           <Route path="/demo" component={demo}/>
         </div>
       </Router>
