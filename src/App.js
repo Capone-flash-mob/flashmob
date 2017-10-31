@@ -76,19 +76,20 @@ class Headline extends React.Component{
 
     })
   }
-
-  render(){
+  /*render(){
     if (this.state.authenticated == 'true') {
       console.log("USER FOUND");
       var user = firebase.auth().currentUser;
       return (
-        <header class="header" id="menu">
-          <ul class="list-inline ul">
-            <li class="list-inline-item" style={{float: 'center'}}><Link to="/create">Create a Flashmob</Link></li>
-            <li class="list-inline-item" style={{float: 'center'}}><Link to="/about">About</Link></li>
-            <li class="list-inline-item"><Link class="title" style={{textDecoration: 'none', color: 'white'}} to="/" ><h1>capone</h1></Link></li>
-            <li class="list-inline-item pull-right" style={{float: 'pull-right'}}>{user.displayName}</li>
-            <button class="btn btn-primary pull-right" onClick={this.signOut}>Sign Out</button>
+         <header class="header" id="menu">
+          <ul id="menu-left">
+            <li id="li-left"><Link to="/create">Create a Flashmob</Link></li>
+            <li id="li-left"><Link to="/about">About</Link></li>
+          </ul>
+          <Link id="titleMenu" style={{textDecoration: 'none', color: 'white'}} to="/"><h1>capone</h1></Link>
+          <ul id="menu-right">
+            <li id="li-right" style={{cursor: 'pointer'}} onClick={this.signOut}><a>Sign Out</a></li>
+            <li id="li-right"><Link to={"/user/" + user.uid}>{user.displayName}</Link></li>
           </ul>
         </header>
       );
@@ -96,19 +97,59 @@ class Headline extends React.Component{
     else {
       console.log("USER NOT FOUND");
       return(
-        <header class="header" id="menu">
-          <ul id="menu-left">
-            <li id="li-left"><Link to="/create">Create a Flashmob</Link></li>
-            <li id="li-left"><Link to="/about">About</Link></li>
+              );
+    }
+  }*/
+  /*render(){
+    return (
+      <div class="row">
+      <header class="navbar">
+          <ul class="nav-item">
+            <li><Link to="/create">Create a Flashmob</Link></li>
+          </ul>
+          <ul class="nav-item">
+            <li><Link to="/about">About</Link></li>
           </ul>
           <Link id="titleMenu" style={{textDecoration: 'none', color: 'white'}} to="/"><h1>capone</h1></Link>
           <ul id="menu-right">
-            <li id="li-right" onClick={this.signIn}><a>Sign In</a></li>
-            <li id="li-right"><a>Sign Up</a></li>
+            <li id="li-right" style={{cursor: 'pointer'}} onClick={this.signIn}><a>Sign In</a></li>
+            
           </ul>
-        </header>
-      );
-    }
+      </header>
+      </div>
+    );
+  }*/
+
+  render() {
+    return (
+      <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary navbar-container">
+        <Link class="navbar-brand navbar-title" to="/">CAPONE</Link>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse-elements" aria-controls="navbar-collapse-elements" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse navbar-collapse-elements" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <div class="navbar-link-container">
+              <Link class="nav-item nav-link navbar-link" to="/Create">Create a flashmob</Link>
+            </div>
+            <div class="navbar-link-container">
+              <Link class="nav-item nav-link navbar-link" to="/about">About</Link>
+            </div>
+          </div>
+        </div>
+        <div class="collapse navbar-collapse justify-content-end navbar-collapse-elements" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <div class="navbar-link-container">
+              <a class="nav-item nav-link navbar-link" onClick={this.signIn}>Log in</a>
+            </div>
+            <div class="navbar-link-container">
+              <a class="nav-item nav-link navbar-link mr-auto"> Sign up</a>
+            </div>
+          </div>
+        </div>
+      </nav>
+    );
+
   }
 }
 
@@ -756,7 +797,7 @@ class App extends Component {
     return (
       //The Router component allows elements inside to use React-router's API
       <Router>
-        <div>
+        <div class="container-flex">
           <Headline></Headline>
 
           {/*Routes*/}

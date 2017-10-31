@@ -29,25 +29,16 @@ var HomeView = class HomeView extends Component {
       return (<div> LOAAAAAAAAADING!!!!!!!!!!!! </div> );
     }
 
-  var colors = ['silver', 'gray', 'red', 'maroon', 'yellow', 'olive', 'lime', 'green',
-              'aqua', 'teal', 'blue', 'navy', 'fuchsia', 'purple'];
   const opts = {
         height: '200',
         width: '100%',
       };
-  var rand = Math.floor((Math.random() * 8));
-  const styleDiv = {
-    border:'2px solid #000000',
-    backgroundColor: colors[rand],
-  }
+
     const flashList = this.state.allMobs;
-    console.log("YAYAYAYA " + flashList[0].key);
     return(
       <div class="content">
         <div class="row">
-          <div class="col-sm-2">
-          </div>
-          <div class="col-sm-8">
+          <div class="col-sm-8 offset-2">
             {flashList.map((key) =>
               <div class="col-sm-6">
                 <Link to={"mob/" + key.key} style={{ textDecoration: 'none'}}>
