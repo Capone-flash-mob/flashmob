@@ -45,9 +45,7 @@ var HomeView = class HomeView extends Component {
     return(
       <div class="content">
         <div class="row">
-          <div class="col-sm-2">
-          </div>
-          <div class="col-sm-8">
+          <div class="col-sm-8 offset-2">
             {flashList.map((key) =>
               <div class="col-sm-6">
                 <Link to={"mob/" + key.key} style={{ textDecoration: 'none'}}>

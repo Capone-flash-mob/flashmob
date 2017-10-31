@@ -23,6 +23,12 @@ body {
 
 .navbar-link {
   color:white;
+  cursor:pointer;
+  color:rgba(255, 255, 255, 0.7) !important;
+}
+.navbar-link-container:hover {
+  margin-bottom: -3px;
+  border-bottom: 3px solid #f19f4d;
 }
 
 

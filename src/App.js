@@ -121,20 +121,28 @@ class Headline extends React.Component{
   render() {
     return (
       <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary navbar-container">
-        <a class="navbar-brand navbar-title" href="#">CAPONE</a>
+        <Link class="navbar-brand navbar-title" to="/">CAPONE</Link>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse-elements" aria-controls="navbar-collapse-elements" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse navbar-collapse-elements" id="navbarNavAltMarkup">
           <div class="navbar-nav">
-            <a class="nav-item nav-link navbar-link" href="#">Create a flashmob</a>
-            <a class="nav-item nav-link navbar-link" href="#">About</a>
+            <div class="navbar-link-container">
+              <Link class="nav-item nav-link navbar-link" to="/Create">Create a flashmob</Link>
+            </div>
+            <div class="navbar-link-container">
+              <Link class="nav-item nav-link navbar-link" to="/about">About</Link>
+            </div>
           </div>
         </div>
         <div class="collapse navbar-collapse justify-content-end navbar-collapse-elements" id="navbarNavAltMarkup">
           <div class="navbar-nav">
-            <a class="nav-item nav-link navbar-link" href="#">Log in</a>
-            <a class="nav-item nav-link navbar-link mr-auto" href="#"> Sign up</a>
+            <div class="navbar-link-container">
+              <a class="nav-item nav-link navbar-link" onClick={this.signIn}>Log in</a>
+            </div>
+            <div class="navbar-link-container">
+              <a class="nav-item nav-link navbar-link mr-auto"> Sign up</a>
+            </div>
           </div>
         </div>
       </nav>
