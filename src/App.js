@@ -244,7 +244,7 @@ class PublicView extends React.Component {
       <div class="content">
         <div class="row">
           <div class="col-sm-10 offset-sm-1">
-            <h1>{this.state.flashmob.title}</h1>
+            <h1>{this.state.flashmob.name}</h1>
           </div>
         </div>
         <div class="row">
@@ -422,6 +422,20 @@ class CreateView extends Component {
             <div class="col-sm-10 offset-sm-1">
               <div class="row">
                 <div class="col-sm-8">
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label for="mainVideoTitle"><i>Video Title:</i></label>
+                        <input type="text" class="form-control" id="mainVideoTitle"></input>
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label for="mainVideoUrl"><i>Video URL:</i></label>
+                        <input type="text" class="form-control" id="mainVideoUrl"></input>
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <div class="col-sm-4">
                   <div class="row">
