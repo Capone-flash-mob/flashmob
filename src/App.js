@@ -128,7 +128,7 @@ class Headline extends React.Component{
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse-elements" aria-controls="navbar-collapse-elements" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse justify-content-beginning navbar-collapse-elements" id="navbarNavAltMarkup">
+        <div class="collapse navbar-collapse justify-content navbar-collapse-elements" id="navbarNavAltMarkup">
           <div class="navbar-nav">
             <div class="navbar-link-container">
               <Link class="nav-item nav-link navbar-link" to="/Create">Create a flashmob</Link>
@@ -211,54 +211,48 @@ class PublicView extends React.Component {
     return (
       <div class="content">
         <div class="row">
-          <div class="col-sm-1">
-          </div>
-          <div class="col-sm-10">
+          <div class="col-sm-10 offset-sm-1">
             <h1>{this.state.flashmob.title}</h1>
           </div>
-          <div class="col-sm-1">
-          </div>
         </div>
         <div class="row">
-          <div class="col-sm-1">
-          </div>
-          <div class="col-sm-10">
+          <div class="col-sm-10 offset-sm-1">
             <p>{this.state.flashmob.description}</p>
           </div>
-          <div class="col-sm-1">
-          </div>
         </div>
         <div class="row">
-          <div class="col-sm-1">
-          </div>
-          <div class="col-sm-10">
+          <div class="col-sm-10 offset-sm-1">
             <div class="row">
               <div class="col-sm-8">
-                <div id="carousel-thumb" class="carousel slide carousel-fade carousel-thumbnails" data-ride="carousel">
+                {/* Video Carousel */}
+                <div id="video-carousel-example" class="carousel slide carousel-fade" data-ride="carousel">
+                  {/* Indicators */}
+                  <ol class="carousel-indicators">
+                    <li data-target="#video-carousel-example" data-slide-to="0" class="active"></li>
+                    <li data-target="#video-carousel-example" data-slide-to="1"></li>
+                    <li data-target="#video-carousel-example" data-slide-to="2"></li>
+                  </ol>
+                  {/* Slides */}
                   <div class="carousel-inner" role="listbox">
-                      <div class="carousel-item active">
-                          <YouTube opts={primary_opts} videoId="D59v74k5flU"/>
-                      </div>
-                      <div class="carousel-item">
-                          <YouTube opts={primary_opts} videoId="D59v74k5flU"/>
-                      </div>
-                      <div class="carousel-item">
-                          <YouTube opts={primary_opts} videoId="D59v74k5flU"/>
-                      </div>
+                    <div class="carousel-item active">
+                      <YouTube opts={primary_opts} videoId="D59v74k5flU"/>
+                    </div>
+                    <div class="carousel-item">
+                      <YouTube opts={primary_opts} videoId="dMH0bHeiRNg"/>
+                    </div>
+                    <div class="carousel-item">
+                      <YouTube opts={primary_opts} videoId="9bZkp7q19f0"/>
+                    </div>
                   </div>
-                  <a class="carousel-control-prev" href="#carousel-thumb" role="button" data-slide="prev">
-                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                      <span class="sr-only">Previous</span>
+                  {/* Controls */}
+                  <a class="carousel-control-prev" href="#video-carousel-example" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
                   </a>
-                  <a class="carousel-control-next" href="#carousel-thumb" role="button" data-slide="next">
+                  <a class="carousel-control-next" href="#video-carousel-example" role="button" data-slide="next">
                       <span class="carousel-control-next-icon" aria-hidden="true"></span>
                       <span class="sr-only">Next</span>
                   </a>
-                  <ol class="carousel-indicators">
-                      <li data-target="#carousel-thumb" data-slide-to="0" class="active"><YouTube opts={secondary_opts} videoId="D59v74k5flU"/></li>
-                      <li data-target="#carousel-thumb" data-slide-to="1"><YouTube opts={secondary_opts} videoId="D59v74k5flU"/></li>
-                      <li data-target="#carousel-thumb" data-slide-to="2"><YouTube opts={secondary_opts} videoId="D59v74k5flU"/></li>
-                  </ol>
                 </div>
               </div>
               <div class="col-sm-4">
@@ -276,8 +270,6 @@ class PublicView extends React.Component {
                 </div>
               </div>
             </div>
-          </div>
-          <div class="col-sm-1">
           </div>
         </div>
       </div>
