@@ -307,149 +307,6 @@ class PublicView extends React.Component {
       </div>
     );
   }
-  /*
-  render(){
-    if (this.state.flashmob == null){
-      return (<div> LOAAAAAAAAADING!!!!!!!!!!!! </div> );
-    }
-    return(
-
-      <div class="content">
-        <div class="row">
-            <img
-            src={this.state.flashmob.bannerImage}
-            class="img-responsive media center-block"
-            alt=""></img>
-        </div>
-        <div class="row">
-          <div class="col-sm-1">
-          </div>
-          <div class="col-sm-10">
-            <div class="infobox">
-            <h1>{this.state.flashmob.title}</h1>
-            </div>
-          </div>
-          <div class="col-sm-1">
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-1">
-          </div>
-          <div class="col-sm-10">
-            <div class="description">
-            <p>{this.state.flashmob.description}</p>
-            </div>
-          </div>
-          <div class="col-sm-1">
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-1">
-          </div>
-          <div class="col-sm-3">
-            <div class="infobox">
-            {this.state.flashmob.date}
-            </div>
-          </div>
-          <div class="col-sm-2">
-            <div class="infobox">
-            {this.state.flashmob.time}
-            </div>
-          </div>
-          <div class="col-sm-5">
-            <div class="infobox">
-            {this.state.flashmob.choreographer}
-            </div>
-          </div>
-          <div class="col-sm-1">
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-1">
-          </div>
-          <div class="col-sm-5">
-            <div class="infobox">
-            {this.state.flashmob.location}
-            </div>
-          </div>
-          <div class="col-sm-5">
-            <div class="infobox">
-            {this.state.flashmob.email}
-            </div>
-          </div>
-          <div class="col-sm-1">
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-3">
-          </div>
-          <div class="col-sm-6">
-            <div class="col-sm-1">
-            </div>
-            <div class="col-sm-10">
-              <div class="infobox">
-              {this.state.flashmob.interested + " Interested "}
-              </div>
-            </div>
-            <div class="col-sm-1">
-            </div>
-          </div>
-          <div class="col-sm-3">
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-3">
-          </div>
-          <div class="col-sm-6">
-            <div class="col-sm-1">
-            </div>
-            <div class="col-sm-10">
-              <button class="button" onClick={this.addFlashMobToUser} vertical-align="middle"><span> I am Interested! </span></button>
-            </div>
-            <div class="col-sm-1">
-            </div>
-          </div>
-          <div class="col-sm-3">
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-1">
-          </div>
-          <div class="col-sm-10">
-          <iframe class="media center-block" src="https://www.youtube.com/embed/XGSy3_Czz8k?controls=1">
-          </iframe>
-          </div>
-          <div class="col-sm-1">
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-1">
-          </div>
-          <div class="col-sm-10">
-            <img
-            src={this.state.flashmob.locationImage}
-            class="img-fluid media center-block"
-            alt="The event location."></img>
-          </div>
-          <div class="col-sm-1">
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-1">
-          </div>
-          <div class="col-sm-10">
-            <div class="announcements">
-              <strong>Announcments: </strong>
-              {<p> {this.state.flashmob.announcments[0].text}</p>}
-            </div>
-          </div>
-          <div class="col-sm-1">
-          </div>
-        </div>
-      </div>
-      );
-
-  } */
 }
 
 // Creates a page where an admin can view and edit mob details
@@ -540,6 +397,50 @@ class CreateView extends Component {
     );
   }
 
+  render() {
+    var pageData = {}
+    return (
+      <div class="content">
+        <form class="App-form" onSubmit={this.handleSubmit}>
+          <div class="row">
+            <div class="col-sm-10 offset-sm-1">
+              <div class="form-group">
+                <label for="title"><i>Flashmob Title:</i></label>
+                <input style={{width: '50%'}} type="text" class="form-control" id="title"></input>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-10 offset-sm-1">
+              <div class="form-group">
+                <label for="description"><i>Description:</i></label>
+                <textarea style={{width: '50%'}} class="form-control" rows="5" id="description"></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-10 offset-sm-1">
+              <div class="row">
+                <div class="col-sm-8">
+                </div>
+                <div class="col-sm-4">
+                  <div class="row">
+                  </div>
+                  <div class="row">
+                  </div>
+                  <div class="row">
+                  </div>
+                  <div class="row">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    );
+  }
+  /*
   render() {
     var pageData = {}
     return (
@@ -697,6 +598,7 @@ class CreateView extends Component {
       </div>
       );
     }
+    */
 }
 
 // Creates a page where users can register
