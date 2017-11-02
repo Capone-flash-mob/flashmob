@@ -6,6 +6,68 @@ body {
   font-family: 'Lato', sans-serif;
 }
 
+.flashmob-title-container{
+  color: #4484ce;
+  margin-top:20px;
+}
+
+.flashmob-desc-container{
+  margin-top:3px;
+  margin-bottom:15px;
+  color:#505050;
+}
+
+.flashmob-detail-container{
+  font-size: 30px;
+  margin-top:15px;
+}
+
+.flashmob-detail-text {
+  color:#505050;
+}
+
+.flashmob-detail-text:hover{
+  color: #4484ce;
+}
+
+.flashmob-detail-subtext {
+  color:gray;
+  float: left;
+  width: 100%;
+  margin-bottom: -9px;
+  font-size: 11px;
+  font-style:italic;
+}
+
+.flashmob-detail-spacer {
+  background-color: rgba(0, 0, 0, 0.33);
+  height: 4px;
+  margin-top: 13px;
+  margin-bottom: 17px;
+}
+
+.flashmob-interest-button {
+  margin-top: 25px;
+  margin-left:0px;
+  text-transform:none;
+  background-color: #4484ce;
+  border: 0px;
+  color:black;
+  box-shadow: none;
+  transition: all 0.25s ease-in-out !important;
+}
+
+.flashmob-interest-button:hover {
+  border: 0px;
+  box-shadow: none;
+  background-color:#366ba9;
+}
+
+.flashmob-detail-decoration {
+  border-top: 4px solid #f19f4d;
+  margin-bottom:20px;
+}
+
 /* Header Component */
 .navbar-title {
   font-size: 35px;
