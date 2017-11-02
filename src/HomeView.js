@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import database from './database'
 import {BrowserRouter as Router, Route, Link, IndexRoute} from 'react-router-dom';
 import YouTube from 'react-youtube'
+
 // Creates a page to view all mobs
 var HomeView = class HomeView extends Component {
   constructor(props) {
@@ -19,7 +20,7 @@ var HomeView = class HomeView extends Component {
   }
 
   handleLink(event){
-      event.preventDefault(); // <- prevent form submit from reloading the page*/
+    event.preventDefault(); // <- prevent form submit from reloading the page*/
     console.log("clicked" + event.target.id);
     this.props.history.push("/mob/" + event.target.id);
   }
@@ -29,10 +30,10 @@ var HomeView = class HomeView extends Component {
       return (<div> LOAAAAAAAAADING!!!!!!!!!!!! </div> );
     }
 
-  const opts = {
-        height: '200',
-        width: '100%',
-      };
+    const opts = {
+      height: '200',
+      width: '100%',
+    };
 
     const flashList = this.state.allMobs;
 

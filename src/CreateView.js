@@ -4,7 +4,7 @@ import {BrowserRouter as Router, Route, Link, IndexRoute} from 'react-router-dom
 import firebase from 'firebase';
 
 // Creates a page where an admin can view and edit mob details
-class CreateView extends Component {
+var CreateView = class CreateView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -65,11 +65,11 @@ class CreateView extends Component {
   handleImage(event){
     const currentImage = event.target.files[0];
     const name = event.target.name;
-    /*const path = event.target.path*/
 
     var storageRef = firebase.storage().ref("BannerImges");
     var uploadTask = storageRef.child(this.state.flashmob_uid + '/BannerImage').put(currentImage);
     var self = this;
+
     uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
       function(snapshot) {
         // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
@@ -84,8 +84,10 @@ class CreateView extends Component {
             break;
         }
       },
+
       function(error) {
       },
+
       function() {
         // Upload completed successfully, now we can get the download URL
         var downloadURL = uploadTask.snapshot.downloadURL;
@@ -98,7 +100,6 @@ class CreateView extends Component {
               bannerImage: downloadURL,
             });
             break;
-
           case "locationImageSub":
             console.log("loaction image changed");
             var myFlashMob = self.state.flashmob;

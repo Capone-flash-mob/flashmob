@@ -12,19 +12,16 @@ var PublicView = class PublicView extends React.Component {
       flashmob_uid: props.match.params.mobid,
       flashmob: {announcments:[{text:""}]}
     };
-
-
     this.addFlashMobToUser = this.addFlashMobToUser.bind(this);
   }
 
   addFlashMobToUser(e){
     e.preventDefault();
-      if(firebase.auth().currentUser){
+    if(firebase.auth().currentUser){
       var isInt = {
         'Interested': true,
         'Admin': false,
       }
-
       var userid = firebase.auth().currentUser.uid;
       var thisFlashMob = this.state.flashmob_uid;
       var userRef = firebase.database().ref('/users/' + userid + '/MyMobs/' + thisFlashMob);
@@ -49,13 +46,8 @@ var PublicView = class PublicView extends React.Component {
     }
 
     const primary_opts = {
-        height: '400',
-        width: '100%',
-    };
-
-    const secondary_opts = {
-        height: '100',
-        width: '100%',
+      height: '400',
+      width: '100%',
     };
 
     return (
