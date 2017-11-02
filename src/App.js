@@ -122,67 +122,64 @@ class Headline extends React.Component{
   }*/
 
   render() {
-        if (this.state.authenticated == 'true') {
-         var user = firebase.auth().currentUser;
-
-    return (
-      <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary navbar-container">
-        <Link class="navbar-brand navbar-title" to="/">CAPONE</Link>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse-elements" aria-controls="navbar-collapse-elements" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse justify-content navbar-collapse-elements" id="navbarNavAltMarkup">
-          <div class="navbar-nav">
-            <div class="navbar-link-container">
-              <Link class="nav-item nav-link navbar-link" to="/Create">Create a flashmob</Link>
-            </div>
-            <div class="navbar-link-container">
-              <Link class="nav-item nav-link navbar-link" to="/about">About</Link>
-            </div>
-          </div>
-        </div>
-        <div class="collapse navbar-collapse justify-content-end navbar-collapse-elements" id="navbarNavAltMarkup">
-          <div class="navbar-nav">
-            <div class="navbar-link-container">
-              <a class="nav-item nav-link navbar-link" onClick={this.signOut}>Sign Out</a>
-            </div>
-            <div class="navbar-link-container">
-              <Link to={"/user/" + user.uid} style={{textDecoration: 'none'}} ><a class="nav-item nav-link navbar-link mr-auto" >{user.displayName}</a></Link>
+    if (this.state.authenticated == 'true') {
+      var user = firebase.auth().currentUser;
+      return (
+        <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary navbar-container">
+          <Link class="navbar-brand navbar-title" to="/">CAPONE</Link>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse-elements" aria-controls="navbar-collapse-elements" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse justify-content navbar-collapse-elements" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+              <div class="navbar-link-container">
+                <Link class="nav-item nav-link navbar-link" to="/Create">Create a flashmob</Link>
+              </div>
+              <div class="navbar-link-container">
+                <Link class="nav-item nav-link navbar-link" to="/about">About</Link>
+              </div>
             </div>
           </div>
-        </div>
-      </nav>
-    )}
+          <div class="collapse navbar-collapse justify-content-end navbar-collapse-elements" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+              <div class="navbar-link-container">
+                <a class="nav-item nav-link navbar-link" onClick={this.signOut}>Sign Out</a>
+              </div>
+              <div class="navbar-link-container">
+                <Link to={"/user/" + user.uid} style={{textDecoration: 'none'}} ><a class="nav-item nav-link navbar-link mr-auto" >{user.displayName}</a></Link>
+              </div>
+            </div>
+          </div>
+        </nav>
+      )
+    }
     else {
       return (
-      <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary navbar-container">
-        <Link class="navbar-brand navbar-title" to="/">CAPONE</Link>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse-elements" aria-controls="navbar-collapse-elements" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse justify-content-beginning navbar-collapse-elements" id="navbarNavAltMarkup">
-          <div class="navbar-nav">
-            <div class="navbar-link-container">
-              <Link class="nav-item nav-link navbar-link" to="/Create">Create a flashmob</Link>
-            </div>
-            <div class="navbar-link-container">
-              <Link class="nav-item nav-link navbar-link" to="/about">About</Link>
-            </div>
-          </div>
-        </div>
-        <div class="collapse navbar-collapse justify-content-end navbar-collapse-elements" id="navbarNavAltMarkup">
-          <div class="navbar-nav">
-            <div class="navbar-link-container">
-              <a class="nav-item nav-link navbar-link" onClick={this.signIn}>Log in</a>
+        <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary navbar-container">
+          <Link class="navbar-brand navbar-title" to="/">CAPONE</Link>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse-elements" aria-controls="navbar-collapse-elements" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse justify-content-beginning navbar-collapse-elements" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+              <div class="navbar-link-container">
+                <Link class="nav-item nav-link navbar-link" to="/Create">Create a flashmob</Link>
+              </div>
+              <div class="navbar-link-container">
+                <Link class="nav-item nav-link navbar-link" to="/about">About</Link>
+              </div>
             </div>
           </div>
-        </div>
-      </nav>
-    );
-
-
+          <div class="collapse navbar-collapse justify-content-end navbar-collapse-elements" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+              <div class="navbar-link-container">
+                <a class="nav-item nav-link navbar-link" onClick={this.signIn}>Log in</a>
+              </div>
+            </div>
+          </div>
+        </nav>
+      );
     }
-
   }
 }
 
@@ -314,7 +311,8 @@ class CreateView extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      flashmob: null
+      flashmob: null,
+      videos: [{ title: '', url: '' }]
     };
     // Bind context
     this.handleChange = this.handleChange.bind(this);
@@ -322,8 +320,28 @@ class CreateView extends Component {
     this.handleImage = this.handleImage.bind(this);
   }
 
-  addInputField(event){
+  handleVideoTitleChange = (current) => (event) => {
+    const newVideos = this.state.videos.map((this_video, this_video_id) => {
+      if (current != this_video_id) return this_video;
+      return { ...this_video, title: event.target.value };
+    });
+    this.setState({ videos: newVideos })
+  }
 
+  handleVideoUrlChange = (current) => (event) => {
+    const newVideos = this.state.videos.map((this_video, this_video_id) => {
+      if (current != this_video_id) return this_video;
+      return { ...this_video, url: event.target.value };
+    });
+    this.setState({ videos: newVideos })
+  }
+
+  handleAddVideo = () => {
+    this.setState({ videos: this.state.videos.concat([{ title: '', url: '' }]) });
+  }
+
+  handleRemoveVideo = (current) => (event) => {
+    this.setState({ videos: this.state.videos.filter((this_video, this_video_id) => current !== this_video_id) });
   }
 
   handleChange(event){
@@ -403,51 +421,104 @@ class CreateView extends Component {
       <div class="content">
         <form class="App-form" onSubmit={this.handleSubmit}>
           <div class="row">
-            <div class="col-sm-10 offset-sm-1">
+            <div class="col-sm-5 offset-sm-1">
               <div class="form-group">
                 <label for="title"><i>Flashmob Title:</i></label>
-                <input style={{width: '50%'}} type="text" class="form-control" id="title"></input>
+                <input type="text" class="form-control" id="title"></input>
+              </div>
+            </div>
+            <div class="col-sm-5">
+              <div class="form-group">
+                <label for="location"><i>Location:</i></label>
+                <input type="text" class="form-control" id="location"></input>
               </div>
             </div>
           </div>
           <div class="row">
-            <div class="col-sm-10 offset-sm-1">
+            <div class="col-sm-5 offset-sm-1">
               <div class="form-group">
                 <label for="description"><i>Description:</i></label>
-                <textarea style={{width: '50%'}} class="form-control" rows="5" id="description"></textarea>
+                <textarea class="form-control" rows="5" id="description"></textarea>
+              </div>
+            </div>
+            <div class="col-sm-5">
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label for="date"><i>Date:</i></label>
+                    <input type="text" class="form-control" id="date"></input>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label for="time"><i>Time:</i></label>
+                    <input type="text" class="form-control" id="time"></input>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label for="choreographer"><i>Choreographer:</i></label>
+                    <input type="text" class="form-control" id="choreographer"></input>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label for="email"><i>Email:</i></label>
+                    <input type="text" class="form-control" id="email"></input>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
           <div class="row">
-            <div class="col-sm-10 offset-sm-1">
-              <div class="row">
-                <div class="col-sm-8">
-                  <div class="row">
-                    <div class="col-sm-6">
-                      <div class="form-group">
-                        <label for="mainVideoTitle"><i>Video Title:</i></label>
-                        <input type="text" class="form-control" id="mainVideoTitle"></input>
-                      </div>
+            <div class="col-sm-5 offset-sm-1">
+              {this.state.videos.map((current_video, current) =>
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <label for="mainVideoTitle"><i>Video Title:</i></label>
+                      <input type="text" class="form-control" id="mainVideoTitle" value={current_video.title} onChange={this.handleVideoTitleChange(current)}></input>
                     </div>
-                    <div class="col-sm-6">
-                      <div class="form-group">
-                        <label for="mainVideoUrl"><i>Video URL:</i></label>
-                        <input type="text" class="form-control" id="mainVideoUrl"></input>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <label for="mainVideoUrl"><i>Video URL:</i></label>
+                      <div class="input-group">
+                        <input type="text" class="form-control" id="mainVideoUrl" value={current_video.url} onChange={this.handleVideoUrlChange(current)} style={{borderRadius: '4px'}}></input>
+                        <span class="input-group-btn" style={{paddingLeft: '25px'}}>
+                          <button type="button" class="btn btn-danger" style={{width: '34px', borderRadius: '4px'}} onClick={this.handleRemoveVideo(current)}>-</button>
+                        </span>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div class="col-sm-4">
-                  <div class="row">
+              )}
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label for="mainVideoTitle"><i>Video Title:</i></label>
+                    <input type="text" class="form-control" id="mainVideoTitle"></input>
                   </div>
-                  <div class="row">
-                  </div>
-                  <div class="row">
-                  </div>
-                  <div class="row">
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label for="mainVideoUrl"><i>Video URL:</i></label>
+                    <div class="input-group">
+                      <input type="text" class="form-control" id="mainVideoUrl" style={{borderRadius: '4px'}}></input>
+                      <span class="input-group-btn" style={{paddingLeft: '25px'}}>
+                        <button type="button" class="btn btn-success" style={{width: '34px', borderRadius: '4px'}} onClick={this.handleAddVideo}>+</button>
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-2 offset-sm-5">
+              <input class="input btn-default bg-primary" style={{margin: '50px 0 0 0'}}type="submit"/>
             </div>
           </div>
         </form>
@@ -833,7 +904,6 @@ class App extends Component {
       <Router>
         <div class="container-flex">
           <Headline></Headline>
-
           {/*Routes*/}
           {/*RR will display the component that has a matching path.
           Variables in the path start with a :colon and can be passed to the component.*/}
