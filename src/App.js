@@ -398,7 +398,7 @@ class CreateView extends Component {
           </div>
           <div class="row">
             <div class="col-sm-2 offset-sm-5">
-              <input class="input btn-default bg-primary" style={{margin: '50px 0 0 0'}}type="submit"/>
+              <input class="input btn-default" style={{margin: '50px 0 0 0'}}type="submit"/>
             </div>
           </div>
         </form>

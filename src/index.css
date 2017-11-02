@@ -49,18 +49,19 @@ body {
 .flashmob-interest-button {
   margin-top: 25px;
   margin-left:0px;
-  text-transform:none;
+  text-transform: none;
+  text-decoration: none;
   background-color: #4484ce;
-  border: 0px;
-  color:black;
+  border: none;
+  cursor: pointer;
+  color: white;
   box-shadow: none;
+  border-radius: 4px;
   transition: all 0.25s ease-in-out !important;
 }
 
 .flashmob-interest-button:hover {
-  border: 0px;
-  box-shadow: none;
-  background-color:#366ba9;
+  background-color: #366ba9;
 }
 
 .flashmob-detail-decoration {
@@ -187,10 +188,11 @@ body {
   border-radius: 4px;
   border: none;
   cursor: pointer;
+  background-color: #4484ce;
 }
 
 .input[type=submit]:hover {
-  background-color: #0072eb !important;
+  background-color: #366ba9;
 }
 
 /* Mob Public View Component */
