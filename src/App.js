@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import fire from './fire';
 import HomeView from './HomeView';
 import UserView from './UserView';
+import PublicView from './PublicView';
 import database from './database';
 import firebase from 'firebase';
 import {BrowserRouter as Router, Route, Link, IndexRoute} from 'react-router-dom';
@@ -126,7 +127,7 @@ class Headline extends React.Component{
          var user = firebase.auth().currentUser;
 
     return (
-      <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary navbar-container">
+      <nav class="navbar fixed-top navbar-expand-lg navbar-dark navbar-container">
         <Link class="navbar-brand navbar-title" to="/">CAPONE</Link>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse-elements" aria-controls="navbar-collapse-elements" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -155,7 +156,7 @@ class Headline extends React.Component{
     )}
     else {
       return (
-      <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary navbar-container">
+      <nav class="navbar fixed-top navbar-expand-lg navbar-dark navbar-container">
         <Link class="navbar-brand navbar-title" to="/">CAPONE</Link>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse-elements" aria-controls="navbar-collapse-elements" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -183,129 +184,6 @@ class Headline extends React.Component{
 
     }
 
-  }
-}
-
-// Creates a page where users can view mob details
-class PublicView extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      flashmob_uid: props.match.params.mobid,
-      flashmob: {announcments:[{text:""}]}
-    };
-
-
-    this.addFlashMobToUser = this.addFlashMobToUser.bind(this);
-  }
-
-  addFlashMobToUser(e){
-    e.preventDefault();
-      if(firebase.auth().currentUser){
-      var isInt = {
-        'Interested': true,
-        'Admin': false,
-      }
-
-      var userid = firebase.auth().currentUser.uid;
-      var thisFlashMob = this.state.flashmob_uid;
-      var userRef = firebase.database().ref('/users/' + userid + '/MyMobs/' + thisFlashMob);
-      userRef.update(isInt);
-    }
-  }
-
-  componentDidMount() {
-    var self = this;
-    database.getFlashMob(this.state.flashmob_uid, function(flashmob){
-      console.log('Received flashmob data for uid', self.state.flashmob_uid, 'with data:', flashmob);
-      self.setState({
-        flashmob_uid: self.state.flashmob_uid,
-        flashmob: flashmob
-      });
-    });
-  }
-
-  render(){
-    if (this.state.flashmob == null) {
-      return (<div> Loading... </div>);
-    }
-
-    const primary_opts = {
-        height: '400',
-        width: '100%',
-    };
-
-    const secondary_opts = {
-        height: '100',
-        width: '100%',
-    };
-
-    return (
-      <div class="content">
-        <div class="row">
-          <div class="col-sm-10 offset-sm-1">
-            <h1>{this.state.flashmob.name}</h1>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-10 offset-sm-1">
-            <p>{this.state.flashmob.description}</p>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-10 offset-sm-1">
-            <div class="row">
-              <div class="col-sm-8">
-                {/* Video Carousel */}
-                <div id="video-carousel-example" class="carousel slide carousel-fade" data-ride="carousel">
-                  {/* Indicators */}
-                  <ol class="carousel-indicators">
-                    <li data-target="#video-carousel-example" data-slide-to="0" class="active"></li>
-                    <li data-target="#video-carousel-example" data-slide-to="1"></li>
-                    <li data-target="#video-carousel-example" data-slide-to="2"></li>
-                  </ol>
-                  {/* Slides */}
-                  <div class="carousel-inner" role="listbox">
-                    <div class="carousel-item active">
-                      <YouTube opts={primary_opts} videoId="D59v74k5flU"/>
-                    </div>
-                    <div class="carousel-item">
-                      <YouTube opts={primary_opts} videoId="dMH0bHeiRNg"/>
-                    </div>
-                    <div class="carousel-item">
-                      <YouTube opts={primary_opts} videoId="9bZkp7q19f0"/>
-                    </div>
-                  </div>
-                  {/* Controls */}
-                  <a class="carousel-control-prev" href="#video-carousel-example" role="button" data-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                  </a>
-                  <a class="carousel-control-next" href="#video-carousel-example" role="button" data-slide="next">
-                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                      <span class="sr-only">Next</span>
-                  </a>
-                </div>
-              </div>
-              <div class="col-sm-4">
-                <div class="row">
-                  <h6>{this.state.flashmob.location}</h6>
-                </div>
-                <div class="row">
-                  <h6>{this.state.flashmob.date}, {this.state.flashmob.time}</h6>
-                </div>
-                <div class="row">
-                  <h6>{this.state.flashmob.choreographer}</h6>
-                </div>
-                <div class="row">
-                  <h6>{this.state.flashmob.email}</h6>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
   }
 }
 
