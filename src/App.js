@@ -166,13 +166,9 @@ class App extends Component {
       <Router>
         <div class="container-flex">
           <Headline></Headline>
-          {/*Routes*/}
-          {/*RR will display the component that has a matching path.
-          Variables in the path start with a :colon and can be passed to the component.*/}
-          {/*http://localhost:3000/public/mobID*/}
+          <Route exact path="/" component={HomeView}/>
           <Route path="/mob/:mobid" component={PublicView}/>
           <Route path="/create" component={CreateView}/>
-          <Route exact path="/" component = {HomeView}/>
           <Route path="/register" component={RegisterView}/>
           <Route path="/user/:userid" component={UserView}/>
           <Route path="/demo" component={demo}/>
