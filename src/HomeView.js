@@ -35,33 +35,7 @@ var HomeView = class HomeView extends Component {
       };
 
     const flashList = this.state.allMobs;
-    /*return(
-      <div class="content">
-        <div class="row">
-          <div class="col-sm-8 offset-2">
-            {flashList.map((key) =>
-              <div class="col-sm-3">
-                <Link to={"mob/" + key.key} style={{ textDecoration: 'none'}}>
-                  <div class="mob-infobox">
-                    <YouTube
-                      opts={opts}
-                      videoId="D59v74k5flU"
-                    />
-                    <div class="mob-infobox-details">
-                      <span class="mob-infobox-title"> {key.name} </span>
-                      <span class="mob-infobox-location"> {key.location} </span>
-                      <span class="mob-infobox-date-and-time"> {key.date}, {key.time} </span>
-                    </div>
-                  </div>
-                </Link>
-              </div>
-            )}
-          </div>
-        </div>
-        <div class="col-sm-2">
-        </div>
-      </div>
-    );*/
+
     return(
       <div class="content">
         <div class="row">
