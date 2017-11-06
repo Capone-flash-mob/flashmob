@@ -27,20 +27,20 @@ class GoogleLogin extends Component{
   // Initializes the API client library and sets up sign-in statelisteners.
   initClient() {
     var self = this;
-    var obj = {};
+    var creds = {};
 
     // Client ID and API key from the Developer Console
-    obj["apiKey"] = 'AIzaSyAWsOMuD2IvgMa_DtqEKJKmmG279bWOBpc';
-    obj["clientId"] = '873484662570-llocoft6cvqr4rksup2j4a27cbu49df4.apps.googleusercontent.com';
+    creds["apiKey"] = 'AIzaSyAWsOMuD2IvgMa_DtqEKJKmmG279bWOBpc';
+    creds["clientId"] = '873484662570-llocoft6cvqr4rksup2j4a27cbu49df4.apps.googleusercontent.com';
 
     // Array of API discovery doc URLs for APIs used by the quickstart
-    obj["discoveryDocs"] = ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"];
+    creds["discoveryDocs"] = ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"];
 
     // Authorization scopes required by the API; multiple scopes can be
     // included, separated by spaces.
-    obj["scope"] = 'https://www.googleapis.com/auth/drive.metadata.readonly';
+    creds["scope"] = 'https://www.googleapis.com/auth/drive.metadata.readonly';
 
-    gapi.client.init(obj).then(function () {
+    gapi.client.init(creds).then(function () {
       // Listen for sign-in state changes.
       gapi.auth2.getAuthInstance().isSignedIn.listen(self.updateSigninStatus.bind(self));
 
