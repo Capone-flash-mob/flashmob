@@ -44,27 +44,6 @@ var VideoForm = class VideoForm extends React.Component {
       width: '100%',
     };
 
-
-    <div class="row">
-      {flashList.map((key, index) =>
-        <div class="col-sm-4">
-          <Link to={"mob/" + key.key} style={{ textDecoration: 'none'}}>
-            <div class="mob-infobox">
-              <YouTube
-                opts={opts}
-                videoId="D59v74k5flU"
-              />
-              <div class="mob-infobox-details">
-                <span class="mob-infobox-title"> {key.name} </span>
-                <span class="mob-infobox-location"> {key.location} </span>
-                <span class="mob-infobox-date-and-time"> {key.date}, {key.time} </span>
-              </div>
-            </div>
-          </Link>
-        </div>
-      )}
-    </div>
-
     return (
       <div class="row">
         <div class="col-sm-5 offset-sm-1">
