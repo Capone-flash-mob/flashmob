@@ -61,7 +61,6 @@ var Headline = class Headline extends React.Component{
   render() {
     if (this.state.authenticated == 'true') {
       var user = firebase.auth().currentUser;
-
       return (
         <nav class="navbar fixed-top navbar-expand-lg navbar-dark navbar-container">
           <Link class="navbar-brand navbar-title" to="/">CAPONE</Link>
