@@ -70,7 +70,7 @@ var Headline = class Headline extends React.Component{
           <div class="collapse navbar-collapse justify-content navbar-collapse-elements" id="navbarNavAltMarkup">
             <div class="navbar-nav">
               <div class="navbar-link-container">
-                <Link class="nav-item nav-link navbar-link" to="/Create">Create a flashmob</Link>
+                <Link class="nav-item nav-link navbar-link" to="/create">Create a flashmob</Link>
               </div>
               <div class="navbar-link-container">
                 <Link class="nav-item nav-link navbar-link" to="/about">About</Link>
@@ -100,7 +100,7 @@ var Headline = class Headline extends React.Component{
           <div class="collapse navbar-collapse justify-content-beginning navbar-collapse-elements" id="navbarNavAltMarkup">
             <div class="navbar-nav">
               <div class="navbar-link-container">
-                <Link class="nav-item nav-link navbar-link" to="/Create">Create a flashmob</Link>
+                <Link class="nav-item nav-link navbar-link" to="/create">Create a flashmob</Link>
               </div>
               <div class="navbar-link-container">
                 <Link class="nav-item nav-link navbar-link" to="/about">About</Link>
