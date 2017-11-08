@@ -31,6 +31,7 @@ class demo extends Component{
       </div>
       <div className="col-md-2" style={style}>
         <GoogleDriveComponents.GoogleLogin></GoogleDriveComponents.GoogleLogin>
+        <GoogleDriveComponents.GDriveUploadBtn></GoogleDriveComponents.GDriveUploadBtn>
       </div>
       <div className="col-md-5" style={style}>
       </div>

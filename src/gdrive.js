@@ -9,6 +9,25 @@ import React, { Component } from 'react';
 import gapi from './gapi'
 
 var GoogleDriveComponents = {};
+
+  // Print an authorized user's filenames and ids.
+  GoogleDriveComponents.printFiles = function() {
+    gapi.client.drive.files.list({
+      'pageSize': 10,
+      'fields': "nextPageToken, files(id, name)"
+    }).then(function(response) {
+      var files = response.result.files;
+      if (files && files.length > 0) {
+        for (var i = 0; i < files.length; i++) {
+          var file = files[i];
+          console.log("Files:" + file.name + ' ID:' + file.id + ')');
+        }
+      } else {
+        console.log('No files found.');
+      }
+    });
+  }
+
 // Allows a user to grant us access to their google drive
 GoogleDriveComponents.GoogleLogin = class GoogleLogin extends Component{
   constructor(props) {
@@ -75,24 +94,6 @@ GoogleDriveComponents.GoogleLogin = class GoogleLogin extends Component{
     gapi.auth2.getAuthInstance().signOut();
   }
 
-  // Print an authorized user's filenames and ids.
-  printFiles() {
-    gapi.client.drive.files.list({
-      'pageSize': 10,
-      'fields': "nextPageToken, files(id, name)"
-    }).then(function(response) {
-      var files = response.result.files;
-      if (files && files.length > 0) {
-        for (var i = 0; i < files.length; i++) {
-          var file = files[i];
-          console.log("Files:" + file.name + ' ID:' + file.id + ')');
-        }
-      } else {
-        console.log('No files found.');
-      }
-    });
-  }
-
   render() {
     return (
       <div>
@@ -113,4 +114,60 @@ GoogleDriveComponents.GoogleLogin = class GoogleLogin extends Component{
   }
 }
 
+GoogleDriveComponents.GDriveUploadBtn = class GDriveUploadBtn extends Component{
+  constructor(props) {
+     super(props);
+     this.state = {status: ''};
+     this.handleChange = this.handleChange.bind(this);
+   }
+
+
+
+   validFileType(file) {
+     var fileTypes = [
+      'video/mp4',
+      'video/webm',
+      'video/ogg',
+      'video/x-flv',
+      'video/mp4',
+      'video/MP2T',
+      'video/3gpp',
+      'video/quicktime',
+      'video/x-msvideo',
+      'video/x-ms-wmv'
+     ];
+     for(var i = 0; i < fileTypes.length; i++) {
+       if(file.type === fileTypes[i]) {
+         return true;
+       }
+     }
+     return false;
+   }
+
+   handleChange(event) {
+     var currentFiles = event.target.files;
+     console.log(currentFiles);
+     if (currentFiles.length === 0){
+       this.setState({status: 'Upload Error: Please refresh page and try again.'});
+     }
+     else{
+       if (this.validFileType(currentFiles[0])){
+         this.setState({status: ''});
+       }
+       else{
+         this.setState({status: 'Upload Error: Use a different video file type.'});
+       }
+    }
+   }
+
+   render() {
+     var server = 'https://www.googleapis.com/upload/drive/v3/files?uploadType=resumable';
+     return (
+       <form>
+           <input type="file" onChange={this.handleChange}></input>
+           <p>{this.state.status}</p>
+       </form>
+     );
+   }
+}
 export default GoogleDriveComponents;
