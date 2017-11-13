@@ -8,6 +8,8 @@ Components:
 import React, { Component } from 'react';
 import gapi from './gapi'
 
+var uploadURI = 'https://www.googleapis.com/upload/drive/v3/files?uploadType=resumable';
+let apiToken = null;
 var GoogleDriveComponents = {};
 
   // Print an authorized user's filenames and ids.
@@ -123,45 +125,83 @@ GoogleDriveComponents.GDriveUploadBtn = class GDriveUploadBtn extends Component{
 
 
 
-   validFileType(file) {
-     var fileTypes = [
-      'video/mp4',
-      'video/webm',
-      'video/ogg',
-      'video/x-flv',
-      'video/mp4',
-      'video/MP2T',
-      'video/3gpp',
-      'video/quicktime',
-      'video/x-msvideo',
-      'video/x-ms-wmv'
-     ];
-     for(var i = 0; i < fileTypes.length; i++) {
-       if(file.type === fileTypes[i]) {
-         return true;
-       }
+  validFileType(file) {
+   var fileTypes = [
+    'video/mp4',
+    'video/webm',
+    'video/ogg',
+    'video/x-flv',
+    'video/mp4',
+    'video/MP2T',
+    'video/3gpp',
+    'video/quicktime',
+    'video/x-msvideo',
+    'video/x-ms-wmv'
+   ];
+   for(var i = 0; i < fileTypes.length; i++) {
+     if(file.type === fileTypes[i]) {
+       return true;
      }
-     return false;
    }
+   return false;
+  }
+
+  createPOSTHeaders(bodySize){
+    var h = new Headers();
+    h.append('Content-Length', bodySize);
+    return h;
+  }
+
+  processResponse(response){
+    if (response.ok){
+      return response.json()
+    }
+    return response.json()
+    .then((error)=>{
+      throw new Error(JSON.stringify(error))
+      })
+  }
+  uploadToGDrive(file, fsize) {
+    const body = file;
+    const headers = this.createPOSTHeaders(fsize);
+    const options = {
+      method: 'POST',
+      headers
+    };
+    /*fetch('www.example.net', { // Your POST endpoint
+    method: 'POST',
+    headers: {
+      "Content-Type": "You will perhaps need to define a content-type here"
+    },
+    body: e.currentTarget.result // This is the content of your file
+  })*/
+    return fetch(uploadURI, {
+      method:'POST',
+      headers:{},
+      body: body}).then(this.processResponse);
+  }
 
    handleChange(event) {
      var currentFiles = event.target.files;
-     console.log(currentFiles);
      if (currentFiles.length === 0){
        this.setState({status: 'Upload Error: Please refresh page and try again.'});
      }
-     else{
+     else if (currentFiles.length === 1){
        if (this.validFileType(currentFiles[0])){
          this.setState({status: ''});
+         var fsize = currentFiles[0].size;
+         this.uploadToGDrive(currentFiles[0], fsize);
        }
        else{
          this.setState({status: 'Upload Error: Use a different video file type.'});
        }
     }
+    else{
+      this.setState({status: 'Upload Error: Only load one file at a time please.'});
+    }
    }
 
    render() {
-     var server = 'https://www.googleapis.com/upload/drive/v3/files?uploadType=resumable';
      return (
        <form>
            <input type="file" onChange={this.handleChange}></input>
