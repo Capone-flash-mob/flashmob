@@ -59,8 +59,20 @@ var database = {
         return usersRef.key;
     },
 
+    addUserField: function(userObj, fieldName, fieldValue, callback){
+        var userid = userObj.userId;
+        var newUserObj = userObj;
+        newUserObj[fieldName] = fieldValue; 
+        console.log("USERID: " + userid)
+        var UserRef = fire.database().ref('/users/' + userid);
+        var NewUserRef = UserRef.update(newUserObj);
+        UserRef.once("value").then(function(snapshot){
+            var finalUser = snapshot.val();
+            callback(finalUser);
+        })
+    },
+
      getMyFlashMobs: function(userID, callback){
-        console.log('USERID is ' + userID);
         var myMobsRef = fire.database().ref('/users/' + userID + '/MyMobs');
         var allMobsRef = fire.database().ref('flashmobs');
         var allMyMobsKeys = [];

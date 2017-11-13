@@ -119,7 +119,7 @@ var PublicView = class PublicView extends React.Component {
                       <span class="flashmob-detail-text">{this.state.flashmob.email}</span>
                     </div>
                     <div class="row">
-                      <button type="button" class="flashmob-interest-button btn btn-lg btn-block">{"I'm Interested"}</button>
+                      <button type="button" onClick={this.addFlashMobToUser}class="flashmob-interest-button btn btn-lg btn-block">{"I'm Interested"}</button>
                     </div>
                   </div>
                 </div>
