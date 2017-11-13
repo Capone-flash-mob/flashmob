@@ -6,6 +6,7 @@ import PublicView from './PublicView';
 import CreateView from './CreateView';
 import UserView from './UserView';
 import RegisterView from './RegisterView';
+import AboutView from './AboutView';
 import database from './database';
 import firebase from 'firebase';
 import {BrowserRouter as Router, Route, Link, IndexRoute} from 'react-router-dom';
@@ -170,6 +171,7 @@ class App extends Component {
           <Route path="/mob/:mobid" component={PublicView}/>
           <Route path="/create" component={CreateView}/>
           <Route path="/register" component={RegisterView}/>
+          <Route path="/about" component={AboutView}/>
           <Route path="/user/:userid" component={UserView}/>
           <Route path="/demo" component={demo}/>
         </div>
