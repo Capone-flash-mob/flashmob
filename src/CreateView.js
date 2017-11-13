@@ -2,84 +2,76 @@ import React, { Component } from 'react';
 import database from './database'
 import {BrowserRouter as Router, Route, Link, IndexRoute} from 'react-router-dom';
 import firebase from 'firebase';
-import YouTube from 'react-youtube'
+import YouTube from 'react-youtube';
 
-// Creates a dynamic video form
+// Creates a dynamic video form component
 var VideoForm = class VideoForm extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super()
     this.state = {
-      videos: [{ title: '', url: '' }]
+      videos: [{
+        title: '',
+        id: '',
+      }],
     };
   }
 
-  handleVideoTitleChange = (current) => (event) => {
-    const newVideos = this.state.videos.map((this_video, this_video_id) => {
-      if (current != this_video_id) return this_video;
-      return { ...this_video, title: event.target.value };
+  handleVideoTitleChange = (current) => (evt) => {
+    const newVideos = this.state.videos.map((this_video, this_id) => {
+      if (current !== this_id) {
+        return this_video;
+      }
+      return { ...this_video, title: evt.target.value }
     });
-    this.setState({ videos: newVideos })
+    this.setState({
+      videos: newVideos
+    });
   }
 
-  handleVideoUrlChange = (current) => (event) => {
-    const newVideos = this.state.videos.map((this_video, this_video_id) => {
-      if (current != this_video_id) return this_video;
-      return { ...this_video, url: event.target.value };
+  handleVideoIdChange = (current) => (evt) => {
+    const newVideos = this.state.videos.map((this_video, this_id) => {
+      if (current !== this_id) {
+        return this_video;
+      }
+      return { ...this_video, id: evt.target.value }
     });
-    this.setState({ videos: newVideos })
+    this.setState({
+      videos: newVideos
+    });
   }
 
   handleAddVideo = () => {
-    this.setState({ videos: this.state.videos.concat([{ title: '', url: '' }]) });
+    this.setState({
+      videos: this.state.videos.concat([{ title: this.state.videos.title, id: this.state.videos.id }])
+    });
   }
 
-  handleRemoveVideo = (current) => (event) => {
-    this.setState({ videos: this.state.videos.filter((this_video, this_video_id) => current !== this_video_id) });
+  handleRemoveVideo = (current) => () => {
+    this.setState({
+      videos: this.state.videos.filter((this_video, this_id) => current !== this_id)
+    });
   }
 
   render() {
-
     const opts = {
-      height: '200',
+      height: '150',
       width: '100%',
     };
-
     return (
       <div class="row">
         <div class="col-sm-5 offset-sm-1">
-          {this.state.videos.map((current_video, current) =>
-            <div class="row">
-              <div class="col-sm-6">
-                <div class="form-group">
-                  <label for="mainVideoTitle"><i>Video Title:</i></label>
-                  <input type="text" class="form-control" id="mainVideoTitle" value={current_video.title} onChange={this.handleVideoTitleChange(current)}></input>
-                </div>
-              </div>
-              <div class="col-sm-6">
-                <div class="form-group">
-                  <label for="mainVideoUrl"><i>Video URL:</i></label>
-                  <div class="input-group">
-                    <input type="text" class="form-control" id="mainVideoUrl" value={current_video.url} onChange={this.handleVideoUrlChange(current)} style={{borderRadius: '4px'}}></input>
-                    <span class="input-group-btn" style={{paddingLeft: '25px'}}>
-                      <button type="button" class="btn btn-danger" style={{width: '34px', borderRadius: '4px'}} onClick={this.handleRemoveVideo(current)}>-</button>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
           <div class="row">
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="mainVideoTitle"><i>Video Title:</i></label>
-                <input type="text" class="form-control" id="mainVideoTitle"></input>
+                <label forName="videoTitle"><i>Video Title:</i></label>
+                <input name="videoTitle" type="text" class="form-control" id="mainVideoTitle" onChange={this.handleVideoTitleChange}></input>
               </div>
             </div>
             <div class="col-sm-6">
               <div class="form-group">
-                <label for="mainVideoUrl"><i>Video URL:</i></label>
+                <label forName="videoID"><i>Video URL:</i></label>
                 <div class="input-group">
-                  <input type="text" class="form-control" id="mainVideoUrl" style={{borderRadius: '4px'}}></input>
+                  <input name="videoID" type="text" class="form-control" id="mainVideoUrl" style={{borderRadius: '4px'}} onChange={this.handleVideoIdChange}></input>
                   <span class="input-group-btn" style={{paddingLeft: '25px'}}>
                     <button type="button" class="btn btn-success" style={{width: '34px', borderRadius: '4px'}} onClick={this.handleAddVideo}>+</button>
                   </span>
@@ -88,10 +80,26 @@ var VideoForm = class VideoForm extends React.Component {
             </div>
           </div>
         </div>
+        <div class="col-sm-10 offset-sm-1">
+          <div class="row">
+            {this.state.videos.filter((current_video, current) => (current_video.title !== '') && (current_video.id !== '')).map((current_video, current) =>
+              <div class="col-sm-2">
+                <h3>{current_video.title},{current_video.id}</h3>
+                <h3>{current_video.title}</h3>
+                <div class="mob-infobox">
+                  <YouTube
+                    opts={opts}
+                    videoId={current_video.id}
+                  />
+                </div>
+                <button type="button" class="btn btn-danger" style={{width: '100%', borderRadius: '4px', margin: '0px 0px 10px 0px'}} onClick={this.handleRemoveVideo(current)}>-</button>
+              </div>
+            )}
+          </div>
+        </div>
       </div>
     );
   }
-
 }
 
 // Creates a page where an admin can view and edit mob details
@@ -187,21 +195,31 @@ var CreateView = class CreateView extends React.Component {
           <div class="row">
             <div class="col-sm-5 offset-sm-1">
               <div class="form-group">
-                <label for="title"><i>Flashmob Title:</i></label>
+                <label forName="title"><i>Flashmob Title:</i></label>
                 <input type="text" class="form-control" id="title"></input>
               </div>
             </div>
             <div class="col-sm-5">
-              <div class="form-group">
-                <label for="location"><i>Location:</i></label>
-                <input type="text" class="form-control" id="location"></input>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label forName="location"><i>Location:</i></label>
+                    <input type="text" class="form-control" id="location"></input>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div>
+                    <label forName="files"><i>Add an Image:</i></label>
+                    <input id="files" type="file"></input>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
           <div class="row">
             <div class="col-sm-5 offset-sm-1">
               <div class="form-group">
-                <label for="description"><i>Description:</i></label>
+                <label forName="description"><i>Description:</i></label>
                 <textarea class="form-control" rows="5" id="description"></textarea>
               </div>
             </div>
@@ -209,13 +227,13 @@ var CreateView = class CreateView extends React.Component {
               <div class="row">
                 <div class="col-sm-6">
                   <div class="form-group">
-                    <label for="date"><i>Date:</i></label>
+                    <label forName="date"><i>Date:</i></label>
                     <input type="text" class="form-control" id="date"></input>
                   </div>
                 </div>
                 <div class="col-sm-6">
                   <div class="form-group">
-                    <label for="time"><i>Time:</i></label>
+                    <label forName="time"><i>Time:</i></label>
                     <input type="text" class="form-control" id="time"></input>
                   </div>
                 </div>
@@ -223,13 +241,13 @@ var CreateView = class CreateView extends React.Component {
               <div class="row">
                 <div class="col-sm-6">
                   <div class="form-group">
-                    <label for="choreographer"><i>Choreographer:</i></label>
+                    <label forName="choreographer"><i>Choreographer:</i></label>
                     <input type="text" class="form-control" id="choreographer"></input>
                   </div>
                 </div>
                 <div class="col-sm-6">
                   <div class="form-group">
-                    <label for="email"><i>Email:</i></label>
+                    <label forName="email"><i>Email:</i></label>
                     <input type="text" class="form-control" id="email"></input>
                   </div>
                 </div>
@@ -239,7 +257,7 @@ var CreateView = class CreateView extends React.Component {
           <VideoForm></VideoForm>
           <div class="row">
             <div class="col-sm-2 offset-sm-5">
-              <input class="input btn-default" style={{margin: '50px 0 0 0'}}type="submit"/>
+              <input class="input btn-default" style={{margin: '50px 0 0 0'}} type="submit"/>
             </div>
           </div>
         </form>
