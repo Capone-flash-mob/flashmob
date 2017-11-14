@@ -158,7 +158,8 @@ class UserView extends Component {
     {/*Render the different user information based on what is available*/}
         <div class="row">
           <div class="col-sm-1 offset-sm-2"> Name: </div>
-          <div class="col-sm-2 offset-sm-5">{this.state.currentUser.Name}</div>
+          <div class="col-sm-1"></div>
+          <div class="col-sm-2 offset-sm-4">{this.state.currentUser.Name}</div>
         </div>
 
         <div class="col-sm-8 offset-sm-2">
@@ -166,8 +167,9 @@ class UserView extends Component {
         </div>
 
         <div class="row">
-          <div class="col-sm-4 offset-sm-2"> Email: </div>
-          <div class="col-sm-4 offset-sm-2"> {this.state.currentUser.Email} </div>
+          <div class="col-sm-1 offset-sm-2"> Email: </div>
+          <div class="col-sm-1"></div>
+          <div class="col-sm-2 offset-sm-4"> {this.state.currentUser.Email} </div>
         </div>
 
        <div class="col-sm-8 offset-sm-2">
@@ -183,28 +185,36 @@ class UserView extends Component {
                 ?  
                 <div class="row">
                     <div class="col-sm-1 offset-sm-2"> Birthdate: </div>
+                    <div class="col-sm-1">
                     <button onClick={this.editBirthdate}> Edit </button>
-                    <div class = "col-sm-1 offset-sm-5">{this.state.currentUser.Birthdate}</div>
+                    </div>
+                    <div class = "col-sm-2 offset-sm-4">{this.state.currentUser.Birthdate}</div>
                   </div>
                 : 
                  <div class="row">
                     <div class="col-sm-1 offset-sm-2"> Birthdate: </div>
+                    <div class="col-sm-1">
                     <button onClick={this.saveBirthdate}> Save </button>
-                    <input id="birthdateId" type="date" class = "col-sm-1 offset-sm-5"></input>
+                    </div>
+                    <input id="birthdateId" type="date" class = "col-sm-1 offset-sm-4"></input>
                   </div>
              )
             : 
               ((this.state.editBirthdate !== true)
                     ?
                   <div class="row">
-                      <div class="col-sm-1 offset-sm-2"> Birthdate: </div>
+                      <div class="col-sm-2 offset-sm-2"> Birthdate: </div>
+                      <div class="col-sm-1">
                       <button onClick={this.editBirthdate}> Edit </button>
-                      <div class = "col-sm-1 offset-sm-5">Unknown</div>
+                      </div>
+                      <div class = "col-sm-1 offset-sm-4">Unknown</div>
                     </div>
                   : <div class="row">
                       <div class="col-sm-1 offset-sm-2"> Birthdate: </div>
+                      <div class="col-sm-1">
                       <button onClick={this.saveBirthdate}> Save </button>
-                      <input type="date" id="birthdateId" placehold={this.state.currentUser.Birthdate} class = "col-sm-1 offset-sm-5"></input>
+                      </div>
+                      <input type="date" id="birthdateId" placehold={this.state.currentUser.Birthdate} class = "col-sm-1 offset-sm-4"></input>
                     </div>
                 )
           }
@@ -224,13 +234,17 @@ class UserView extends Component {
                 ?  
                 <div class="row">
                     <div class="col-sm-1 offset-sm-2"> Hometown: </div>
+                    <div class="col-sm-1">
                     <button onClick={this.editHometown}> Edit </button>
-                    <div class = "col-sm-1 offset-sm-5">{this.state.currentUser.Hometown}</div>
+                    </div>
+                    <div class = "col-sm-2 offset-sm-4">{this.state.currentUser.Hometown}</div>
                   </div>
                 : <div class="row">
                     <div class="col-sm-1 offset-sm-2"> Hometown: </div>
+                    <div class="col-sm-1">
                     <button onClick={this.saveHometown}> Save </button>
-                    <input type="text" id="hometownId" class = "col-sm-1 offset-sm-5"></input>
+                    </div>
+                    <input type="text" id="hometownId" class = "col-sm-1 offset-sm-4"></input>
                   </div>
              )
             : 
@@ -238,13 +252,17 @@ class UserView extends Component {
                   ?
                 <div class="row">
                     <div class="col-sm-1 offset-sm-2"> Hometown: </div>
+                    <div class="col-sm-1">
                     <button onClick={this.editHometown}> Edit </button>
-                    <div class = "col-sm-1 offset-sm-5">Unknown</div>
+                    </div>
+                    <div class = "col-sm-1 offset-sm-4">Unknown</div>
                   </div>
                 : <div class="row">
                     <div class="col-sm-1 offset-sm-2"> Hometown: </div>
+                    <div class="col-sm-1">
                     <button onClick={this.saveHometown}> Save </button>
-                    <input id="hometownId" type="text" placehold={this.state.currentUser.Hometown} class = "col-sm-1 offset-sm-5"></input>
+                    </div>
+                    <input id="hometownId" type="text" placehold={this.state.currentUser.Hometown} class = "col-sm-1 offset-sm-4"></input>
                   </div>
               )
           }
@@ -261,13 +279,17 @@ class UserView extends Component {
                 ?  
                 <div class="row">
                     <div class="col-sm-1 offset-sm-2"> Gender: </div>
+                    <div class="col-sm-1">
                     <button onClick={this.editGender}> Edit </button>
-                    <div class = "col-sm-1 offset-sm-5">{this.state.currentUser.Gender}</div>
+                    </div>
+                    <div class = "col-sm-2 offset-sm-4">{this.state.currentUser.Gender}</div>
                   </div>
                 : <div class="row">
                     <div class="col-sm-1 offset-sm-2"> Gender: </div>
+                    <div class="col-sm-1">
                     <button onClick={this.saveGender}> Save </button>
-                    <select id="genderId" class = "col-sm-1 offset-sm-5">
+                    </div>
+                    <select id="genderId" class = "col-sm-1 offset-sm-4">
                       <option value="Male">Male</option>
                       <option value="Female">Female</option>
                       <option value="Other?">Other?</option>
@@ -279,13 +301,17 @@ class UserView extends Component {
                   ?
                 <div class="row">
                     <div class="col-sm-1 offset-sm-2"> Gender: </div>
+                    <div class="col-sm-1">
                     <button onClick={this.editGender}> Edit </button>
-                    <div class = "col-sm-1 offset-sm-5">Unknown</div>
+                    </div>
+                    <div class = "col-sm-1 offset-sm-4">Unknown</div>
                   </div>
                 : <div class="row">
                     <div class="col-sm-1 offset-sm-2"> Gender: </div>
+                    <div class="col-sm-1">
                     <button onClick={this.saveGender}> Save </button>
-                    <select id="genderId" class = "col-sm-1 offset-sm-5">
+                    </div>
+                    <select id="genderId" class = "col-sm-1 offset-sm-4">
                       <option value="Male">Male</option>
                       <option value="Female">Female</option>
                       <option value="Other">Other?</option>
