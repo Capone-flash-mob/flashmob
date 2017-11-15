@@ -9,40 +9,32 @@ var VideoForm = class VideoForm extends React.Component {
   constructor() {
     super()
     this.state = {
-      videos: [{
-        title: '',
-        id: '',
-      }],
+      videos: [],
     };
+        this.handleVideoTitleChange = this.handleVideoTitleChange.bind(this);
+        this.handleVideoIdChange = this.handleVideoIdChange.bind(this);
+
   }
 
-  handleVideoTitleChange = (current) => (evt) => {
-    const newVideos = this.state.videos.map((this_video, this_id) => {
-      if (current !== this_id) {
-        return this_video;
-      }
-      return { ...this_video, title: evt.target.value }
-    });
+//function called when text in video title is changed
+  handleVideoTitleChange(event){
     this.setState({
-      videos: newVideos
-    });
+      current_video: event.target.value
+    })
   }
 
-  handleVideoIdChange = (current) => (evt) => {
-    const newVideos = this.state.videos.map((this_video, this_id) => {
-      if (current !== this_id) {
-        return this_video;
-      }
-      return { ...this_video, id: evt.target.value }
-    });
+//function called when video id is changed
+  handleVideoIdChange (event) {
+    var pureId = event.target.value.replace("https://www.youtube.com/watch?v=", "");
     this.setState({
-      videos: newVideos
-    });
+      current_video_id: pureId
+    })
   }
 
+//adds video th
   handleAddVideo = () => {
     this.setState({
-      videos: this.state.videos.concat([{ title: this.state.videos.title, id: this.state.videos.id }])
+      videos: this.state.videos.concat([{ title: this.state.current_video, id: this.state.current_video_id }])
     });
   }
 
@@ -57,6 +49,7 @@ var VideoForm = class VideoForm extends React.Component {
       height: '150',
       width: '100%',
     };
+    console.log("title" + this.state.videos.length)
     return (
       <div class="row">
         <div class="col-sm-5 offset-sm-1">
@@ -71,7 +64,7 @@ var VideoForm = class VideoForm extends React.Component {
               <div class="form-group">
                 <label forName="videoID"><i>Video URL:</i></label>
                 <div class="input-group">
-                  <input name="videoID" type="text" class="form-control" id="mainVideoUrl" style={{borderRadius: '4px'}} onChange={this.handleVideoIdChange}></input>
+                  <input name="videoID" type="text"  class="form-control" id="mainVideoUrl" style={{borderRadius: '4px'}} onChange={this.handleVideoIdChange}></input>
                   <span class="input-group-btn" style={{paddingLeft: '25px'}}>
                     <button type="button" class="btn btn-success" style={{width: '34px', borderRadius: '4px'}} onClick={this.handleAddVideo}>+</button>
                   </span>
@@ -82,17 +75,18 @@ var VideoForm = class VideoForm extends React.Component {
         </div>
         <div class="col-sm-10 offset-sm-1">
           <div class="row">
-            {this.state.videos.filter((current_video, current) => (current_video.title !== '') && (current_video.id !== '')).map((current_video, current) =>
+            {this.state.videos.map((key, index) =>
               <div class="col-sm-2">
-                <h3>{current_video.title},{current_video.id}</h3>
-                <h3>{current_video.title}</h3>
+              
+                <h3>{key.title},{key.id}</h3>
+                <h3>{key.title}</h3>
                 <div class="mob-infobox">
                   <YouTube
                     opts={opts}
-                    videoId={current_video.id}
+                    videoId={key.id}
                   />
                 </div>
-                <button type="button" class="btn btn-danger" style={{width: '100%', borderRadius: '4px', margin: '0px 0px 10px 0px'}} onClick={this.handleRemoveVideo(current)}>-</button>
+                <button type="button" class="btn btn-danger" style={{width: '100%', borderRadius: '4px', margin: '0px 0px 10px 0px'}} onClick={this.handleRemoveVideo(key)}>-</button>
               </div>
             )}
           </div>
