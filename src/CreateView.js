@@ -11,19 +11,17 @@ var VideoForm = class VideoForm extends React.Component {
     this.state = {
       videos: [],
     };
-        this.handleVideoTitleChange = this.handleVideoTitleChange.bind(this);
-        this.handleVideoIdChange = this.handleVideoIdChange.bind(this);
-        this.handleAddVideo = this.handleAddVideo.bind(this);
+    this.handleVideoTitleChange = this.handleVideoTitleChange.bind(this);
+    this.handleVideoIdChange = this.handleVideoIdChange.bind(this);
+    this.handleAddVideo = this.handleAddVideo.bind(this);
   }
 
-//function called when text in video title is changed
   handleVideoTitleChange(event){
     this.setState({
       current_video: event.target.value
     })
   }
 
-//function called when video id is changed
   handleVideoIdChange (event) {
     var pureId = event.target.value.replace("https://www.youtube.com/watch?v=", "");
     this.props.handler(event);
@@ -32,7 +30,6 @@ var VideoForm = class VideoForm extends React.Component {
     })
   }
 
-//adds video th
   handleAddVideo(event){
     this.setState({
       videos: this.state.videos.concat([{ title: this.state.current_video, id: this.state.current_video_id }])
@@ -42,9 +39,10 @@ var VideoForm = class VideoForm extends React.Component {
       console.log("LENGTH IS " + this.state.videos.length + " videos");
     })
   }
-  handleRemoveVideo = (current) => () => {
+
+  handleRemoveVideo = (key) => () => {
     this.setState({
-      videos: this.state.videos.filter((this_video, this_id) => current !== this_id)
+      videos: this.state.videos.filter((current) => key !== current)
     });
   }
 
@@ -53,6 +51,7 @@ var VideoForm = class VideoForm extends React.Component {
       height: '150',
       width: '100%',
     };
+
     console.log("title" + this.state.videos.length)
     return (
       <div class="row">
@@ -81,8 +80,6 @@ var VideoForm = class VideoForm extends React.Component {
           <div class="row">
             {this.state.videos.map((key, index) =>
               <div class="col-sm-2">
-              
-                <h3>{key.title},{key.id}</h3>
                 <h3>{key.title}</h3>
                 <div class="mob-infobox">
                   <YouTube
