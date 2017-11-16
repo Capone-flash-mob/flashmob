@@ -13,7 +13,7 @@ var VideoForm = class VideoForm extends React.Component {
     };
         this.handleVideoTitleChange = this.handleVideoTitleChange.bind(this);
         this.handleVideoIdChange = this.handleVideoIdChange.bind(this);
-
+        this.handleAddVideo = this.handleAddVideo.bind(this);
   }
 
 //function called when text in video title is changed
@@ -26,18 +26,22 @@ var VideoForm = class VideoForm extends React.Component {
 //function called when video id is changed
   handleVideoIdChange (event) {
     var pureId = event.target.value.replace("https://www.youtube.com/watch?v=", "");
+    this.props.handler(event);
     this.setState({
       current_video_id: pureId
     })
   }
 
 //adds video th
-  handleAddVideo = () => {
+  handleAddVideo(event){
     this.setState({
       videos: this.state.videos.concat([{ title: this.state.current_video, id: this.state.current_video_id }])
-    });
+    }, function(){
+      var vidName = this.state.videos;
+      this.props.handler(vidName);
+      console.log("LENGTH IS " + this.state.videos.length + " videos");
+    })
   }
-
   handleRemoveVideo = (current) => () => {
     this.setState({
       videos: this.state.videos.filter((this_video, this_id) => current !== this_id)
@@ -64,7 +68,7 @@ var VideoForm = class VideoForm extends React.Component {
               <div class="form-group">
                 <label forName="videoID"><i>Video URL:</i></label>
                 <div class="input-group">
-                  <input name="videoID" type="text"  class="form-control" id="mainVideoUrl" style={{borderRadius: '4px'}} onChange={this.handleVideoIdChange}></input>
+                  <input name="videoID" type="text" class="form-control" id="mainVideoUrl" style={{borderRadius: '4px'}} onChange={this.handleVideoIdChange}></input>
                   <span class="input-group-btn" style={{paddingLeft: '25px'}}>
                     <button type="button" class="btn btn-success" style={{width: '34px', borderRadius: '4px'}} onClick={this.handleAddVideo}>+</button>
                   </span>
@@ -102,25 +106,32 @@ var CreateView = class CreateView extends React.Component {
     super(props);
     this.state = {
       flashmob: null,
+      videos: [],
     };
     // Bind context
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleImage = this.handleImage.bind(this);
+    this.handleVideos = this.handleVideos.bind(this);
   }
 
   handleChange(event){
     const name = event.target.name;
     const value = event.target.value;
-    console.log('State:', this.state);
     this.setState({
       [name]: value
     });
   }
 
+  handleVideos(ChildVideos){
+
+  this.setState({
+      videos: ChildVideos,
+    });
+  }
+
   handleSubmit(event){
     event.preventDefault(); // <- prevent form submit from reloading the page*/
-    console.log('Form is being sumitted!\nCurrent State is:', this.state);
     this.setState({
       flashmob: this.state,
     });
@@ -190,7 +201,7 @@ var CreateView = class CreateView extends React.Component {
             <div class="col-sm-5 offset-sm-1">
               <div class="form-group">
                 <label forName="title"><i>Flashmob Title:</i></label>
-                <input type="text" class="form-control" id="title"></input>
+                <input type="text" onChange={this.handleChange} name="title" class="form-control" id="title"></input>
               </div>
             </div>
             <div class="col-sm-5">
@@ -198,7 +209,7 @@ var CreateView = class CreateView extends React.Component {
                 <div class="col-sm-6">
                   <div class="form-group">
                     <label forName="location"><i>Location:</i></label>
-                    <input type="text" class="form-control" id="location"></input>
+                    <input type="text" onChange={this.handleChange} name="location" class="form-control" id="location"></input>
                   </div>
                 </div>
                 <div class="col-sm-6">
@@ -214,7 +225,7 @@ var CreateView = class CreateView extends React.Component {
             <div class="col-sm-5 offset-sm-1">
               <div class="form-group">
                 <label forName="description"><i>Description:</i></label>
-                <textarea class="form-control" rows="5" id="description"></textarea>
+                <textarea onChange={this.handleChange} name="description" class="form-control" rows="5" id="description"></textarea>
               </div>
             </div>
             <div class="col-sm-5">
@@ -222,13 +233,13 @@ var CreateView = class CreateView extends React.Component {
                 <div class="col-sm-6">
                   <div class="form-group">
                     <label forName="date"><i>Date:</i></label>
-                    <input type="text" class="form-control" id="date"></input>
+                    <input type="text" onChange={this.handleChange} name="date" class="form-control" id="date"></input>
                   </div>
                 </div>
                 <div class="col-sm-6">
                   <div class="form-group">
                     <label forName="time"><i>Time:</i></label>
-                    <input type="text" class="form-control" id="time"></input>
+                    <input type="text" onChange={this.handleChange} name="time" class="form-control" id="time"></input>
                   </div>
                 </div>
               </div>
@@ -236,19 +247,19 @@ var CreateView = class CreateView extends React.Component {
                 <div class="col-sm-6">
                   <div class="form-group">
                     <label forName="choreographer"><i>Choreographer:</i></label>
-                    <input type="text" class="form-control" id="choreographer"></input>
+                    <input type="text" onChange={this.handleChange} name="choreographer" class="form-control" id="choreographer"></input>
                   </div>
                 </div>
                 <div class="col-sm-6">
                   <div class="form-group">
                     <label forName="email"><i>Email:</i></label>
-                    <input type="text" class="form-control" id="email"></input>
+                    <input type="text" onChange={this.handleChange} name="email" class="form-control" id="email"></input>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <VideoForm></VideoForm>
+          <VideoForm handler={this.handleVideos}></VideoForm>
           <div class="row">
             <div class="col-sm-2 offset-sm-5">
               <input class="input btn-default" style={{margin: '50px 0 0 0'}} type="submit"/>
