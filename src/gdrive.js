@@ -8,7 +8,6 @@ Components:
 import React, { Component } from 'react';
 import gapi from './gapi'
 
-var uploadURI = 'https://www.googleapis.com/upload/drive/v3/files?uploadType=resumable';
 let apiToken = null;
 var GoogleDriveComponents = {};
 
@@ -146,7 +145,9 @@ GoogleDriveComponents.GDriveUploadBtn = class GDriveUploadBtn extends Component{
    return false;
   }
 
-  createPOSTHeaders(bodySize){
+  // Code that allows someone to upload a video to their Google Drive
+  //  Note: Google DOESN'T allow random users to access some else's GDrive
+  /*createPOSTHeaders(bodySize){
     var h = new Headers();
     h.append('Content-Length', bodySize);
     return h;
@@ -156,11 +157,11 @@ GoogleDriveComponents.GDriveUploadBtn = class GDriveUploadBtn extends Component{
     if (response.ok){
       return response.json()
     }
-    return response.json()
     .then((error)=>{
       throw new Error(JSON.stringify(error))
       })
   }
+
   uploadToGDrive(file, fsize) {
     const body = file;
     const headers = this.createPOSTHeaders(fsize);
@@ -168,19 +169,17 @@ GoogleDriveComponents.GDriveUploadBtn = class GDriveUploadBtn extends Component{
       method: 'POST',
       headers
     };
-    /*fetch('www.example.net', { // Your POST endpoint
-    method: 'POST',
-    headers: {
-      "Content-Type": "You will perhaps need to define a content-type here"
-    },
-    body: e.currentTarget.result // This is the content of your file
-  })*/
+    // Send request to google drive servers
+    // Append ?uploadType=resumable to request a resumable upload
+    var uploadURI = 'https://www.googleapis.com/upload/drive/v3/files?uploadType=resumable';
     return fetch(uploadURI, {
       method:'POST',
-      headers:{},
-      body: body}).then(this.processResponse);
-  }
+      headers:headers,
+      body: {}}) // If there's no metadata, then leave body empty
+      .then(this.processResponse);
+  }*/
 
+  // Uploads a video file to GDrive or fails with error message
    handleChange(event) {
      var currentFiles = event.target.files;
      if (currentFiles.length === 0){
@@ -190,7 +189,7 @@ GoogleDriveComponents.GDriveUploadBtn = class GDriveUploadBtn extends Component{
        if (this.validFileType(currentFiles[0])){
          this.setState({status: ''});
          var fsize = currentFiles[0].size;
-         this.uploadToGDrive(currentFiles[0], fsize);
+         //@TODO: Upload to our servers
        }
        else{
          this.setState({status: 'Upload Error: Use a different video file type.'});
