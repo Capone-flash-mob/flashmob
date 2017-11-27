@@ -4,6 +4,133 @@ import {BrowserRouter as Router, Route, Link, IndexRoute} from 'react-router-dom
 import firebase from 'firebase';
 import YouTube from 'react-youtube';
 
+// Creates an input-validated TitleForm
+var TitleForm = class TitleForm extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      title: '',
+      focused: true,
+    };
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(event) {
+    this.setState({
+      title: event.target.value,
+      focused: false,
+    });
+  }
+
+  render() {
+    return (
+      <div class="form-group">
+        <label forName="title"><i>Flashmob Title:</i></label>
+        {this.state.title.length < 50 && !(this.state.focused == false && this.state.title.length == 0) ? (
+          <input type="text" onChange={this.handleChange} name="title" class="form-control" id="title"></input>
+        ) : (
+          <input type="text" onChange={this.handleChange} name="title" class="form-control red-border" id="title"></input>
+        )}
+      </div>
+    )
+  }
+}
+
+// Creates an input-validated Description
+var DescriptionForm = class DescriptionForm extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      title: '',
+    };
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(event) {
+    this.setState({
+      title: event.target.value,
+    });
+  }
+
+  render() {
+    return (
+      <div class="form-group">
+        <label forName="description"><i>Description:</i></label>
+        {this.state.title.length < 500 ? (
+          <textarea onChange={this.handleChange} name="description" class="form-control" id="description"></textarea>
+        ) : (
+          <textarea onChange={this.handleChange} name="description" class="form-control red-border" id="description"></textarea>
+        )}
+      </div>
+    )
+  }
+}
+
+// Creates an input-validated ChoreographerForm
+var ChoreographerForm = class ChoreographerForm extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      choreographer: '',
+      focused: true,
+    };
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(event) {
+    this.setState({
+      choreographer: event.target.value,
+      focused: false,
+    });
+  }
+
+  render() {
+    return (
+      <div class="form-group">
+        <label forName="choreographer"><i>Choreographer:</i></label>
+        {this.state.choreographer.length < 25 && !(this.state.focused == false && this.state.choreographer.length == 0) ? (
+          <input type="text" onChange={this.handleChange} name="choreographer" class="form-control" id="choreographer"></input>
+        ) : (
+          <input type="text" onChange={this.handleChange} name="choreographer" class="form-control red-border" id="choreographer"></input>
+        )}
+      </div>
+    )
+  }
+}
+
+// Creates an input-validated EmailForm
+var EmailForm = class EmailForm extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      email: '',
+      focused: true,
+    };
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(event) {
+    this.setState({
+      email: event.target.value,
+      focused: false,
+    });
+  }
+
+  render() {
+    const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return (
+      <div class="form-group">
+        <label forName="email"><i>Email:</i></label>
+        {!(this.state.focused == false && !regex.test(this.state.email)) && !(this.state.focused == false && this.state.email.length == 0) ? (
+          <input type="text" onChange={this.handleChange} name="email" class="form-control" id="email"></input>
+        ) : (
+          <input type="text" onChange={this.handleChange} name="email" class="form-control red-border" id="email"></input>
+        )}
+      </div>
+    )
+  }
+}
+
 // Creates a dynamic video form component
 var VideoForm = class VideoForm extends React.Component {
   constructor() {
@@ -16,13 +143,13 @@ var VideoForm = class VideoForm extends React.Component {
     this.handleAddVideo = this.handleAddVideo.bind(this);
   }
 
-  handleVideoTitleChange(event){
+  handleVideoTitleChange(event) {
     this.setState({
       current_video: event.target.value
     })
   }
 
-  handleVideoIdChange (event) {
+  handleVideoIdChange(event) {
     var pureId = event.target.value.replace("https://www.youtube.com/watch?v=", "");
     this.props.handler(event);
     this.setState({
@@ -30,10 +157,10 @@ var VideoForm = class VideoForm extends React.Component {
     })
   }
 
-  handleAddVideo(event){
+  handleAddVideo(event) {
     this.setState({
       videos: this.state.videos.concat([{ title: this.state.current_video, id: this.state.current_video_id }])
-    }, function(){
+    }, function() {
       var vidName = this.state.videos;
       this.props.handler(vidName);
       console.log("LENGTH IS " + this.state.videos.length + " videos");
@@ -121,10 +248,9 @@ var CreateView = class CreateView extends React.Component {
   }
 
   handleVideos(ChildVideos){
-
-  this.setState({
-      videos: ChildVideos,
-    });
+    this.setState({
+        videos: ChildVideos,
+      });
   }
 
   handleSubmit(event){
@@ -196,10 +322,7 @@ var CreateView = class CreateView extends React.Component {
         <form class="App-form" onSubmit={this.handleSubmit}>
           <div class="row">
             <div class="col-sm-5 offset-sm-1">
-              <div class="form-group">
-                <label forName="title"><i>Flashmob Title:</i></label>
-                <input type="text" onChange={this.handleChange} name="title" class="form-control" id="title"></input>
-              </div>
+              <TitleForm></TitleForm>
             </div>
             <div class="col-sm-5">
               <div class="row">
@@ -220,38 +343,29 @@ var CreateView = class CreateView extends React.Component {
           </div>
           <div class="row">
             <div class="col-sm-5 offset-sm-1">
-              <div class="form-group">
-                <label forName="description"><i>Description:</i></label>
-                <textarea onChange={this.handleChange} name="description" class="form-control" rows="5" id="description"></textarea>
-              </div>
+              <DescriptionForm></DescriptionForm>
             </div>
             <div class="col-sm-5">
               <div class="row">
                 <div class="col-sm-6">
                   <div class="form-group">
                     <label forName="date"><i>Date:</i></label>
-                    <input type="text" onChange={this.handleChange} name="date" class="form-control" id="date"></input>
+                    <input type="date" onChange={this.handleChange} name="date" class="form-control" id="date"></input>
                   </div>
                 </div>
                 <div class="col-sm-6">
                   <div class="form-group">
                     <label forName="time"><i>Time:</i></label>
-                    <input type="text" onChange={this.handleChange} name="time" class="form-control" id="time"></input>
+                    <input type="time" onChange={this.handleChange} name="time" class="form-control" id="time"></input>
                   </div>
                 </div>
               </div>
               <div class="row">
                 <div class="col-sm-6">
-                  <div class="form-group">
-                    <label forName="choreographer"><i>Choreographer:</i></label>
-                    <input type="text" onChange={this.handleChange} name="choreographer" class="form-control" id="choreographer"></input>
-                  </div>
+                  <ChoreographerForm></ChoreographerForm>
                 </div>
                 <div class="col-sm-6">
-                  <div class="form-group">
-                    <label forName="email"><i>Email:</i></label>
-                    <input type="text" onChange={this.handleChange} name="email" class="form-control" id="email"></input>
-                  </div>
+                  <EmailForm></EmailForm>
                 </div>
               </div>
             </div>

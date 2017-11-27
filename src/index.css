@@ -144,7 +144,7 @@
   margin-bottom: 1px;
 }
 
-/* Mob Admin View Component */
+/* Mob Create View Component */
 .button {
   font-size: calc(6px + 0.5vw);
   text-align: center;
@@ -187,6 +187,11 @@
 
 .input[type=submit]:hover {
   background-color: #366ba9;
+}
+
+.red-border {
+  border-color: red !important;
+  box-shadow: 0 0 0 0.2rem rgba(255,0,0,.25) !important;
 }
 
 /* Mob Public View Component */

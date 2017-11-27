@@ -98,3 +98,33 @@ var VideoForm = class VideoForm extends React.Component {
     );
   }
 }
+
+
+var TitleForm = class TitleForm extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      title: '',
+    };
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(event) {
+    this.setState({
+      title: event.target.value,
+    });
+  }
+
+  render() {
+    return (
+      <div class="form-group">
+        <label forName="title"><i>Flashmob Title:</i></label>
+        {this.state.title.length < 10 ? (
+          <input type="text" onChange={this.handleChange} name="title" class="form-control" id="title"></input>
+        ) : (
+          <input type="text" onChange={this.handleChange} name="title" class="form-control" id="title" border-color="red"></input>
+        )}
+      </div>
+    )
+  }
+}
