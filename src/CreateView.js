@@ -163,6 +163,38 @@ var DateForm = class DateForm extends React.Component {
   }
 }
 
+// Creates an input-validated TimeForm
+var TimeForm = class TimeForm extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      time: '',
+      focused: true,
+    };
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(event) {
+    this.setState({
+      time: event.target.value,
+      focused: false,
+    });
+  }
+
+  render() {
+    return (
+      <div class="form-group">
+        <label forName="time"><i>Time:</i></label>
+        {!(this.state.focused == false && this.state.time.length == 0) ? (
+          <input type="time" onChange={this.handleChange} name="time" class="form-control" id="time"></input>
+        ) : (
+          <input type="time" onChange={this.handleChange} name="time" class="form-control red-border" id="time"></input>
+        )}
+      </div>
+    )
+  }
+}
+
 // Creates a dynamic video form component
 var VideoForm = class VideoForm extends React.Component {
   constructor() {
@@ -271,7 +303,7 @@ var CreateView = class CreateView extends React.Component {
     this.handleVideos = this.handleVideos.bind(this);
   }
 
-  handleChange(event){
+  handleChange(event) {
     const name = event.target.name;
     const value = event.target.value;
     this.setState({
@@ -279,24 +311,83 @@ var CreateView = class CreateView extends React.Component {
     });
   }
 
-  handleVideos(ChildVideos){
-    this.setState({
-        videos: ChildVideos,
+  handleTitle(_title) {
+    if (_title.length != 0) {
+      this.setState({
+        title: _title,
       });
+    }
+    else {
+      this.setState({
+        title: ''
+      });
+    }
   }
 
-  handleSubmit(event){
-    event.preventDefault(); // <- prevent form submit from reloading the page*/
+  handleDescription(_description) {
     this.setState({
-      flashmob: this.state,
+      description: _description,
     });
-    const flashmobKey = database.addFlashmob(this.state);
-    alert('Successfully added new mob');
-    // Redirect to created flash mob
-    this.props.history.push("/public/" + flashmobKey);
   }
 
-  handleImage(event){
+  handleChoreographer(_choreographer) {
+    if (_choreographer.length != 0) {
+      this.setState({
+        choreographer: _choreographer,
+      });
+    }
+  }
+
+  handleEmail(_email) {
+    if (_email.length != 0) {
+      this.setState({
+          email: _email,
+      });
+    }
+  }
+
+  handleDate(_date) {
+    if (_date.length != 0) {
+      this.setState({
+        date: _date,
+      });
+    }
+  }
+
+  handleTime(_time) {
+    if (_time.length != 0) {
+      this.setState({
+        time: _time,
+      });
+    }
+  }
+
+  handleVideos(_videos) {
+    if (_videos.length != 0) {
+      this.setState({
+        videos: _videos,
+      });
+    }
+  }
+
+  handleSubmit(event) {
+    if (this.state.title.length == 0) {
+      event.preventDefault();
+      alert('Title is required');
+    }
+    else {
+      event.preventDefault(); // <- prevent form submit from reloading the page*/
+      this.setState({
+        flashmob: this.state,
+      });
+      const flashmobKey = database.addFlashmob(this.state);
+      alert('Successfully added new mob');
+      // Redirect to created flash mob
+      this.props.history.push("/public/" + flashmobKey);
+    }
+  }
+
+  handleImage(event) {
     const currentImage = event.target.files[0];
     const name = event.target.name;
 
@@ -354,7 +445,7 @@ var CreateView = class CreateView extends React.Component {
         <form class="App-form" onSubmit={this.handleSubmit}>
           <div class="row">
             <div class="col-sm-5 offset-sm-1">
-              <TitleForm></TitleForm>
+              <TitleForm handler={this.handleTitle}></TitleForm>
             </div>
             <div class="col-sm-5">
               <div class="row">
@@ -375,26 +466,23 @@ var CreateView = class CreateView extends React.Component {
           </div>
           <div class="row">
             <div class="col-sm-5 offset-sm-1">
-              <DescriptionForm></DescriptionForm>
+              <DescriptionForm handler={this.handleDescription}></DescriptionForm>
             </div>
             <div class="col-sm-5">
               <div class="row">
                 <div class="col-sm-6">
-                  <DateForm></DateForm>
+                  <DateForm handler={this.handleDate}></DateForm>
                 </div>
                 <div class="col-sm-6">
-                  <div class="form-group">
-                    <label forName="time"><i>Time:</i></label>
-                    <input type="time" onChange={this.handleChange} name="time" class="form-control" id="time"></input>
-                  </div>
+                  <TimeForm handler={this.handleTime}></TimeForm>
                 </div>
               </div>
               <div class="row">
                 <div class="col-sm-6">
-                  <ChoreographerForm></ChoreographerForm>
+                  <ChoreographerForm handler={this.handleChoreographer}></ChoreographerForm>
                 </div>
                 <div class="col-sm-6">
-                  <EmailForm></EmailForm>
+                  <EmailForm handler={this.handleEmail}></EmailForm>
                 </div>
               </div>
             </div>
