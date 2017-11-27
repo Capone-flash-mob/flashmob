@@ -335,7 +335,7 @@ var CreateView = class CreateView extends React.Component {
                 <div class="col-sm-6">
                   <div>
                     <label forName="files"><i>Add an Image:</i></label>
-                    <input id="files" type="file"></input>
+                    <input id="files" type="file" accept="image/*"></input>
                   </div>
                 </div>
               </div>
