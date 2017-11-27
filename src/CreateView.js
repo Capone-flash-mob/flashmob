@@ -131,6 +131,38 @@ var EmailForm = class EmailForm extends React.Component {
   }
 }
 
+// Creates an input-validated DateForm
+var DateForm = class DateForm extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      date: '',
+      focused: true,
+    };
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(event) {
+    this.setState({
+      date: event.target.value,
+      focused: false,
+    });
+  }
+
+  render() {
+    return (
+      <div class="form-group">
+        <label forName="date"><i>Date:</i></label>
+        {!(this.state.focused == false && this.state.date.length == 0) ? (
+          <input type="date" onChange={this.handleChange} name="date" class="form-control" id="date"></input>
+        ) : (
+          <input type="date" onChange={this.handleChange} name="date" class="form-control red-border" id="date"></input>
+        )}
+      </div>
+    )
+  }
+}
+
 // Creates a dynamic video form component
 var VideoForm = class VideoForm extends React.Component {
   constructor() {
@@ -348,10 +380,7 @@ var CreateView = class CreateView extends React.Component {
             <div class="col-sm-5">
               <div class="row">
                 <div class="col-sm-6">
-                  <div class="form-group">
-                    <label forName="date"><i>Date:</i></label>
-                    <input type="date" onChange={this.handleChange} name="date" class="form-control" id="date"></input>
-                  </div>
+                  <DateForm></DateForm>
                 </div>
                 <div class="col-sm-6">
                   <div class="form-group">
