@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import database from './database'
+import database from './database';
 import {BrowserRouter as Router, Route, Link, IndexRoute} from 'react-router-dom';
 import YouTube from 'react-youtube'
 import firebase from 'firebase';
@@ -82,7 +82,7 @@ var PublicView = class PublicView extends React.Component {
 
   render(){
     this.swapEnguagmentButtons();
-    console.log(this.state);
+
     if (this.state.flashmob == null) {
       return (<div> Loading... </div>);
     }
@@ -162,7 +162,12 @@ var PublicView = class PublicView extends React.Component {
                     </div>
                     <div class="row">
                       <button style={this.state.showInterested} type="button" onClick={this.addFlashMobToUser}class="flashmob-interest-button btn btn-lg btn-block">{"I'm Interested"}</button>
-                      <SubmitTextLine style={this.state.showYouTubeLink} label="YouTube URL" instructions="Paste and submit your Youtube video link here!"></SubmitTextLine>
+                      <SubmitTextLine
+                      style={this.state.showYouTubeLink}
+                      label="YouTube URL"
+                      instructions="Submit a Youtube video link here to get feedback!"
+                      trigger="submitVideoURL"
+                      fmid={this.state.flashmob_uid}></SubmitTextLine>
                     </div>
                   </div>
                 </div>
