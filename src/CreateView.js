@@ -20,6 +20,7 @@ var TitleForm = class TitleForm extends React.Component {
       title: event.target.value,
       focused: false,
     });
+    this.props.handler(this.state.title);
   }
 
   render() {
@@ -41,22 +42,23 @@ var DescriptionForm = class DescriptionForm extends React.Component {
   constructor() {
     super()
     this.state = {
-      title: '',
+      description: '',
     };
     this.handleChange = this.handleChange.bind(this);
   }
 
   handleChange(event) {
     this.setState({
-      title: event.target.value,
+      description: event.target.value,
     });
+    this.props.handler(this.state.description);
   }
 
   render() {
     return (
       <div class="form-group">
         <label forName="description"><i>Description:</i></label>
-        {this.state.title.length < 500 ? (
+        {this.state.description.length < 500 ? (
           <textarea onChange={this.handleChange} name="description" class="form-control" id="description"></textarea>
         ) : (
           <textarea onChange={this.handleChange} name="description" class="form-control red-border" id="description"></textarea>
@@ -82,6 +84,7 @@ var ChoreographerForm = class ChoreographerForm extends React.Component {
       choreographer: event.target.value,
       focused: false,
     });
+    this.props.handler(this.state.choreographer);
   }
 
   render() {
@@ -114,6 +117,7 @@ var EmailForm = class EmailForm extends React.Component {
       email: event.target.value,
       focused: false,
     });
+    this.props.handler(this.state.email);
   }
 
   render() {
@@ -125,6 +129,39 @@ var EmailForm = class EmailForm extends React.Component {
           <input type="text" onChange={this.handleChange} name="email" class="form-control" id="email"></input>
         ) : (
           <input type="text" onChange={this.handleChange} name="email" class="form-control red-border" id="email"></input>
+        )}
+      </div>
+    )
+  }
+}
+
+// Creates an input-validated LocationForm
+var LocationForm = class LocationForm extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      location: '',
+      focused: true,
+    };
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(event) {
+    this.setState({
+      location: event.target.value,
+      focused: false,
+    });
+    this.props.handler(this.state.location);
+  }
+
+  render() {
+    return (
+      <div class="form-group">
+        <label forName="date"><i>Date:</i></label>
+        {!(this.state.focused == false && this.state.date.length == 0) ? (
+          <input type="date" onChange={this.handleChange} name="date" class="form-control" id="date"></input>
+        ) : (
+          <input type="date" onChange={this.handleChange} name="date" class="form-control red-border" id="date"></input>
         )}
       </div>
     )
@@ -147,6 +184,7 @@ var DateForm = class DateForm extends React.Component {
       date: event.target.value,
       focused: false,
     });
+    this.props.handler(this.state.date);
   }
 
   render() {
@@ -179,6 +217,7 @@ var TimeForm = class TimeForm extends React.Component {
       time: event.target.value,
       focused: false,
     });
+    this.props.handler(this.state.time);
   }
 
   render() {
@@ -294,12 +333,26 @@ var CreateView = class CreateView extends React.Component {
     super(props);
     this.state = {
       flashmob: null,
+      title: '',
+      description: '',
+      choreographer: '',
+      location: '',
+      email: '',
+      date: '',
+      time: '',
       videos: [],
     };
     // Bind context
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleImage = this.handleImage.bind(this);
+    this.handleTitle = this.handleTitle.bind(this);
+    this.handleDescription = this.handleDescription.bind(this);
+    this.handleChoreographer = this.handleChoreographer.bind(this);
+    this.handleEmail = this.handleEmail.bind(this);
+    this.handleLocation = this.handleLocation.bind(this);
+    this.handleDate = this.handleDate.bind(this);
+    this.handleTime = this.handleTime.bind(this);
     this.handleVideos = this.handleVideos.bind(this);
   }
 
@@ -312,16 +365,9 @@ var CreateView = class CreateView extends React.Component {
   }
 
   handleTitle(_title) {
-    if (_title.length != 0) {
-      this.setState({
-        title: _title,
-      });
-    }
-    else {
-      this.setState({
-        title: ''
-      });
-    }
+    this.setState({
+      title: _title,
+    });
   }
 
   handleDescription(_description) {
@@ -331,49 +377,65 @@ var CreateView = class CreateView extends React.Component {
   }
 
   handleChoreographer(_choreographer) {
-    if (_choreographer.length != 0) {
-      this.setState({
-        choreographer: _choreographer,
-      });
-    }
+    this.setState({
+      choreographer: _choreographer,
+    });
   }
 
   handleEmail(_email) {
-    if (_email.length != 0) {
-      this.setState({
-          email: _email,
-      });
-    }
+    this.setState({
+      email: _email,
+    });
+  }
+
+  handleLocation(_location) {
+    this.setState({
+      location: _location,
+    });
   }
 
   handleDate(_date) {
-    if (_date.length != 0) {
-      this.setState({
-        date: _date,
-      });
-    }
+    this.setState({
+      date: _date,
+    });
   }
 
   handleTime(_time) {
-    if (_time.length != 0) {
-      this.setState({
-        time: _time,
-      });
-    }
+    this.setState({
+      time: _time,
+    });
   }
 
   handleVideos(_videos) {
-    if (_videos.length != 0) {
-      this.setState({
-        videos: _videos,
-      });
-    }
+    this.setState({
+      videos: _videos,
+    });
   }
 
   handleSubmit(event) {
     if (this.state.title.length == 0) {
       event.preventDefault();
       alert('Title is required');
+    }
+    else if (this.state.choreographer.length == 0) {
+      event.preventDefault();
+      alert('Choreographer is required');
+    }
+    else if (this.state.email.length == 0) {
+      event.preventDefault();
+      alert('Email is required');
+    }
+    else if (this.state.location.length == 0) {
+      event.preventDefault();
+      alert('Location is required');
+    }
+    else if (this.state.date.length == 0) {
+      event.preventDefault();
+      alert('Date is required');
+    }
+    else if (this.state.time.length == 0) {
+      event.preventDefault();
+      alert('Time is required');
     }
     else {
       event.preventDefault(); // <- prevent form submit from reloading the page*/
@@ -450,10 +512,7 @@ var CreateView = class CreateView extends React.Component {
             <div class="col-sm-5">
               <div class="row">
                 <div class="col-sm-6">
-                  <div class="form-group">
-                    <label forName="location"><i>Location:</i></label>
-                    <input type="text" onChange={this.handleChange} name="location" class="form-control" id="location"></input>
-                  </div>
+                  <LocationForm handler={this.handleLocation}></LocationForm>
                 </div>
                 <div class="col-sm-6">
                   <div>
