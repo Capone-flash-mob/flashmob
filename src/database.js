@@ -207,7 +207,7 @@ var database = {
     getAllFeedbackForUser: function(userId, callback){
         // Send flashmob to firebase
         //var feedback = this.getAllFeedbackForFlashmob(flashmobId);
-        /*var feedback = [];
+        var feedback = [];
         this.getMyFlashMobs(userId, function(flashMobs){
           console.log('Got flashmobs:', flashMobs);
           flashMobs.forEach(function(flashmob){
@@ -219,10 +219,11 @@ var database = {
               });
             }
           });
+          console.log('All feedback found for user:', feedback);
           callback(feedback);
-        });*/
+        });
         // Dummy return for now
-          callback([
+          /*callback([
             {
               'userId': 'userid1',
               'videoUrl': 'video1.com',
@@ -235,7 +236,7 @@ var database = {
               'time': (new Date()).getTime(),
               'comments': []
             }
-          ]);
+          ]);*/
       },
       getFeedbackForUserForSpecificFlashmob: function(flashmobId, userId, callback){
         // Send flashmob to firebase
