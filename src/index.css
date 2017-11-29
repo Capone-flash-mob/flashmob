@@ -1,3 +1,9 @@
+/*Twitter Boostrap default style overrides*/
+.btn-primary{
+  background-color: #366ba9;
+  border-color: #366ba9;
+}
+/*Custom*/
 .flashmob-title-container{
   color: #4484ce;
   margin-top:20px;
