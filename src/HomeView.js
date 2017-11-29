@@ -48,7 +48,7 @@ var HomeView = class HomeView extends Component {
                     <div class="mob-infobox">
                       <YouTube
                         opts={opts}
-                        videoId="D59v74k5flU"
+                        videoId={key.videos[0].id}
                       />
                       <div class="mob-infobox-details">
                         <span class="mob-infobox-title">{key.title}</span>
