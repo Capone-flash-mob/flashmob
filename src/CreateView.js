@@ -325,6 +325,7 @@ var CreateView = class CreateView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      authenticated: false,
       flashmob: null,
       title: '',
       description: '',
@@ -348,6 +349,28 @@ var CreateView = class CreateView extends React.Component {
     this.handleDate = this.handleDate.bind(this);
     this.handleTime = this.handleTime.bind(this);
     this.handleVideos = this.handleVideos.bind(this);
+  }
+
+   componentDidMount() {
+
+    var self = this;
+    var userID = this.props.match.params.userid
+
+    firebase.auth().onAuthStateChanged(function(user) {
+      if(user){
+        var myUser = database.getUser(user.uid, function(customUser){
+          self.setState({
+          authenticated: 'true',
+          currentUser: customUser,
+          })
+        })
+      }
+      else {
+        self.setState({
+          authenticated: 'false',
+        })
+      }
+    })
   }
 
   handleChange(event) {
@@ -496,6 +519,10 @@ var CreateView = class CreateView extends React.Component {
 
   render() {
     var pageData = {}
+
+    if(this.state.authenticated==='true'){
+            console.log("AUTHTHTHTHT AUTHTHTHTTRUUEEE " + this.state.authenticated)
+
     return (
       <div class="content">
         <form class="App-form" onSubmit={this.handleSubmit}>
@@ -549,7 +576,19 @@ var CreateView = class CreateView extends React.Component {
         </form>
       </div>
     );
+  } else {
+    return(
+      <div class="content">
+        <div class="row">
+          <div class="col-sm-6 offset-sm-4">
+            PLEASE SIGN IN TO CREATE FLASHMOB
+          </div>
+        </div>
+      </div>
+      );
   }
+
+}
 }
 
 export default CreateView;
