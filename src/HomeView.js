@@ -51,9 +51,9 @@ var HomeView = class HomeView extends Component {
                         videoId="D59v74k5flU"
                       />
                       <div class="mob-infobox-details">
-                        <span class="mob-infobox-title"> {key.name} </span>
-                        <span class="mob-infobox-location"> {key.location} </span>
-                        <span class="mob-infobox-date-and-time"> {key.date}, {key.time} </span>
+                        <span class="mob-infobox-title">{key.title}</span>
+                        <span class="mob-infobox-location">{key.location}</span>
+                        <span class="mob-infobox-date-and-time">{key.date}, {key.time}</span>
                       </div>
                     </div>
                   </Link>
