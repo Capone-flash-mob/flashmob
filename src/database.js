@@ -62,7 +62,7 @@ var database = {
     addUserField: function(userObj, fieldName, fieldValue, callback){
         var userid = userObj.userId;
         var newUserObj = userObj;
-        newUserObj[fieldName] = fieldValue; 
+        newUserObj[fieldName] = fieldValue;
         console.log("USERID: " + userid)
         var UserRef = fire.database().ref('/users/' + userid);
         var NewUserRef = UserRef.update(newUserObj);
@@ -103,7 +103,7 @@ var database = {
 
         })
 
-    })     
+    })
     },
 
 
@@ -127,6 +127,43 @@ var database = {
         var flashmobRef = fire.database().ref('flashmobs').push(flashMobInstance);
         console.log('flashmob ref:', flashmobRef);
         return flashmobRef.key;
+    },
+
+    /*********************
+    These next 3 functions should work but they have not been tested yet since there are no flashmobs to test on
+    **************/
+    submitFeedbackForFlashmob: function(flashmobId, userid, videoUrl){
+      this.getFlashMob(flashmobId, function(flashmob) {
+        var currentFeedback = flashmob['feedback'];
+        const currentTime = new Date();
+        currentFeedback.push({
+          'userId': userid,
+          'videoUrl': videoUrl,
+          'time': currentTime.getTime()
+        });
+
+        var flashMobUpdateInstance =  { 'feedback': currentFeedback};
+
+        var flashRef = fire.database().ref('flashmobs').child(flashmobId);
+        console.log(flashRef);
+
+        flashRef.update(flashMobUpdateInstance);
+      });
+    },
+    getAllFeedbackForFlashmob: function(flashmobId){
+        // Send flashmob to firebase
+      this.getFlashMob(flashmobId, function(flashmob) {
+        return flashmob['feedback'];
+      });
+    },
+    getFeedbackForUser: function(flashmobId, userId){
+        // Send flashmob to firebase
+        var feedback = this.getAllFeedbackForFlashmob(flashmobId);
+        feedback.forEach(function(iFeed){
+          if (iFeed['userId'] == userId){
+            return iFeed;
+          }
+        });
     }
 }
 

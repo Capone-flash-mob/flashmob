@@ -16,6 +16,8 @@ import ReactDOM from 'react-dom';
 import gapi from './gapi'
 import VideoUploadBtn from './video-upload';
 
+window.db = database;
+
 // Allows a user to grant us access to their google drive
 class GoogleLogin extends Component{
   constructor(props) {
