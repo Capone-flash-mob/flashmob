@@ -13,8 +13,8 @@ import {BrowserRouter as Router, Route, Link, IndexRoute} from 'react-router-dom
 import YouTube from 'react-youtube';
 import { withRouter } from 'react-router-dom';
 import ReactDOM from 'react-dom';
-import gapi from './gapi'
-import VideoUploadBtn from './video-upload';
+import gapi from './gapi';
+import SubmitTextLine from './SubmitTextLine';
 
 window.db = database;
 
@@ -133,8 +133,9 @@ class demo extends Component{
       height: "2em"
     };
     return(
-      <div>
+      <div className="content">
         <p> Add your component below to preview it on the hidden /demo page!</p>
+        
       </div>
     );
   }

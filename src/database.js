@@ -6,11 +6,12 @@ var database = {
         console.log('Flashmobid:', flashMobId);
         var flashMobRef = fire.database().ref('/flashmobs/'+flashMobId);
         flashMobRef.once("value").then(function(snapshot){
-            console.log(snapshot.val());
-            var flashMobSnap = snapshot.val();
+            /*console.log(snapshot.val());*/
+            // Commented out because it breaks website when announcements==null
+            /*var flashMobSnap = snapshot.val();
             // TODO: REMOVE TEMPORARY ADDITION OF ELEMENT
             flashMobSnap['announcements'] = ['a', 'b']
-            callback(flashMobSnap);
+            callback(flashMobSnap);*/
         })
     },
 
