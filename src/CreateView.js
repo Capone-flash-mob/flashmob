@@ -27,7 +27,7 @@ var TitleForm = class TitleForm extends React.Component {
     return (
       <div class="form-group">
         <label forName="title"><i>Flashmob Title:</i></label>
-        {this.state.title.length < 50 && !(this.state.focused == false && this.state.title.length == 0) ? (
+        {this.state.title.length < 50 && !(this.state.focused === false && this.state.title.length === 0) ? (
           <input type="text" onChange={this.handleChange} name="title" class="form-control" id="title"></input>
         ) : (
           <input type="text" onChange={this.handleChange} name="title" class="form-control red-border" id="title"></input>
@@ -157,11 +157,11 @@ var LocationForm = class LocationForm extends React.Component {
   render() {
     return (
       <div class="form-group">
-        <label forName="date"><i>Date:</i></label>
-        {!(this.state.focused == false && this.state.date.length == 0) ? (
-          <input type="date" onChange={this.handleChange} name="date" class="form-control" id="date"></input>
+        <label forName="location"><i>Location:</i></label>
+        {!(this.state.focused == false && this.state.location.length == 0) ? (
+          <input type="text" onChange={this.handleChange} name="location" class="form-control" id="location"></input>
         ) : (
-          <input type="date" onChange={this.handleChange} name="date" class="form-control red-border" id="date"></input>
+          <input type="text" onChange={this.handleChange} name="location" class="form-control red-border" id="location"></input>
         )}
       </div>
     )
@@ -413,27 +413,27 @@ var CreateView = class CreateView extends React.Component {
   }
 
   handleSubmit(event) {
-    if (this.state.title.length == 0) {
+    if (this.state.title.length === 0) {
       event.preventDefault();
       alert('Title is required');
     }
-    else if (this.state.choreographer.length == 0) {
+    else if (this.state.choreographer.length === 0) {
       event.preventDefault();
       alert('Choreographer is required');
     }
-    else if (this.state.email.length == 0) {
+    else if (this.state.email.length === 0) {
       event.preventDefault();
       alert('Email is required');
     }
-    else if (this.state.location.length == 0) {
+    else if (this.state.location.length === 0) {
       event.preventDefault();
       alert('Location is required');
     }
-    else if (this.state.date.length == 0) {
+    else if (this.state.date === undefined) {
       event.preventDefault();
       alert('Date is required');
     }
-    else if (this.state.time.length == 0) {
+    else if (this.state.time === undefined) {
       event.preventDefault();
       alert('Time is required');
     }
