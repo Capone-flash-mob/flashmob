@@ -45,7 +45,9 @@ class SubmitTextLine extends React.Component {
         }
         this.setState({submitted: "btn btn-lg btn-block btn-success"});
     });
-
+    if(this.state.trigger == 'yourTrigger'){
+      //yourfunctions();
+    }
 
     event.preventDefault();
     }

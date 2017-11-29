@@ -137,7 +137,8 @@ var database = {
             'adminID': adminID,
             'email': email,
             'imgAddr': imgAddr,
-            'timestamp': new Date(Date.now())
+            'timestamp': new Date(Date.now()),
+            'feedback': []
         };
     },
 
@@ -200,17 +201,21 @@ var database = {
     },
     getAllFeedbackForUser: function(userId, callback){
         // Send flashmob to firebase
-        /*var feedback = this.getAllFeedbackForFlashmob(flashmobId);
+        //var feedback = this.getAllFeedbackForFlashmob(flashmobId);
+        var feedback = [];
         this.getMyFlashMobs(userId, function(flashMobs){
-          feedback.forEach(function(iFeed){
-            if (iFeed['userId'] == userId){
-              //return iFeed;
-            }
+          console.log('Got flashmobs:', flashMobs);
+          flashMobs.forEach(function(flashmob){
+            flashmob['feedback'].forEach(function(feed){
+              if (feed['uid'] == userId){
+                feedback.push(feed);
+              }
+            });
           });
-
-        });*/
+          callback(feedback);
+        });
         // Dummy return for now
-          callback([
+          /*callback([
             {
               'userId': 'userid1',
               'videoUrl': 'video1.com',
@@ -223,7 +228,7 @@ var database = {
               'time': (new Date()).getTime(),
               'comments': []
             }
-          ]);
+          ]);*/
       },
       getFeedbackForUserForSpecificFlashmob: function(flashmobId, userId, callback){
         // Send flashmob to firebase
