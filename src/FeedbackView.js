@@ -72,12 +72,15 @@ var FeedbackView = class FeedbackView extends Component {
                         opts={opts}
                         videoId="D59v74k5flU"
                       />
-                      {key['comments'].map((key, index) =>
-                        <div>
-                          {key}
-                        </div>
-                      )}
-                      <SubmitTextLine label="YouTube URL" instructions="Paste and submit your Youtube video link here!"></SubmitTextLine>
+                      <div class="comments-section">
+                        <div class="comments-header"> Comments </div>
+                        {key['comments'].map((key, index) =>
+                          <div class="comment-container">
+                            <span class="comment-text">{key}</span>
+                          </div>
+                        )}
+                        <SubmitTextLine label="Comment: " instructions=""></SubmitTextLine>
+                      </div>
                     </div>
                   </div>
                 </div>

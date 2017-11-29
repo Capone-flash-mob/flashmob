@@ -195,7 +195,7 @@ var database = {
               'userId': 'userid1',
               'videoUrl': 'video1.com',
               'time': (new Date()).getTime(),
-              'comments': ['Great job, keep up the good work!', 'You are the best thanks!']
+              'comments': ['Great job, keep up the good work! I would work on the hip movement so you can really get this thing swinging! We are really trying to indicate fun with this dance so make sure you smile.', 'You are the best thanks!']
             },
             {
               'userId': 'userid1',
