@@ -3,6 +3,9 @@ import database from './database'
 import {BrowserRouter as Router, Route, Link, IndexRoute} from 'react-router-dom';
 import YouTube from 'react-youtube'
 import firebase from 'firebase';
+import SubmitTextLine from './SubmitTextLine';
+import fire from './fire';
+import users from './users';
 
 // Creates a page where users can view mob details
 var PublicView = class PublicView extends React.Component {
@@ -10,9 +13,26 @@ var PublicView = class PublicView extends React.Component {
     super(props);
     this.state = {
       flashmob_uid: props.match.params.mobid,
-      flashmob: {announcments:[{text:""}]}
+      flashmob: {announcments:[{text:""}]},
+      showInterested: 'Block',
+      showYouTubeLinke: 'None'
     };
     this.addFlashMobToUser = this.addFlashMobToUser.bind(this);
+  }
+
+  swapEnguagmentButtons(){
+    var mythis = this;
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        // User is signed in.
+        var uuid = firebase.auth().currentUser.uid;
+        var fmid = this.state.flashmob_uid;
+        users.userIsParticipantOfMob(uuid, fmid);
+      } else {
+        // No user is signed in.
+        // I'm Interested Button is shown by default
+      }
+    });
   }
 
   addFlashMobToUser(e){
@@ -41,6 +61,7 @@ var PublicView = class PublicView extends React.Component {
   }
 
   render(){
+    this.swapEnguagmentButtons();
     if (this.state.flashmob == null) {
       return (<div> Loading... </div>);
     }
@@ -120,6 +141,7 @@ var PublicView = class PublicView extends React.Component {
                     </div>
                     <div class="row">
                       <button type="button" onClick={this.addFlashMobToUser}class="flashmob-interest-button btn btn-lg btn-block">{"I'm Interested"}</button>
+                      <SubmitTextLine label="YouTube URL" instructions="Paste and submit your Youtube video link here!"></SubmitTextLine>
                     </div>
                   </div>
                 </div>
