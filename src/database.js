@@ -98,6 +98,7 @@ var database = {
                 allMyMobs.push(snapshot.val());
                 processed++;
                 if(processed == allMyMobsKeys.length){
+                    console.log('allMyMobs', allMyMobs)
                     callback(allMyMobs);
                 }
             })
@@ -107,6 +108,23 @@ var database = {
     })
     },
 
+    getMyFlashMobIDs: function(userID, callback){
+       var myMobsRef = fire.database().ref('/users/' + userID + '/MyMobs');
+       var allMobsRef = fire.database().ref('flashmobs');
+       var allMyMobsKeys = [];
+       var allMyMobs = [];
+
+       //get list of keys for interested mobs
+       myMobsRef.once("value").then(function(snapshot){
+           snapshot.forEach(function(item){
+               var mobkey = item.key;
+               console.log("KEY IS " + mobkey);
+               allMyMobsKeys.push(mobkey);
+           })
+
+        callback(allMyMobsKeys);
+       });
+   },
 
     createFlashMobInstanceHelper: function(name, date, time, description, loc, adminID, email, imgAddr){
         return {
