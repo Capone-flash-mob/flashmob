@@ -123,8 +123,8 @@ var database = {
              allMyMobsKeys.push(mobkey);
              })
 
+             resolve(allMyMobsKeys);
              });
-          resolve(allMyMobsKeys);
          });
    },
 
