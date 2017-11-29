@@ -7,7 +7,9 @@ class SubmitTextLine extends React.Component {
     {
       instructions: props.instructions,
       label: props.label,
-      value: props.value
+      value: props.value,
+      submitted: "btn btn-primary",
+      buttonText: "Submit"
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -19,7 +21,8 @@ class SubmitTextLine extends React.Component {
   }
 
   handleSubmit(event) {
-    alert('A name was submitted: ' + this.state.value);
+    /*alert('A name was submitted: ' + this.state.value);*/
+    this.setState({submitted: "btn btn-success"})
     event.preventDefault();
   }
 
@@ -31,7 +34,8 @@ class SubmitTextLine extends React.Component {
           {this.state.label + ': '}
           <input type="text" value={this.state.value} onChange={this.handleChange} />
         </label>
-        <input type="submit" value="Submit" />
+        {' '}
+        <input className={this.state.submitted} type="submit" value={this.state.buttonText} />
       </form>
     );
   }
