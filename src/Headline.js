@@ -82,6 +82,9 @@ var Headline = class Headline extends React.Component{
                 <div class="navbar-link-container">
                   <a class="nav-item nav-link navbar-link" onClick={this.signOut}>Sign Out</a>
                 </div>
+              <div class="navbar-link-container">
+                <Link class="nav-item nav-link navbar-link" to="/feedback">Feedback</Link>
+              </div>
                 <div class="navbar-link-container">
                   <Link to={"/user/" + user.uid} style={{textDecoration: 'none'}} ><a class="nav-item nav-link navbar-link mr-auto" >{user.displayName}</a></Link>
                 </div>

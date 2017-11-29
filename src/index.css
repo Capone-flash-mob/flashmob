@@ -4,6 +4,31 @@
   border-color: #366ba9;
 }
 /*Custom*/
+.feedback-overview-container{
+  background-color: #c3c3c3;
+  padding: 20px 10px 20px;
+  color: black;
+  border: 2px solid #4484ce;
+  font-size: 21px;
+  margin-bottom:10px;
+  text-decoration:none !important;
+}
+
+.feedback-columns{
+  margin-bottom:10px;
+}
+.feedback-column-text{
+  font-size: 21px;
+  color: #4484ce;
+  text-align:center;
+}
+
+.feedback-instance-text {
+  text-align:center;
+  text-decoration: none !important;
+  color:black;
+}
+
 .flashmob-title-container{
   color: #4484ce;
   margin-top:20px;
@@ -66,7 +91,6 @@
   border-top: 4px solid #f19f4d;
   margin-bottom:20px;
 }
-
 /* Header Component */
 .navbar-title {
   font-size: 35px;

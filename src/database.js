@@ -6,12 +6,11 @@ var database = {
         console.log('Flashmobid:', flashMobId);
         var flashMobRef = fire.database().ref('/flashmobs/'+flashMobId);
         flashMobRef.once("value").then(function(snapshot){
-            /*console.log(snapshot.val());*/
-            // Commented out because it breaks website when announcements==null
-            /*var flashMobSnap = snapshot.val();
+            console.log(snapshot.val());
+            var flashMobSnap = snapshot.val();
             // TODO: REMOVE TEMPORARY ADDITION OF ELEMENT
             flashMobSnap['announcements'] = ['a', 'b']
-            callback(flashMobSnap);*/
+            callback(flashMobSnap);
         })
     },
 
@@ -140,7 +139,8 @@ var database = {
         currentFeedback.push({
           'userId': userid,
           'videoUrl': videoUrl,
-          'time': currentTime.getTime()
+          'time': currentTime.getTime(),
+          'comments': []
         });
 
         var flashMobUpdateInstance =  { 'feedback': currentFeedback};
@@ -151,20 +151,86 @@ var database = {
         flashRef.update(flashMobUpdateInstance);
       });
     },
-    getAllFeedbackForFlashmob: function(flashmobId){
+    getAllFeedbackForFlashmob: function(flashmobId, callback){
         // Send flashmob to firebase
-      this.getFlashMob(flashmobId, function(flashmob) {
-        return flashmob['feedback'];
-      });
+      //this.getFlashMob(flashmobId, function(flashmob) {
+        // Dummy return for now
+        callback([
+          {
+            'userId': 'userid1',
+            'videoUrl': 'a.com',
+            'time': (new Date()).getTime(),
+            'comments': []
+          },
+          {
+            'userId': 'userid2',
+            'videoUrl': 'b.com',
+            'time': (new Date()).getTime(),
+            'comments': []
+          },
+          {
+            'userId': 'userid3',
+            'videoUrl': 'c.com',
+            'time': (new Date()).getTime(),
+            'comments': []
+          }
+        ]);
+        //return flashmob['feedback'];
+      //});
     },
-    getFeedbackForUser: function(flashmobId, userId){
+    getAllFeedbackForUser: function(userId, callback){
         // Send flashmob to firebase
-        var feedback = this.getAllFeedbackForFlashmob(flashmobId);
+        /*var feedback = this.getAllFeedbackForFlashmob(flashmobId);
+        this.getMyFlashMobs(userId, function(flashMobs){
+          feedback.forEach(function(iFeed){
+            if (iFeed['userId'] == userId){
+              //return iFeed;
+            }
+          });
+
+        });*/
+        // Dummy return for now
+          callback([
+            {
+              'userId': 'userid1',
+              'videoUrl': 'video1.com',
+              'time': (new Date()).getTime(),
+              'comments': ['Great job, keep up the good work!', 'You are the best thanks!']
+            },
+            {
+              'userId': 'userid1',
+              'videoUrl': 'video2.com',
+              'time': (new Date()).getTime(),
+              'comments': []
+            }
+          ]);
+      },
+      getFeedbackForUserForSpecificFlashmob: function(flashmobId, userId, callback){
+        // Send flashmob to firebase
+        /*var feedback = this.getAllFeedbackForFlashmob(flashmobId);
         feedback.forEach(function(iFeed){
           if (iFeed['userId'] == userId){
-            return iFeed;
+
+            //return iFeed;
+
+
           }
-        });
+        });*/
+        // Dummy return for now
+         callback([
+          {
+            'userId': 'userid1',
+            'videoUrl': 'video1.com',
+            'time': (new Date()).getTime(),
+            'comments': []
+          },
+          {
+            'userId': 'userid1',
+            'videoUrl': 'video2.com',
+            'time': (new Date()).getTime(),
+            'comments': []
+          }
+        ]);
     }
 }
 
