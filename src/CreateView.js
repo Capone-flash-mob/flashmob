@@ -341,6 +341,7 @@ var CreateView = class CreateView extends React.Component {
       date: '',
       time: '',
       videos: [],
+      feedback: []
     };
     // Bind context
     this.handleChange = this.handleChange.bind(this);

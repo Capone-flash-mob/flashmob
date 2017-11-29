@@ -138,13 +138,14 @@ var database = {
             'email': email,
             'imgAddr': imgAddr,
             'timestamp': new Date(Date.now()),
-            'feedback': []
         };
     },
 
     addFlashmob: function(flashMobInstance){
         // Send flashmob to firebase
         flashMobInstance['interested'] = 0;
+        //flashMobInstance['feedback'] = [];
+        console.log('About to add flashmob:', flashMobInstance);
         var flashmobRef = fire.database().ref('flashmobs').push(flashMobInstance);
         console.log('flashmob ref:', flashmobRef);
         return flashmobRef.key;
@@ -153,14 +154,16 @@ var database = {
     /*********************
     These next 3 functions should work but they have not been tested yet since there are no flashmobs to test on
     **************/
-    submitFeedbackForFlashmob: function(flashmobId, userid, videoUrl){
+    submitFeedbackForFlashmob: function(flashmobId, userid, username, videoUrl){
       this.getFlashMob(flashmobId, function(flashmob) {
-        var currentFeedback = flashmob['feedback'];
+        var currentFeedback = flashmob['feedback'] || [];
         const currentTime = new Date();
         currentFeedback.push({
           'userId': userid,
           'videoUrl': videoUrl,
           'time': currentTime.getTime(),
+          'username': username,
+          'flashmobName': flashmob['title'],
           'comments': []
         });
 
@@ -206,11 +209,13 @@ var database = {
         this.getMyFlashMobs(userId, function(flashMobs){
           console.log('Got flashmobs:', flashMobs);
           flashMobs.forEach(function(flashmob){
-            flashmob['feedback'].forEach(function(feed){
-              if (feed['uid'] == userId){
-                feedback.push(feed);
-              }
-            });
+            if (flashmob['feedback']){
+              flashmob['feedback'].forEach(function(feed){
+                if (feed['uid'] == userId){
+                  feedback.push(feed);
+                }
+              });
+            }
           });
           callback(feedback);
         });
