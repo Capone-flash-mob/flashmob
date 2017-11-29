@@ -38,10 +38,11 @@ class SubmitTextLine extends React.Component {
     if(this.state.trigger == 'submitVideoURL'){
       firebase.auth().onAuthStateChanged(user => {
         if (user) {
+          var uname = user.displayName;
           var uuid = user.uid;
           var fmid = this.props.fmid;
           var vurl = this.state.value;
-          database.submitVideoURL(uuid,fmid,vurl);
+          database.submitFeedbackForFlashmob(fmid, uuid, uname, vurl);
         }
         this.setState({submitted: "btn btn-lg btn-block btn-success"});
     });
