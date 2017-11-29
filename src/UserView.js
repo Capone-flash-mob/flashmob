@@ -142,6 +142,8 @@ class UserView extends Component {
     }
     const flashList = this.state.myMobs;
 
+    //const feedbackList = this;
+
 
     if(this.state.currentUser == undefined){
           return (<div>Please Sign in to View a User Page</div>);

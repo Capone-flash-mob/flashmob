@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import fire from './fire';
 import Headline from './Headline';
 import HomeView from './HomeView';
+import FeedbackView from './FeedbackView';
 import PublicView from './PublicView';
 import CreateView from './CreateView';
 import UserView from './UserView';
@@ -135,7 +136,7 @@ class demo extends Component{
     return(
       <div className="content">
         <p> Add your component below to preview it on the hidden /demo page!</p>
-        
+
       </div>
     );
   }
@@ -166,6 +167,7 @@ class App extends Component {
           <Route path="/about" component={AboutView}/>
           <Route path="/user/:userid" component={UserView}/>
           <Route path="/demo" component={demo}/>
+          <Route path="/feedback" component={FeedbackView}/>
         </div>
       </Router>
     );
