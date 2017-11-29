@@ -6,6 +6,11 @@
 /*Custom*/
 .comments-section input{
   width: 100%;
+  margin-bottom:10px;
+
+}
+.comments-section label{
+  color:green;
 
 }
 .comments-header{

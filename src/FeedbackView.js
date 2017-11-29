@@ -79,7 +79,7 @@ var FeedbackView = class FeedbackView extends Component {
                             <span class="comment-text">{key}</span>
                           </div>
                         )}
-                        <SubmitTextLine label="Comment: " instructions=""></SubmitTextLine>
+                        <SubmitTextLine label="" instructions="" placeholder="Comment"></SubmitTextLine>
                       </div>
                     </div>
                   </div>
