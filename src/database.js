@@ -9,7 +9,6 @@ var database = {
             console.log(snapshot.val());
             var flashMobSnap = snapshot.val();
             // TODO: REMOVE TEMPORARY ADDITION OF ELEMENT
-            flashMobSnap['announcements'] = ['a', 'b']
             callback(flashMobSnap);
         })
     },
@@ -177,9 +176,12 @@ var database = {
     },
     getAllFeedbackForFlashmob: function(flashmobId, callback){
         // Send flashmob to firebase
-      //this.getFlashMob(flashmobId, function(flashmob) {
+      this.getFlashMob(flashmobId, function(flashmob) {
+        var feedback = flashmob['feedback'] || [];
+        callback(feedback);
+      });
         // Dummy return for now
-        callback([
+        /*callback([
           {
             'userId': 'userid1',
             'videoUrl': 'a.com',
@@ -198,14 +200,14 @@ var database = {
             'time': (new Date()).getTime(),
             'comments': []
           }
-        ]);
+        ]);*/
         //return flashmob['feedback'];
       //});
     },
     getAllFeedbackForUser: function(userId, callback){
         // Send flashmob to firebase
         //var feedback = this.getAllFeedbackForFlashmob(flashmobId);
-        var feedback = [];
+        /*var feedback = [];
         this.getMyFlashMobs(userId, function(flashMobs){
           console.log('Got flashmobs:', flashMobs);
           flashMobs.forEach(function(flashmob){
@@ -218,9 +220,9 @@ var database = {
             }
           });
           callback(feedback);
-        });
+        });*/
         // Dummy return for now
-          /*callback([
+          callback([
             {
               'userId': 'userid1',
               'videoUrl': 'video1.com',
@@ -233,7 +235,7 @@ var database = {
               'time': (new Date()).getTime(),
               'comments': []
             }
-          ]);*/
+          ]);
       },
       getFeedbackForUserForSpecificFlashmob: function(flashmobId, userId, callback){
         // Send flashmob to firebase
