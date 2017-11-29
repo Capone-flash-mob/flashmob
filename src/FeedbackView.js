@@ -9,18 +9,40 @@ import SubmitTextLine from './SubmitTextLine';
 var FeedbackView = class FeedbackView extends Component {
   constructor(props) {
     super(props);
+    this.setState({
+      feedback: []
+    });
     this.handleLink = this.handleLink.bind(this);
   }
 
   componentDidMount() {
     var self = this;
 
-    //database.getAllFeedbackForUser(this.state.currentUser.uid, function(feedback){
-    database.getAllFeedbackForUser(null, function(feedback){
+    console.log('COMPONENT DID MOUNT');
+    firebase.auth().onAuthStateChanged(function(user) {
+      console.log('entered callback');
+      if(user){
+
+        var myUser = database.getUser(user.uid, function(customUser){
+        self.setState({
+          authenticated: 'true',
+          currentUser: customUser,
+        });
+        console.log('This is the users uid:', user.uid);
+        database.getAllFeedbackForUser(user.uid, function(feedback){
+          self.setState({
+            'feedback': feedback
+          });
+        });
+      })
+    }
+    else {
+      console.log('not logged in');
       self.setState({
-        'feedback': feedback
-      });
-    });
+        authenticated: 'false',
+      })
+    }
+  })
   }
 
   handleLink(event){
@@ -38,7 +60,7 @@ var FeedbackView = class FeedbackView extends Component {
       width: '100%',
     };
 
-    const feedbackList = this.state.feedback;
+    const feedbackList = this.state.feedback || [];
     console.log('Feedback list:', feedbackList);
 
     return(
@@ -79,7 +101,7 @@ var FeedbackView = class FeedbackView extends Component {
                             <span class="comment-text">{key}</span>
                           </div>
                         )}
-                        <SubmitTextLine label="" instructions="" placeholder="Comment"></SubmitTextLine>
+                        <SubmitTextLine label="" instructions="" placeholder="Comment" triger="triggerfunc"></SubmitTextLine>
                       </div>
                     </div>
                   </div>
@@ -93,26 +115,4 @@ var FeedbackView = class FeedbackView extends Component {
   }
 }
 
-/*
-<div class="col-sm-8 offset-sm-2">
-            <div class="row">
-              {flashList.map((key, index) =>
-                <div class="col-sm-4">
-                  <Link to={"mob/" + key.key} style={{ textDecoration: 'none'}}>
-                    <div class="mob-infobox">
-                      <YouTube
-                        opts={opts}
-                        videoId="D59v74k5flU"
-                      />
-                      <div class="mob-infobox-details">
-                        <span class="mob-infobox-title"> {key.name} </span>
-                        <span class="mob-infobox-location"> {key.location} </span>
-                        <span class="mob-infobox-date-and-time"> {key.date}, {key.time} </span>
-                      </div>
-                    </div>
-                  </Link>
-                </div>
-              )}
-            </div>
-          </div>*/
 export default FeedbackView;
