@@ -19,8 +19,7 @@ var TitleForm = class TitleForm extends React.Component {
     this.setState({
       title: event.target.value,
       focused: false,
-    });
-    this.props.handler(this.state.title);
+    }, () => {this.props.handler(this.state.title);});
   }
 
   render() {
@@ -50,8 +49,7 @@ var DescriptionForm = class DescriptionForm extends React.Component {
   handleChange(event) {
     this.setState({
       description: event.target.value,
-    });
-    this.props.handler(this.state.description);
+    }, () => {this.props.handler(this.state.description);});
   }
 
   render() {
@@ -83,8 +81,7 @@ var ChoreographerForm = class ChoreographerForm extends React.Component {
     this.setState({
       choreographer: event.target.value,
       focused: false,
-    });
-    this.props.handler(this.state.choreographer);
+    }, () => {this.props.handler(this.state.choreographer);});
   }
 
   render() {
@@ -116,8 +113,7 @@ var EmailForm = class EmailForm extends React.Component {
     this.setState({
       email: event.target.value,
       focused: false,
-    });
-    this.props.handler(this.state.email);
+    }, () => {this.props.handler(this.state.email);});
   }
 
   render() {
@@ -150,8 +146,7 @@ var LocationForm = class LocationForm extends React.Component {
     this.setState({
       location: event.target.value,
       focused: false,
-    });
-    this.props.handler(this.state.location);
+    }, () => {this.props.handler(this.state.location);});
   }
 
   render() {
@@ -183,8 +178,7 @@ var DateForm = class DateForm extends React.Component {
     this.setState({
       date: event.target.value,
       focused: false,
-    });
-    this.props.handler(this.state.date);
+    }, () => {this.props.handler(this.state.date);});
   }
 
   render() {
@@ -216,8 +210,7 @@ var TimeForm = class TimeForm extends React.Component {
     this.setState({
       time: event.target.value,
       focused: false,
-    });
-    this.props.handler(this.state.time);
+    }, () => {this.props.handler(this.state.time);});
   }
 
   render() {
