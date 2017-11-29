@@ -12,7 +12,6 @@ var PublicView = class PublicView extends React.Component {
     super(props);
     this.state = {
       flashmob_uid: props.match.params.mobid,
-      flashmob: {announcments:[{text:""}]},
       showInterested: {display: 'block'},
       showYouTubeLink: {display: 'none'},
       swapEnguagmentButtonsRan: false // Needed to stop infinite loop
@@ -75,7 +74,7 @@ var PublicView = class PublicView extends React.Component {
       console.log('Received flashmob data for uid', self.state.flashmob_uid, 'with data:', flashmob);
       self.setState({
         flashmob_uid: self.state.flashmob_uid,
-        flashmob: flashmob
+        flashmob: flashmob,
       });
     });
   }
@@ -96,7 +95,7 @@ var PublicView = class PublicView extends React.Component {
       <div class="content">
         <div class="row flashmob-title-container">
           <div class="col-sm-10 offset-sm-1">
-            <h1>{this.state.flashmob.name}</h1>
+            <h1>{this.state.flashmob.title}</h1>
           </div>
         </div>
         <div class="row flashmob-desc-container">
@@ -112,21 +111,27 @@ var PublicView = class PublicView extends React.Component {
                 <div id="video-carousel-example" class="carousel slide carousel-fade" data-ride="carousel">
                   {/* Indicators */}
                   <ol class="carousel-indicators">
-                    <li data-target="#video-carousel-example" data-slide-to="0" class="active"></li>
-                    <li data-target="#video-carousel-example" data-slide-to="1"></li>
-                    <li data-target="#video-carousel-example" data-slide-to="2"></li>
+                    {this.state.flashmob.videos.map((key, index) =>
+                      (index === 0) ? (
+                        <li data-target="#video-carousel-example" data-slide-to={index} class="active"></li>
+                      ) : (
+                        <li data-target="#video-carousel-example" data-slide-to={index}></li>
+                      )
+                    )}
                   </ol>
                   {/* Slides */}
                   <div class="carousel-inner" role="listbox">
-                    <div class="carousel-item active">
-                      <YouTube opts={primary_opts} videoId="D59v74k5flU"/>
-                    </div>
-                    <div class="carousel-item">
-                      <YouTube opts={primary_opts} videoId="dMH0bHeiRNg"/>
-                    </div>
-                    <div class="carousel-item">
-                      <YouTube opts={primary_opts} videoId="9bZkp7q19f0"/>
-                    </div>
+                    {this.state.flashmob.videos.map((key, index) =>
+                      (index === 0) ? (
+                        <div class="carousel-item active">
+                          <YouTube opts={primary_opts} videoId={key.id}/>
+                        </div>
+                      ) : (
+                        <div class="carousel-item">
+                          <YouTube opts={primary_opts} videoId={key.id}/>
+                        </div>
+                      )
+                    )}
                   </div>
                   {/* Controls */}
                   <a class="carousel-control-prev" href="#video-carousel-example" role="button" data-slide="prev">
