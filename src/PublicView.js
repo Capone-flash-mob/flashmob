@@ -5,7 +5,6 @@ import YouTube from 'react-youtube'
 import firebase from 'firebase';
 import SubmitTextLine from './SubmitTextLine';
 import fire from './fire';
-import users from './users';
 
 // Creates a page where users can view mob details
 var PublicView = class PublicView extends React.Component {
@@ -14,20 +13,41 @@ var PublicView = class PublicView extends React.Component {
     this.state = {
       flashmob_uid: props.match.params.mobid,
       flashmob: {announcments:[{text:""}]},
-      showInterested: 'Block',
-      showYouTubeLinke: 'None'
+      showInterested: {display: 'block'},
+      showYouTubeLink: {display: 'none'},
+      swapEnguagmentButtonsRan: false // Needed to stop infinite loop
     };
     this.addFlashMobToUser = this.addFlashMobToUser.bind(this);
   }
 
+  // Swaps enguagement buttons if user is logged in and a member of the flashmob
   swapEnguagmentButtons(){
     var mythis = this;
+    var isMemberOfMob = false;
+    var runCount = 0; // Used to stop infinite loop at setState
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         // User is signed in.
         var uuid = firebase.auth().currentUser.uid;
         var fmid = this.state.flashmob_uid;
-        users.userIsParticipantOfMob(uuid, fmid);
+        database.getMyFlashMobIDs(uuid).then(keys =>{
+          var i;
+          for (i=0;i<keys.length;i++){
+            if(keys[i] == fmid){
+              isMemberOfMob = true;
+              break;
+            }
+          }
+        })
+        .then(()=>{
+          if(isMemberOfMob && this.state.swapEnguagmentButtonsRan==false){
+            this.setState({
+              showInterested: {display: 'none'},
+              showYouTubeLink: {display: 'block'},
+              swapEnguagmentButtonsRan: true
+            });
+          }
+        });
       } else {
         // No user is signed in.
         // I'm Interested Button is shown by default
@@ -62,6 +82,7 @@ var PublicView = class PublicView extends React.Component {
 
   render(){
     this.swapEnguagmentButtons();
+    console.log(this.state);
     if (this.state.flashmob == null) {
       return (<div> Loading... </div>);
     }
@@ -140,8 +161,8 @@ var PublicView = class PublicView extends React.Component {
                       <span class="flashmob-detail-text">{this.state.flashmob.email}</span>
                     </div>
                     <div class="row">
-                      <button type="button" onClick={this.addFlashMobToUser}class="flashmob-interest-button btn btn-lg btn-block">{"I'm Interested"}</button>
-                      <SubmitTextLine label="YouTube URL" instructions="Paste and submit your Youtube video link here!"></SubmitTextLine>
+                      <button style={this.state.showInterested} type="button" onClick={this.addFlashMobToUser}class="flashmob-interest-button btn btn-lg btn-block">{"I'm Interested"}</button>
+                      <SubmitTextLine style={this.state.showYouTubeLink} label="YouTube URL" instructions="Paste and submit your Youtube video link here!"></SubmitTextLine>
                     </div>
                   </div>
                 </div>
