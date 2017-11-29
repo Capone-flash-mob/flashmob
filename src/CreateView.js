@@ -462,7 +462,7 @@ var CreateView = class CreateView extends React.Component {
       const flashmobKey = database.addFlashmob(this.state);
       alert('Successfully added new mob');
       // Redirect to created flash mob
-      this.props.history.push("/public/" + flashmobKey);
+      this.props.history.push("/mob/" + flashmobKey);
     }
   }
 

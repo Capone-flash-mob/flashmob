@@ -81,9 +81,9 @@ var FeedbackView = class FeedbackView extends Component {
                   <div class="feedback-overview-container" role="tab" id={"heading-" + index}>
                     <a class="collapsed" data-toggle="collapse" href={"#collapse-" + index } aria-expanded="false" aria-controls={"collapse-" + index}>
                       <div class="row">
-                        <div class="col-sm-4 feedback-instance-text">{ key.userId } </div>
+                        <div class="col-sm-4 feedback-instance-text">{ key.username } </div>
                         <div class="col-sm-4 feedback-instance-text"> { (new Date(key.time)).toLocaleDateString() } </div>
-                        <div class="col-sm-4 feedback-instance-text"> Flashmob Name </div>
+                        <div class="col-sm-4 feedback-instance-text"> { key.flashmobName } </div>
                       </div>
                     </a>
                   </div>
