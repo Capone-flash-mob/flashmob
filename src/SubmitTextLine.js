@@ -8,6 +8,7 @@ class SubmitTextLine extends React.Component {
       instructions: props.instructions,
       label: props.label,
       value: props.value,
+      placeholder: props.placeholder,
       submitted: "btn btn-lg btn-block btn-primary",
       buttonText: "Submit"
     };
@@ -30,14 +31,14 @@ class SubmitTextLine extends React.Component {
     return (
       <form onSubmit={this.handleSubmit}>
         <p>{this.state.instructions}</p>
-        
+
         <label>
           {this.state.label + ''}
         </label>
 
-        <input type="text" value={this.state.value} onChange={this.handleChange} />
+        <input placeholder={this.state.placeholder} type="text" value={this.state.value} onChange={this.handleChange} />
         {' '}
-        <input className={this.state.submitted} type="submit" value={this.state.buttonText} />
+        <input  className={this.state.submitted} type="submit" value={this.state.buttonText} />
       </form>
     );
   }
