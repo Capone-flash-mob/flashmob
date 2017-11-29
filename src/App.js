@@ -14,6 +14,7 @@ import YouTube from 'react-youtube';
 import { withRouter } from 'react-router-dom';
 import ReactDOM from 'react-dom';
 import gapi from './gapi'
+import VideoUploadBtn from './video-upload';
 
 // Allows a user to grant us access to their google drive
 class GoogleLogin extends Component{
@@ -131,19 +132,7 @@ class demo extends Component{
     };
     return(
       <div>
-        <div class="row" style={style}>Headline  </div>
-        <Headline></Headline>
-        <div class="row" style={style}>PublicView  </div>
-        {/*<PublicView></PublicView>*/}
-        <div class="row" style={style}>CreateView  </div>
-        <CreateView></CreateView>
-        <div class="row" style={style}>HomeView  </div>
-        <HomeView></HomeView>
-        <div class="row" style={style}>RegisterView  </div>
-        <RegisterView></RegisterView>
-        <div class="row" style={style}>GoogleLogin  </div>
-        <GoogleLogin></GoogleLogin>
-        <div class="row" style={style}>  </div>
+        <p> Add your component below to preview it on the hidden /demo page!</p>
       </div>
     );
   }
