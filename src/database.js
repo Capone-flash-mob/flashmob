@@ -108,22 +108,24 @@ var database = {
     })
     },
 
-    getMyFlashMobIDs: function(userID, callback){
+    getMyFlashMobIDs: function(userID){
        var myMobsRef = fire.database().ref('/users/' + userID + '/MyMobs');
        var allMobsRef = fire.database().ref('flashmobs');
        var allMyMobsKeys = [];
        var allMyMobs = [];
 
-       //get list of keys for interested mobs
-       myMobsRef.once("value").then(function(snapshot){
+       return new Promise((resolve,reject)=>{
+         //get list of keys for interested mobs
+         myMobsRef.once("value").then(function(snapshot){
            snapshot.forEach(function(item){
-               var mobkey = item.key;
-               console.log("KEY IS " + mobkey);
-               allMyMobsKeys.push(mobkey);
-           })
+             var mobkey = item.key;
+             /*console.log("KEY IS " + mobkey);*/
+             allMyMobsKeys.push(mobkey);
+             })
 
-        callback(allMyMobsKeys);
-       });
+             });
+          resolve(allMyMobsKeys);
+         });
    },
 
     createFlashMobInstanceHelper: function(name, date, time, description, loc, adminID, email, imgAddr){
