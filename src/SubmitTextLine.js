@@ -54,10 +54,12 @@ class SubmitTextLine extends React.Component {
     return (
       <form onSubmit={this.handleSubmit}>
         <p>{this.state.instructions}</p>
+        
         <label>
-          {this.state.label + ': '}
-          <input type="text" value={this.state.value} onChange={this.handleChange} />
+          {this.state.label + ''}
         </label>
+
+        <input type="text" value={this.state.value} onChange={this.handleChange} />
         {' '}
         <input className={this.state.submitted} type="submit" value={this.state.buttonText}/>
       </form>

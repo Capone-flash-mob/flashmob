@@ -23,7 +23,7 @@ class UserView extends Component {
   }
 
   componentDidMount() {
-  
+
     var self = this;
     var userID = this.props.match.params.userid
 
@@ -64,7 +64,7 @@ class UserView extends Component {
 
   editBirthdate(event){
     this.setState({
-      editBirthdate: true, 
+      editBirthdate: true,
     })
   }
 
@@ -138,11 +138,13 @@ class UserView extends Component {
       height: '20px',
       width: '90%',
       height: '50px',
-      margin: '-50px auto 10px', 
+      margin: '-50px auto 10px',
     }
     const flashList = this.state.myMobs;
 
-   
+    //const feedbackList = this;
+
+
     if(this.state.currentUser == undefined){
           return (<div>Please Sign in to View a User Page</div>);
     }
@@ -178,11 +180,11 @@ class UserView extends Component {
 
 
           <div>
-            
+
           {
           (this.state.currentUser.Birthdate!=="")
             ? ((this.state.editBirthdate !== true)
-                ?  
+                ?
                 <div class="row">
                     <div class="col-sm-1 offset-sm-2"> Birthdate: </div>
                     <div class="col-sm-1">
@@ -190,7 +192,7 @@ class UserView extends Component {
                     </div>
                     <div class = "col-sm-2 offset-sm-4">{this.state.currentUser.Birthdate}</div>
                   </div>
-                : 
+                :
                  <div class="row">
                     <div class="col-sm-1 offset-sm-2"> Birthdate: </div>
                     <div class="col-sm-1">
@@ -199,7 +201,7 @@ class UserView extends Component {
                     <input id="birthdateId" type="date" class = "col-sm-1 offset-sm-4"></input>
                   </div>
              )
-            : 
+            :
               ((this.state.editBirthdate !== true)
                     ?
                   <div class="row">
@@ -227,11 +229,11 @@ class UserView extends Component {
         </div>
 
 
-         <div> 
+         <div>
           {
           (this.state.currentUser.Hometown!=="")
             ? ((this.state.editHometown !== true)
-                ?  
+                ?
                 <div class="row">
                     <div class="col-sm-1 offset-sm-2"> Hometown: </div>
                     <div class="col-sm-1">
@@ -247,7 +249,7 @@ class UserView extends Component {
                     <input type="text" id="hometownId" class = "col-sm-1 offset-sm-4"></input>
                   </div>
              )
-            : 
+            :
                ((this.state.editHometown !== true)
                   ?
                 <div class="row">
@@ -272,11 +274,11 @@ class UserView extends Component {
         <hr/>
         </div>
 
-        <div> 
+        <div>
           {
           (this.state.currentUser.Gender!=="")
             ? ((this.state.editGender !== true)
-                ?  
+                ?
                 <div class="row">
                     <div class="col-sm-1 offset-sm-2"> Gender: </div>
                     <div class="col-sm-1">
@@ -296,7 +298,7 @@ class UserView extends Component {
                       </select>
                   </div>
              )
-            : 
+            :
                ((this.state.editGender !== true)
                   ?
                 <div class="row">
@@ -315,7 +317,7 @@ class UserView extends Component {
                       <option value="Male">Male</option>
                       <option value="Female">Female</option>
                       <option value="Other">Other?</option>
-                    </select>    
+                    </select>
                   </div>
               )
           }
@@ -329,7 +331,7 @@ class UserView extends Component {
           <div class = "col-sm-4 offset-sm-5">MyFlashmobs</div>
             <div class="row">
 
-              {(flashList!==undefined) ?
+              {(flashList!==undefined && false) ?
               flashList.map((key, index) =>
                 <div class="col-sm-4">
                   <Link to={"mob/" + key.key} style={{ textDecoration: 'none'}}>
@@ -347,14 +349,14 @@ class UserView extends Component {
                   </Link>
                 </div>
               )
-            
-            : 
+
+            :
             <div class="row">
             <div class="col-sm-12 offset-sm-5">You don't seem to be interested in any flashmobs at the moment</div>
             </div>
           }
-              
-            
+
+
             </div>
           </div>
         </div>
