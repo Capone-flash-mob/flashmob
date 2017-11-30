@@ -331,14 +331,14 @@ class UserView extends Component {
           <div class = "col-sm-4 offset-sm-5">MyFlashmobs</div>
             <div class="row">
 
-              {(flashList!==undefined && false) ?
+              {(flashList!==undefined && flashList!==false) ?
               flashList.map((key, index) =>
                 <div class="col-sm-4">
                   <Link to={"mob/" + key.key} style={{ textDecoration: 'none'}}>
                     <div class="mob-infobox">
                       <YouTube
                         opts={opts}
-                        videoId="D59v74k5flU"
+                        videoId={key.videos[0].id}
                       />
                       <div class="mob-infobox-details">
                         <span class="mob-infobox-title"> {key.name} </span>
