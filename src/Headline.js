@@ -2,6 +2,7 @@ import React from 'react';
 import database from './database'
 import {BrowserRouter as Router, Route, Link, IndexRoute} from 'react-router-dom';
 import firebase from 'firebase';
+import { withRouter } from 'react-router';
 
 // Creates a headline banner with our logo and a login button
 var provider = new firebase.auth.GoogleAuthProvider();
@@ -15,6 +16,34 @@ var Headline = class Headline extends React.Component{
     };
     this.signIn = this.signIn.bind(this);
     this.signOut = this.signOut.bind(this);
+  }
+
+
+   signIn(){
+    firebase.auth().signInWithPopup(provider).then(function(result){
+      var credential = result.credential;
+      var user = result.user;
+      var userid = user.uid;
+      var userEmail = user.email;
+      var userName = user.displayName;
+      var emailVerified = user.emailVerified;
+      database.signInUser(userid, userEmail, userName, emailVerified);
+      this.setState({
+        authenticated: 'true',
+      });
+
+    }).catch(function(error){})
+  }
+
+  signOut(){
+    var self = this;
+    firebase.auth().signOut().then((user) => {
+      ;
+      this.setState({
+        authenticated: 'false',
+      })
+      
+    })
   }
 
    componentWillMount() {
@@ -33,31 +62,7 @@ var Headline = class Headline extends React.Component{
     })
   }
 
-  signIn(e){
-    e.preventDefault();
-    firebase.auth().signInWithPopup(provider).then(function(result){
-      var credential = result.credential;
-      var user = result.user;
-      var userid = user.uid;
-      var userEmail = user.email;
-      var userName = user.displayName;
-      var emailVerified = user.emailVerified;
-      database.signInUser(userid, userEmail, userName, emailVerified);
-      this.setState({
-        authenticated: 'true',
-      });
-    }).catch(function(error){})
-  }
-
-  signOut(e){
-    e.preventDefault();
-    firebase.auth().signOut().then((user) => {
-      this.setState({
-        authenticated: 'false',
-      })
-
-    })
-  }
+ 
 
   render() {
     if (this.state.authenticated == 'true') {
@@ -80,7 +85,7 @@ var Headline = class Headline extends React.Component{
             <div class="collapse navbar-collapse justify-content-end navbar-collapse-elements" id="navbarNavAltMarkup">
               <div class="navbar-nav">
                 <div class="navbar-link-container">
-                  <a class="nav-item nav-link navbar-link" onClick={this.signOut}>Sign Out</a>
+                  <Link class="nav-item nav-link navbar-link" to="/" onClick={this.signOut} >Sign Out</Link>
                 </div>
               <div class="navbar-link-container">
                 <Link class="nav-item nav-link navbar-link" to="/feedback">Feedback</Link>
