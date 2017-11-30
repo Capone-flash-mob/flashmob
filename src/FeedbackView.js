@@ -92,16 +92,16 @@ var FeedbackView = class FeedbackView extends Component {
                     <div class="card-body">
                       <YouTube
                         opts={opts}
-                        videoId="D59v74k5flU"
+                        videoId={ key.videoUrl }
                       />
                       <div class="comments-section">
                         <div class="comments-header"> Comments </div>
                         {key['comments'].map((key, index) =>
                           <div class="comment-container">
-                            <span class="comment-text">{key}</span>
+                            <span class="comment-text">{key.comment}</span>
                           </div>
                         )}
-                        <SubmitTextLine label="" instructions="" placeholder="Comment" triger="triggerfunc"></SubmitTextLine>
+                        <SubmitTextLine label="" instructions="" placeholder="Comment" trigger="commentTrigger" feedbackUid={key.uid} flashmobId={key.flashmobId}></SubmitTextLine>
                       </div>
                     </div>
                   </div>

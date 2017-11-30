@@ -21,7 +21,9 @@ class SubmitTextLine extends React.Component {
       placeholder: props.placeholder,
       submitted: "btn btn-lg btn-block btn-primary",
       buttonText: "Submit",
-      trigger: props.trigger // callback which can passed in as an attribute
+      trigger: props.trigger, // callback which can passed in as an attribute
+      flashmobId: props.flashmobId,
+      feedbackUid: props.feedbackUid
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -35,22 +37,33 @@ class SubmitTextLine extends React.Component {
 
   // Add an if statement here for your trigger for custom onClick callback
   handleSubmit(event) {
+    console.log('handling submit event***********');
+    console.log('trigger is:', this.state.trigger);
     if(this.state.trigger == 'submitVideoURL'){
+      console.log('submit video called');
       firebase.auth().onAuthStateChanged(user => {
         if (user) {
           var uname = user.displayName;
           var uuid = user.uid;
           var fmid = this.props.fmid;
           var vurl = this.state.value;
+          console.log('SUBMITTING FEEDBACK NOW');
           database.submitFeedbackForFlashmob(fmid, uuid, uname, vurl);
         }
         this.setState({submitted: "btn btn-lg btn-block btn-success"});
-    });
-    if(this.state.trigger == 'yourTrigger'){
-      //yourfunctions();
+      });
     }
-
     event.preventDefault();
+    console.log('got here 1');
+    console.log('got here 2');
+    if(this.state.trigger === 'commentTrigger'){
+      console.log('Comment Trigger called');
+      console.log('Comment Trigger called');
+      console.log('Comment Trigger called');
+      console.log('Comment Trigger called');
+      console.log('Comment Trigger called');
+      //yourfunctions();
+      database.submitFeedbackComment(this.state.flashmobId, this.state.feedbackUid, this.state.value);
     }
   }
 

@@ -246,7 +246,7 @@ var VideoForm = class VideoForm extends React.Component {
   }
 
   handleVideoIdChange(event) {
-    var pureId = event.target.value.replace("https://www.youtube.com/watch?v=", "");
+    var pureId = database.youtubeLinkHelper(event.target.value)
     this.props.handler(event);
     this.setState({
       current_video_id: pureId
@@ -460,7 +460,7 @@ var CreateView = class CreateView extends React.Component {
         flashmob: this.state,
       });
       const flashmobKey = database.addFlashmob(this.state);
-      alert('Successfully added new mob');
+      alert('Successfully added new mob', this.state);
       // Redirect to created flash mob
       this.props.history.push("/mob/" + flashmobKey);
     }
