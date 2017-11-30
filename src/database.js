@@ -212,9 +212,16 @@ var database = {
           console.log('Got flashmobs:', flashMobs);
           flashMobs.forEach(function(flashmob){
             if (flashmob['feedback']){
+              console.log('Flashmob ', flashmob['title'], 'has feedback!');
               flashmob['feedback'].forEach(function(feed){
-                if (feed['uid'] == userId){
-                  feedback.push(feed);
+                console.log('Found feedback:', feed['userId']);
+                if (feed['userId'] == userId){
+                  if (feed['comments']){
+                    feedback.push(feed);
+                  } else {
+                    feed['comments'] = [];
+                    feedback.push(feed);
+                  }
                 }
               });
             }
