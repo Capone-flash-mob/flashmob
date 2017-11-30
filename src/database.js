@@ -1,6 +1,20 @@
 import fire from './fire';
 
 var database = {
+    youtubeLinkHelper: function(link){
+      //var index = link.indexOf('v=');
+      //var id = '';
+      return link.replace("https://www.youtube.com/watch?v=", "");
+    },
+    guid: function() {
+      function s4() {
+        return Math.floor((1 + Math.random()) * 0x10000)
+        .toString(16)
+        .substring(1);
+      }
+      return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+      s4() + '-' + s4() + s4() + s4();
+    },
     // Get full flashMob item using flashMobId
     getFlashMob:  function(flashMobId, callback){
         console.log('Flashmobid:', flashMobId);
@@ -81,6 +95,9 @@ var database = {
         myMobsRef.once("value").then(function(snapshot){
             snapshot.forEach(function(item){
                 var mobkey = item.key;
+                console.log('ITEM IS: ', item);
+                console.log('ITEM IS: ', item);
+                console.log('ITEM IS: ', item);
                 console.log("KEY IS " + mobkey);
                 allMyMobsKeys.push(mobkey);
             })
@@ -150,20 +167,57 @@ var database = {
         return flashmobRef.key;
     },
 
-    /*********************
-    These next 3 functions should work but they have not been tested yet since there are no flashmobs to test on
-    **************/
+
+    submitFeedbackComment: function(flashmobId, feedbackId, commentText){
+
+      console.log('Entered submit comment function, flashmobid:', flashmobId, 'feedbackid:', feedbackId, 'commenttext:', commentText);
+      this.getFlashMob(flashmobId, function(flashmob) {
+        console.log('Got flashmob:', flashmob);
+        var currentFeedback = flashmob['feedback'];
+        var finalFeedback = [];
+        if (currentFeedback){
+          console.log('Flashmob has feedback, iterating over list');
+
+          currentFeedback.forEach(function(feed){
+            console.log('Iterating over piece of feedback:', feed);
+            if (feed['uid'] == feedbackId){
+              console.log('Found matching uid feedback that we will add comment to:', feed);
+              var currentComments = feed['comments'] || [];
+              const currentTime = new Date();
+              currentComments.push({
+                'time': currentTime.getTime(),
+                'comment': commentText,
+              });
+              feed['comments'] = currentComments;
+            }
+            finalFeedback.push(feed);
+          });
+        }
+        var flashMobUpdateInstance =  { 'feedback': finalFeedback};
+
+        var flashRef = fire.database().ref('flashmobs').child(flashmobId);
+        console.log(flashRef);
+
+        flashRef.update(flashMobUpdateInstance);
+      });
+
+    },
     submitFeedbackForFlashmob: function(flashmobId, userid, username, videoUrl){
+      console.log('SUBMITTING FEEDBACK:', flashmobId, userid, username, videoUrl);
+      videoUrl = this.youtubeLinkHelper(videoUrl);
+      var guid = this.guid();
       this.getFlashMob(flashmobId, function(flashmob) {
         var currentFeedback = flashmob['feedback'] || [];
         const currentTime = new Date();
         currentFeedback.push({
+          'flashmobId': flashmobId,
           'userId': userid,
           'videoUrl': videoUrl,
           'time': currentTime.getTime(),
           'username': username,
           'flashmobName': flashmob['title'],
-          'comments': []
+          'comments': [],
+          'uid': guid
         });
 
         var flashMobUpdateInstance =  { 'feedback': currentFeedback};
@@ -213,37 +267,34 @@ var database = {
           flashMobs.forEach(function(flashmob){
             if (flashmob['feedback']){
               console.log('Flashmob ', flashmob['title'], 'has feedback!');
-              flashmob['feedback'].forEach(function(feed){
-                console.log('Found feedback:', feed['userId']);
-                if (feed['userId'] == userId){
+              if (flashmob['currentUser']['userId'] === userId){
+
+                flashmob['feedback'].forEach(function(feed){
                   if (feed['comments']){
                     feedback.push(feed);
                   } else {
                     feed['comments'] = [];
                     feedback.push(feed);
                   }
-                }
-              });
+                });
+              } else {
+                flashmob['feedback'].forEach(function(feed){
+                  console.log('Found feedback:', feed['userId']);
+                  if (feed['userId'] == userId){
+                    if (feed['comments']){
+                      feedback.push(feed);
+                    } else {
+                      feed['comments'] = [];
+                      feedback.push(feed);
+                    }
+                  }
+                });
+              }
             }
           });
           console.log('All feedback found for user:', feedback);
           callback(feedback);
         });
-        // Dummy return for now
-          /*callback([
-            {
-              'userId': 'userid1',
-              'videoUrl': 'video1.com',
-              'time': (new Date()).getTime(),
-              'comments': ['Great job, keep up the good work! I would work on the hip movement so you can really get this thing swinging! We are really trying to indicate fun with this dance so make sure you smile.', 'You are the best thanks!']
-            },
-            {
-              'userId': 'userid1',
-              'videoUrl': 'video2.com',
-              'time': (new Date()).getTime(),
-              'comments': []
-            }
-          ]);*/
       },
       getFeedbackForUserForSpecificFlashmob: function(flashmobId, userId, callback){
         // Send flashmob to firebase
