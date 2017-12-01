@@ -102,7 +102,7 @@ var Headline = class Headline extends React.Component{
     else {
       return (
         <nav class="navbar fixed-top navbar-expand-lg navbar-dark navbar-container">
-          <Link class="navbar-brand navbar-title" to="/">CAPONE</Link>
+          <Link class="navbar-brand navbar-title" to="/">CΛPONE</Link>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse-elements" aria-controls="navbar-collapse-elements" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
