@@ -2,8 +2,6 @@ import fire from './fire';
 
 var database = {
     youtubeLinkHelper: function(link){
-      //var index = link.indexOf('v=');
-      //var id = '';
       return link.replace("https://www.youtube.com/watch?v=", "");
     },
     guid: function() {
@@ -15,6 +13,7 @@ var database = {
       return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
       s4() + '-' + s4() + s4() + s4();
     },
+
     // Get full flashMob item using flashMobId
     getFlashMob:  function(flashMobId, callback){
         console.log('Flashmobid:', flashMobId);
