@@ -246,7 +246,7 @@ var VideoForm = class VideoForm extends React.Component {
   }
 
   handleVideoIdChange(event) {
-    var pureId = database.youtubeLinkHelper(event.target.value)
+    var pureId = database.youtubeLinkHelper(event.target.value);
     this.props.handler(event);
     this.setState({
       current_video_id: pureId
