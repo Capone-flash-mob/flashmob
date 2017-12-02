@@ -170,12 +170,12 @@ var PublicView = class PublicView extends React.Component {
                   </a>
                 </div>
               </div>
-              <div class="col-sm-3">
+              <div class="col-sm-4">
                 <div class="row">
                   <div class="col-sm-10 offset-sm-2">
                     <div class="row flashmob-detail-decoration"></div>
                     <div class="row flashmob-detail-container">
-                      <span class="flashmob-detail-subtext">Located in</span>
+                      <span class="flashmob-detail-subtext">Located In</span>
                       <span class="flashmob-detail-text">{this.state.flashmob.location}</span>
                     </div>
                     <div class="row flashmob-detail-container">
