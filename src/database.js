@@ -32,7 +32,7 @@ var database = {
         allMobs.once("value").then(function(snapshot){
         snapshot.forEach(function(item){
               var myItem = item.val();
-              myItem.key = item.key
+              myItem.key = item.key;
               allFlashMobs.push(myItem);
               //console.log("ITEM: " + myitem.key);
             });
@@ -269,7 +269,7 @@ var database = {
         });
       },
       getFeedbackForUserForSpecificFlashmob: function(flashmobId, userId, callback){
-       
+
         // Dummy return for now
          callback([
           {
