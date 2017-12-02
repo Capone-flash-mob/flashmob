@@ -37,7 +37,7 @@ var database = {
                     allFlashMobs.push(myItem);
                     //console.log("ITEM: " + myitem.key);
                 })
-                callback(allFlashMobs);
+                callback(allFlashMobs.reverse());
             })
         },
 
