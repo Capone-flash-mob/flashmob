@@ -29,7 +29,6 @@ var FeedbackView = class FeedbackView extends Component {
           authenticated: 'true',
           currentUser: customUser,
         });
-        console.log('This is the users uid:', user.uid);
         database.getAllFeedbackForUser(user.uid, function(feedback){
           console.log("GOT ALL FEEDBACK");
           self.setState({

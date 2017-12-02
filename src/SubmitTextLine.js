@@ -59,6 +59,7 @@ class SubmitTextLine extends React.Component {
 
       //yourfunctions();
       database.submitFeedbackComment(this.state.flashmobId, this.state.feedbackUid, this.state.value, this.props.reState);
+      this.state.value = ''
     }
   }
 
