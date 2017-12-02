@@ -25,6 +25,30 @@ var HomeView = class HomeView extends Component {
     this.props.history.push("/mob/" + event.target.id);
   }
 
+  adjustTime(time) {
+    var time = time.split(':'); // convert to array
+
+    var hours = Number(time[0]);
+    var minutes = Number(time[1]);
+
+    var time_value;
+
+    if (hours > 0 && hours <= 12) {
+      time_value= "" + hours;
+    }
+    else if (hours > 12) {
+      time_value= "" + (hours - 12);
+    }
+    else if (hours == 0) {
+      time_value= "12";
+    }
+
+    time_value += (minutes < 10) ? ":0" + minutes : ":" + minutes;
+    time_value += (hours >= 12) ? " P.M." : " A.M.";
+
+    return time_value;
+  }
+
   render(){
     if (this.state == null){
       return (<div> LOAAAAAAAAADING!!!!!!!!!!!! </div> );
@@ -53,7 +77,7 @@ var HomeView = class HomeView extends Component {
                       <div class="mob-infobox-details">
                         <span class="mob-infobox-title">{key.title}</span>
                         <span class="mob-infobox-location">{key.location}</span>
-                        <span class="mob-infobox-date-and-time">{key.date}, {key.time}</span>
+                        <span class="mob-infobox-date-and-time">{key.date}, {this.adjustTime(key.time)}</span>
                       </div>
                     </div>
                   </Link>

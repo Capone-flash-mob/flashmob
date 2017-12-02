@@ -13,14 +13,13 @@ import firebase from 'firebase';
 class SubmitTextLine extends React.Component {
   constructor(props) {
     super(props);
-    this.state =
-    {
+    this.state = {
       instructions: props.instructions,
       label: props.label,
       value: props.value,
       placeholder: props.placeholder,
       submitted: "btn btn-lg btn-block btn-primary",
-      buttonText: "Submit",
+      buttonText: "+",
       trigger: props.trigger, // callback which can passed in as an attribute
       flashmobId: props.flashmobId,
       feedbackUid: props.feedbackUid
@@ -71,14 +70,15 @@ class SubmitTextLine extends React.Component {
     return (
       <form onSubmit={this.handleSubmit}>
         <p>{this.state.instructions}</p>
-
-        <label>
-          {this.state.label + ''}
+        <label forName="textLine">
+          <i>{this.state.label + ''}</i>
         </label>
-
-        <input placeholder={this.state.placeholder} type="text" value={this.state.value} onChange={this.handleChange} />
-        {' '}
-        <input className={this.state.submitted} type="submit" value={this.state.buttonText}/>
+        <div class="input-group">
+          <input name="textLine" class="form-control" type="text" placeholder={this.state.placeholder} value={this.state.value} onChange={this.handleChange} />
+          <span class="input-group-btn">
+            <input class="btn btn-success" type="submit" value={this.state.buttonText} />
+          </span>
+        </div>
       </form>
     );
   }

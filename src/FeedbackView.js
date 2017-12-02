@@ -79,7 +79,7 @@ var FeedbackView = class FeedbackView extends Component {
               {feedbackList.map((key, index) =>
                 <div class="card">
                   <div class="feedback-overview-container" role="tab" id={"heading-" + index}>
-                    <a class="collapsed" data-toggle="collapse" href={"#collapse-" + index } aria-expanded="false" aria-controls={"collapse-" + index}>
+                    <a class="collapsed" data-toggle="collapse" href={"#collapse-" + index } aria-expanded="false" aria-controls={"collapse-" + index} style={{textDecoration: 'none'}}>
                       <div class="row">
                         <div class="col-sm-4 feedback-instance-text">{ key.username } </div>
                         <div class="col-sm-4 feedback-instance-text"> { (new Date(key.time)).toLocaleDateString() } </div>

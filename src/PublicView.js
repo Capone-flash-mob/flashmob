@@ -80,24 +80,8 @@ var PublicView = class PublicView extends React.Component {
     });
   }
 
-  render(){
-    this.swapEnguagmentButtons();
-    console.log('-----stateRender', this.state);
-    if (this.state.flashmob == null) {
-      return (<div> Loading... </div>);
-    }
-
-    const primary_opts = {
-      height: '400',
-      width: '100%',
-    };
-
-    var month_int = parseInt(this.state.flashmob.date.substr(5,2), 10)-1;
-    var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-    var month_str = months[month_int];
-    var date_str = month_str + ' ' + this.state.flashmob.date.substr(8,2);
-
-    var time = this.state.flashmob.time.split(':'); // convert to array
+  adjustTime(time) {
+    var time = time.split(':'); // convert to array
 
     var hours = Number(time[0]);
     var minutes = Number(time[1]);
@@ -116,6 +100,31 @@ var PublicView = class PublicView extends React.Component {
 
     time_value += (minutes < 10) ? ":0" + minutes : ":" + minutes;
     time_value += (hours >= 12) ? " P.M." : " A.M.";
+
+    return time_value;
+  }
+
+  adjustDate(date) {
+    var month_int = parseInt(date.substr(5,2), 10)-1;
+    var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    var month_str = months[month_int];
+    var date_int = parseInt(date.substr(8,2), 10);
+    var date_str = month_str + ' ' + date_int.toString();
+
+    return date_str;
+  }
+
+  render(){
+    this.swapEnguagmentButtons();
+    console.log('-----stateRender', this.state);
+    if (this.state.flashmob == null) {
+      return (<div> Loading... </div>);
+    }
+
+    const primary_opts = {
+      height: '400',
+      width: '100%',
+    };
 
     return (
       <div class="content">
@@ -180,7 +189,7 @@ var PublicView = class PublicView extends React.Component {
                     </div>
                     <div class="row flashmob-detail-container">
                       <span class="flashmob-detail-subtext">Date & Time</span>
-                      <span class="flashmob-detail-text">{date_str}, {time_value}</span>
+                      <span class="flashmob-detail-text">{this.adjustDate(this.state.flashmob.date)}, {this.adjustTime(this.state.flashmob.time)}</span>
                     </div>
                     <div class="row flashmob-detail-spacer"></div>
                     <div class="row flashmob-detail-container">
@@ -191,12 +200,13 @@ var PublicView = class PublicView extends React.Component {
                       <span class="flashmob-detail-subtext">Contact</span>
                       <span class="flashmob-detail-text">{this.state.flashmob.email}</span>
                     </div>
+                    <div class="row flashmob-detail-decoration" style={{marginTop: '13px', marginBottom: '13px'}}></div>
                     <div class="row">
                     {this.state.showYouTubeLink ?
                       (
                         <SubmitTextLine
-                        label="YouTube URL"
-                        instructions="Submit a Youtube video link here to get feedback!"
+                        label="YouTube URL:"
+                        instructions="Submit a YouTube link here to get feedback!"
                         trigger="submitVideoURL"
                         fmid={this.state.flashmob_uid}></SubmitTextLine>
                       )

@@ -46,7 +46,7 @@ class UserView extends Component {
       }
     })
 
-    
+
   }
 
   handleLink(event){
@@ -221,12 +221,9 @@ class UserView extends Component {
           }
         </div>
 
-
-
         <div class="col-sm-8 offset-sm-2">
         <hr/>
         </div>
-
 
          <div>
           {
@@ -327,7 +324,7 @@ class UserView extends Component {
 
           <div class="col-sm-8 offset-sm-2">
           <hr/>
-          <div class = "col-sm-4 offset-sm-5">MyFlashmobs</div>
+          <h2> Your Flashmobs </h2>
             <div class="row">
 
               {(flashList!==undefined) ?
@@ -351,7 +348,7 @@ class UserView extends Component {
 
             :
             <div class="row">
-            <div class="col-sm-12 offset-sm-5">You don't seem to be interested in any flashmobs at the moment</div>
+            <div class="col-sm-12 offset-sm-5">{"You don't seem to be interested in any flashmobs at the moment"}</div>
             </div>
           }
 
