@@ -163,20 +163,15 @@ var database = {
     },
 
 
-    submitFeedbackComment: function(flashmobId, feedbackId, commentText){
+    submitFeedbackComment: function(flashmobId, feedbackId, commentText, restate){
 
       console.log('Entered submit comment function, flashmobid:', flashmobId, 'feedbackid:', feedbackId, 'commenttext:', commentText);
       this.getFlashMob(flashmobId, function(flashmob) {
-        console.log('Got flashmob:', flashmob);
         var currentFeedback = flashmob['feedback'];
         var finalFeedback = [];
         if (currentFeedback){
-          console.log('Flashmob has feedback, iterating over list');
-
           currentFeedback.forEach(function(feed){
-            console.log('Iterating over piece of feedback:', feed);
             if (feed['uid'] == feedbackId){
-              console.log('Found matching uid feedback that we will add comment to:', feed);
               var currentComments = feed['comments'] || [];
               const currentTime = new Date();
               currentComments.push({
@@ -191,9 +186,9 @@ var database = {
         var flashMobUpdateInstance =  { 'feedback': finalFeedback};
 
         var flashRef = fire.database().ref('flashmobs').child(flashmobId);
-        console.log(flashRef);
-
         flashRef.update(flashMobUpdateInstance);
+        console.log("UPDATED FEEDBACK")
+        return restate()
       });
 
     },

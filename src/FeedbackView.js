@@ -13,6 +13,7 @@ var FeedbackView = class FeedbackView extends Component {
       feedback: []
     });
     this.handleLink = this.handleLink.bind(this);
+    this.reState = this.reState.bind(this);
   }
 
   componentDidMount() {
@@ -30,6 +31,7 @@ var FeedbackView = class FeedbackView extends Component {
         });
         console.log('This is the users uid:', user.uid);
         database.getAllFeedbackForUser(user.uid, function(feedback){
+          console.log("GOT ALL FEEDBACK");
           self.setState({
             'feedback': feedback
           });
@@ -43,6 +45,23 @@ var FeedbackView = class FeedbackView extends Component {
       })
     }
   })
+  }
+
+  reState(userid){
+    var self = this;
+    firebase.auth().onAuthStateChanged(function(user){
+      if(user){
+        console.log(user.uid)
+        database.getAllFeedbackForUser(user.uid, function(feedback){
+        console.log("GOT ALL FEEDBACK");
+        self.setState({
+          'feedback': feedback
+        });
+    });
+
+
+      }
+    })
   }
 
   handleLink(event){
@@ -61,7 +80,6 @@ var FeedbackView = class FeedbackView extends Component {
     };
 
     const feedbackList = this.state.feedback || [];
-    console.log('Feedback list:', feedbackList);
 
     return(
       <div class="content">
@@ -101,7 +119,7 @@ var FeedbackView = class FeedbackView extends Component {
                             <span class="comment-text">{key.comment}</span>
                           </div>
                         )}
-                        <SubmitTextLine label="" instructions="" placeholder="Comment" trigger="commentTrigger" feedbackUid={key.uid} flashmobId={key.flashmobId}></SubmitTextLine>
+                        <SubmitTextLine reState={this.reState} label="" instructions="" placeholder="Comment" trigger="commentTrigger" feedbackUid={key.uid} flashmobId={key.flashmobId}></SubmitTextLine>
                       </div>
                     </div>
                   </div>

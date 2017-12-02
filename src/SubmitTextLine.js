@@ -56,13 +56,9 @@ class SubmitTextLine extends React.Component {
     console.log('got here 1');
     console.log('got here 2');
     if(this.state.trigger === 'commentTrigger'){
-      console.log('Comment Trigger called');
-      console.log('Comment Trigger called');
-      console.log('Comment Trigger called');
-      console.log('Comment Trigger called');
-      console.log('Comment Trigger called');
+
       //yourfunctions();
-      database.submitFeedbackComment(this.state.flashmobId, this.state.feedbackUid, this.state.value);
+      database.submitFeedbackComment(this.state.flashmobId, this.state.feedbackUid, this.state.value, this.props.reState);
     }
   }
 
