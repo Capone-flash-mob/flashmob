@@ -31,15 +31,15 @@ var database = {
         var allMobs = fire.database().ref('/flashmobs');
         var allFlashMobs = [];
         allMobs.once("value").then(function(snapshot){
-                snapshot.forEach(function(item){
-                    var myItem = item.val();
-                    myItem.key = item.key
-                    allFlashMobs.push(myItem);
-                    //console.log("ITEM: " + myitem.key);
-                })
-                callback(allFlashMobs.reverse());
-            })
-        },
+        snapshot.forEach(function(item){
+              var myItem = item.val();
+              myItem.key = item.key
+              allFlashMobs.push(myItem);
+              //console.log("ITEM: " + myitem.key);
+            });
+          callback(allFlashMobs.reverse());
+        })
+      },
 
     editFlashmob: function(uid, key, value){
         var flashMobUpdateInstance =  {};
