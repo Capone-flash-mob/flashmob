@@ -95,10 +95,6 @@ var database = {
         myMobsRef.once("value").then(function(snapshot){
             snapshot.forEach(function(item){
                 var mobkey = item.key;
-                console.log('ITEM IS: ', item);
-                console.log('ITEM IS: ', item);
-                console.log('ITEM IS: ', item);
-                console.log("KEY IS " + mobkey);
                 allMyMobsKeys.push(mobkey);
             })
 
@@ -109,11 +105,11 @@ var database = {
             var myRef = fire.database().ref('/flashmobs/'+ item);
 
             myRef.once("value").then(function(snapshot){
-                console.log(snapshot.val());
-                allMyMobs.push(snapshot.val());
+                var myNewMob = snapshot.val();
+                myNewMob.key = snapshot.key;
+                allMyMobs.push(myNewMob);
                 processed++;
                 if(processed == allMyMobsKeys.length){
-                    console.log('allMyMobs', allMyMobs)
                     callback(allMyMobs);
                 }
             })
@@ -234,29 +230,6 @@ var database = {
         var feedback = flashmob['feedback'] || [];
         callback(feedback);
       });
-        // Dummy return for now
-        /*callback([
-          {
-            'userId': 'userid1',
-            'videoUrl': 'a.com',
-            'time': (new Date()).getTime(),
-            'comments': []
-          },
-          {
-            'userId': 'userid2',
-            'videoUrl': 'b.com',
-            'time': (new Date()).getTime(),
-            'comments': []
-          },
-          {
-            'userId': 'userid3',
-            'videoUrl': 'c.com',
-            'time': (new Date()).getTime(),
-            'comments': []
-          }
-        ]);*/
-        //return flashmob['feedback'];
-      //});
     },
     getAllFeedbackForUser: function(userId, callback){
         // Send flashmob to firebase
@@ -297,16 +270,7 @@ var database = {
         });
       },
       getFeedbackForUserForSpecificFlashmob: function(flashmobId, userId, callback){
-        // Send flashmob to firebase
-        /*var feedback = this.getAllFeedbackForFlashmob(flashmobId);
-        feedback.forEach(function(iFeed){
-          if (iFeed['userId'] == userId){
-
-            //return iFeed;
-
-
-          }
-        });*/
+       
         // Dummy return for now
          callback([
           {

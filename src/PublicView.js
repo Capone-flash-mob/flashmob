@@ -64,6 +64,8 @@ var PublicView = class PublicView extends React.Component {
       var thisFlashMob = this.state.flashmob_uid;
       var userRef = firebase.database().ref('/users/' + userid + '/MyMobs/' + thisFlashMob);
       userRef.update(isInt);
+      var newState = this.state;
+      this.setState(newState);
     }
   }
 

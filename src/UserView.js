@@ -30,10 +30,13 @@ class UserView extends Component {
     firebase.auth().onAuthStateChanged(function(user) {
       if(user){
         var myUser = database.getUser(user.uid, function(customUser){
-          self.setState({
-          authenticated: 'true',
-          currentUser: customUser,
-          })
+            database.getMyFlashMobs(userID, function(flashmobs){
+              self.setState({
+             myMobs: flashmobs,
+             authenticated: 'true',
+             currentUser: customUser,
+           });
+       });
         })
       }
       else {
@@ -43,11 +46,7 @@ class UserView extends Component {
       }
     })
 
-    database.getMyFlashMobs(userID, function(flashmobs){
-        self.setState({
-           myMobs: flashmobs,
-        });
-      });
+    
   }
 
   handleLink(event){
@@ -331,10 +330,10 @@ class UserView extends Component {
           <div class = "col-sm-4 offset-sm-5">MyFlashmobs</div>
             <div class="row">
 
-              {(flashList!==undefined && flashList!==false) ?
+              {(flashList!==undefined) ?
               flashList.map((key, index) =>
                 <div class="col-sm-4">
-                  <Link to={"mob/" + key.key} style={{ textDecoration: 'none'}}>
+                  <Link to={"/mob/" + key.key} style={{ textDecoration: 'none'}}>
                     <div class="mob-infobox">
                       <YouTube
                         opts={opts}
