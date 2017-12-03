@@ -12,6 +12,11 @@
 
 .comments-section label {
   color: green;
+  display:none;
+}
+
+.comments-section form p {
+    display:none;
 }
 
 .comments-header {
