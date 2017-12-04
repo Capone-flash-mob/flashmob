@@ -531,17 +531,7 @@ var CreateView = class CreateView extends React.Component {
               <TitleForm handler={this.handleTitle}></TitleForm>
             </div>
             <div class="col-sm-5">
-              <div class="row">
-                <div class="col-sm-6">
-                  <LocationForm handler={this.handleLocation}></LocationForm>
-                </div>
-                <div class="col-sm-6">
-                  <div>
-                    <label forName="files"><i>Add an Image:</i></label>
-                    <input id="files" type="file" accept="image/*"></input>
-                  </div>
-                </div>
-              </div>
+              <LocationForm handler={this.handleLocation}></LocationForm>
             </div>
           </div>
           <div class="row">
