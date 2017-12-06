@@ -16,10 +16,10 @@ var database = {
 
     // Get full flashMob item using flashMobId
     getFlashMob:  function(flashMobId, callback){
-        console.log('Flashmobid:', flashMobId);
+        //console.log('Flashmobid:', flashMobId);
         var flashMobRef = fire.database().ref('/flashmobs/'+flashMobId);
         flashMobRef.once("value").then(function(snapshot){
-            console.log(snapshot.val());
+            //console.log(snapshot.val());
             var flashMobSnap = snapshot.val();
             // TODO: REMOVE TEMPORARY ADDITION OF ELEMENT
             callback(flashMobSnap);
@@ -34,7 +34,7 @@ var database = {
               var myItem = item.val();
               myItem.key = item.key;
               allFlashMobs.push(myItem);
-              //console.log("ITEM: " + myitem.key);
+              ////console.log("ITEM: " + myitem.key);
             });
           callback(allFlashMobs.reverse());
         })
@@ -50,10 +50,10 @@ var database = {
     },
 
      getUser: function(UserId, callback){
-        console.log('UserID', UserId);
+        //console.log('UserID', UserId);
         var UserRef = fire.database().ref('/users/'+ UserId);
         UserRef.once("value").then(function(snapshot){
-            console.log(snapshot.val());
+            //console.log(snapshot.val());
             var UserSnap = snapshot.val();
             // TODO: REMOVE TEMPORARY ADDITION OF ELEMENT
             callback(UserSnap);
@@ -75,7 +75,7 @@ var database = {
         var userid = userObj.userId;
         var newUserObj = userObj;
         newUserObj[fieldName] = fieldValue;
-        console.log("USERID: " + userid)
+        //console.log("USERID: " + userid)
         var UserRef = fire.database().ref('/users/' + userid);
         var NewUserRef = UserRef.update(newUserObj);
         UserRef.once("value").then(function(snapshot){
@@ -98,7 +98,7 @@ var database = {
             })
 
             var processed = 0;
-            console.log("SIZE IS " + allMyMobsKeys.length)
+            //console.log("SIZE IS " + allMyMobsKeys.length)
             allMyMobsKeys.forEach(function(item){
 
             var myRef = fire.database().ref('/flashmobs/'+ item);
@@ -129,7 +129,7 @@ var database = {
          myMobsRef.once("value").then(function(snapshot){
            snapshot.forEach(function(item){
              var mobkey = item.key;
-             /*console.log("KEY IS " + mobkey);*/
+             /*//console.log("KEY IS " + mobkey);*/
              allMyMobsKeys.push(mobkey);
              })
 
@@ -156,16 +156,16 @@ var database = {
         // Send flashmob to firebase
         flashMobInstance['interested'] = 0;
         //flashMobInstance['feedback'] = [];
-        console.log('About to add flashmob:', flashMobInstance);
+        //console.log('About to add flashmob:', flashMobInstance);
         var flashmobRef = fire.database().ref('flashmobs').push(flashMobInstance);
-        console.log('flashmob ref:', flashmobRef);
+        //console.log('flashmob ref:', flashmobRef);
         return flashmobRef.key;
     },
 
 
     submitFeedbackComment: function(flashmobId, feedbackId, commentText, restate){
 
-      console.log('Entered submit comment function, flashmobid:', flashmobId, 'feedbackid:', feedbackId, 'commenttext:', commentText);
+      //console.log('Entered submit comment function, flashmobid:', flashmobId, 'feedbackid:', feedbackId, 'commenttext:', commentText);
       this.getFlashMob(flashmobId, function(flashmob) {
         var currentFeedback = flashmob['feedback'];
         var finalFeedback = [];
@@ -187,36 +187,50 @@ var database = {
 
         var flashRef = fire.database().ref('flashmobs').child(flashmobId);
         flashRef.update(flashMobUpdateInstance);
-        console.log("UPDATED FEEDBACK")
+        //console.log("UPDATED FEEDBACK")
         return restate()
       });
 
     },
+    // Submit a video for feedback; only if it doesn't already exists
     submitFeedbackForFlashmob: function(flashmobId, userid, username, videoUrl){
-      console.log('SUBMITTING FEEDBACK:', flashmobId, userid, username, videoUrl);
-      videoUrl = this.youtubeLinkHelper(videoUrl);
-      var guid = this.guid();
-      this.getFlashMob(flashmobId, function(flashmob) {
-        var currentFeedback = flashmob['feedback'] || [];
-        const currentTime = new Date();
-        currentFeedback.push({
-          'flashmobId': flashmobId,
-          'userId': userid,
-          'videoUrl': videoUrl,
-          'time': currentTime.getTime(),
-          'username': username,
-          'flashmobName': flashmob['title'],
-          'comments': [],
-          'uid': guid
-        });
+      // videoUrl must have a value or it will cause errors
+      if (videoUrl != ""){
+              videoUrl = this.youtubeLinkHelper(videoUrl);
+              var guid = this.guid(); // Generate unique id
+              this.getFlashMob(flashmobId, function(flashmob) {
+                var currentFeedback = flashmob['feedback'] || [];
+                var alreadyExists = false
+                var k = 0
+                for (; k<currentFeedback.length;k++){
+                  if (currentFeedback[k]['videoUrl'] === videoUrl){
+                    alreadyExists = true
+                    console.log("Duplicate submission blocked!")
+                  }
+                }
+                if (!alreadyExists){
+                  const currentTime = new Date();
+                  currentFeedback.push({
+                    'flashmobId': flashmobId,
+                    'userId': userid,
+                    'videoUrl': videoUrl,
+                    'time': currentTime.getTime(),
+                    'username': username,
+                    'flashmobName': flashmob['title'],
+                    'comments': [],
+                    'uid': guid
+                  });
 
-        var flashMobUpdateInstance =  { 'feedback': currentFeedback};
+                  var flashMobUpdateInstance =  { 'feedback': currentFeedback};
 
-        var flashRef = fire.database().ref('flashmobs').child(flashmobId);
-        console.log(flashRef);
+                  var flashRef = fire.database().ref('flashmobs').child(flashmobId);
+                  //console.log(flashRef);
 
-        flashRef.update(flashMobUpdateInstance);
-      });
+                  flashRef.update(flashMobUpdateInstance);
+                  console.log("YouTube URL Submit Success!")
+                }
+              });
+      }
     },
     getAllFeedbackForFlashmob: function(flashmobId, callback){
         // Send flashmob to firebase
@@ -230,10 +244,10 @@ var database = {
         //var feedback = this.getAllFeedbackForFlashmob(flashmobId);
         var feedback = [];
         this.getMyFlashMobs(userId, function(flashMobs){
-          console.log('Got flashmobs:', flashMobs);
+          //console.log('Got flashmobs:', flashMobs);
           flashMobs.forEach(function(flashmob){
             if (flashmob['feedback']){
-              console.log('Flashmob ', flashmob['title'], 'has feedback!');
+              //console.log('Flashmob ', flashmob['title'], 'has feedback!');
               if (flashmob['currentUser']['userId'] === userId){
 
                 flashmob['feedback'].forEach(function(feed){
@@ -246,7 +260,7 @@ var database = {
                 });
               } else {
                 flashmob['feedback'].forEach(function(feed){
-                  console.log('Found feedback:', feed['userId']);
+                  //console.log('Found feedback:', feed['userId']);
                   if (feed['userId'] == userId){
                     if (feed['comments']){
                       feedback.push(feed);
@@ -259,7 +273,7 @@ var database = {
               }
             }
           });
-          console.log('All feedback found for user:', feedback);
+          //console.log('All feedback found for user:', feedback);
           callback(feedback);
         });
       },
