@@ -201,7 +201,7 @@ var PublicView = class PublicView extends React.Component {
                       <span class="flashmob-detail-text">{this.state.flashmob.email}</span>
                     </div>
                     <div class="row flashmob-detail-decoration" style={{marginTop: '13px', marginBottom: '13px'}}></div>
-                    <div class="row">
+                    <div class="row flashmob-component-container">
                     {this.state.showYouTubeLink ?
                       (
                         <SubmitTextLine

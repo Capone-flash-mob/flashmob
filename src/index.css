@@ -83,6 +83,11 @@
 .flashmob-detail-container{
   font-size: 30px;
   margin-top:15px;
+  margin: 1px;
+}
+.flashmob-component-container{
+  margin-top:15px;
+  margin: 1px;
 }
 
 .flashmob-detail-text {
