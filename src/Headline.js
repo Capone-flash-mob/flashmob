@@ -32,6 +32,7 @@ var Headline = class Headline extends React.Component{
         authenticated: 'true',
       });
 
+    window.location.reload(); // Reload page to inform other components
     }).catch(function(error){})
   }
 
@@ -42,7 +43,8 @@ var Headline = class Headline extends React.Component{
       this.setState({
         authenticated: 'false',
       })
-      
+
+    window.location.reload(); // Reload page to inform other components
     })
   }
 
@@ -62,7 +64,7 @@ var Headline = class Headline extends React.Component{
     })
   }
 
- 
+
 
   render() {
     if (this.state.authenticated == 'true') {
